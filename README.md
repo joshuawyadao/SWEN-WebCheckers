@@ -6,10 +6,10 @@ a web micro-framework.
 
 ## Team
 
-- rml1168 (Ryan Lei))
+- rml1168 (Ryan Lei)
 - MEMBER2
 - MEMBER3
-- Joshua Yadao
+- jwy4877 (Joshua Yadao)
 
 
 ## Prerequisites
