@@ -1,0 +1,36 @@
+commit 8ae1b7be31e39845322deb968ae029682939008a
+Author: jwy4877 <jwy4877@g.rit.edu>
+Date:   Wed Feb 13 19:58:09 2019 -0500
+
+    Updated name format
+
+commit d9681227ab487d6402f9223e347fd0817719d348
+Merge: 94e79d5 4630b7e
+Author: jwy4877 <jwy4877@g.rit.edu>
+Date:   Wed Feb 13 19:52:03 2019 -0500
+
+    Merge branch 'master' of https://github.com/RIT-SWEN-261-10/team-project-2185-swen-261-10-d-10d
+
+commit 94e79d582ea4344ec402c9492161bb5ff9daf6c5
+Author: jwy4877 <jwy4877@g.rit.edu>
+Date:   Wed Feb 13 19:47:20 2019 -0500
+
+    Changed README.md and added my name to the fourth slot
+
+commit 4630b7eccb31264e5bec7a4fcca008f3680a3d43
+Author: Ryan Lei <rml1168>
+Date:   Wed Feb 13 13:54:30 2019 -0500
+
+    rml1168 editted readme.md
+
+commit 1a8c0b2e216ee0b89ce69a70ec46837b1d7c7f60
+Author: Kenn Martinez <KennUbuntu@ACHEPEHnvy.com>
+Date:   Thu Feb 7 16:01:14 2019 -0500
+
+    For your benefit
+
+commit 7aaad62534cec1f265ced16951251c2db0109408
+Author: KennBMartinez <kbmvse@rit.edu>
+Date:   Thu Feb 7 15:51:00 2019 -0500
+
+    Initial WEBCHECKERS SEED REPO for 2185
