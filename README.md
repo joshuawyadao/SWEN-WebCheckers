@@ -6,7 +6,7 @@ a web micro-framework.
 
 ## Team
 
-- MEMBER1
+- rml1168 (Ryan Lei))
 - MEMBER2
 - MEMBER3
 - Joshua Yadao
