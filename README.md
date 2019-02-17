@@ -8,7 +8,7 @@ a web micro-framework.
 
 - rml1168 (Ryan Lei)
 - cxl8351 (Christopher Lee)
-- MEMBER3
+- lr5469 (La Raw)
 - jwy4877 (Joshua Yadao)
 
 
