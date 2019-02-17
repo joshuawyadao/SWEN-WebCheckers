@@ -7,7 +7,7 @@ a web micro-framework.
 ## Team
 
 - rml1168 (Ryan Lei)
-- MEMBER2
+- cxl8351 (Christopher Lee)
 - MEMBER3
 - jwy4877 (Joshua Yadao)
 
