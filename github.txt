@@ -1,3 +1,33 @@
+commit 05ffe0d725baeeed37fc68fad528fbff44d57cca
+Author: jwy4877 <jwy4877@g.rit.edu>
+Date:   Sun Feb 17 12:51:45 2019 -0500
+
+    deleted teehee
+
+commit 809df9c81bb596699950f82e2747ada6ac02357e
+Author: jwy4877 <jwy4877@g.rit.edu>
+Date:   Sun Feb 17 12:49:42 2019 -0500
+
+    added teehee
+
+commit c7c2d7fb00549ca7214fbe66b579cd285742bd93
+Author: laraw <lr5469@rit.edu>
+Date:   Sun Feb 17 12:32:37 2019 -0500
+
+    inital commit - add lr5469 laraw
+
+commit 512dd06220bce310d0fe6afc300fb1b90a9123aa
+Author: cxl8351 <cxl8351@rit.edu>
+Date:   Sat Feb 16 19:15:52 2019 -0500
+
+    Added Christopher
+
+commit 5995517027702e016eadfd8876bbca949d67e84b
+Author: jwy4877 <jwy4877@g.rit.edu>
+Date:   Thu Feb 14 10:31:28 2019 -0500
+
+    added github.txt for logging git commits
+
 commit 8ae1b7be31e39845322deb968ae029682939008a
 Author: jwy4877 <jwy4877@g.rit.edu>
 Date:   Wed Feb 13 19:58:09 2019 -0500
