@@ -10,6 +10,7 @@ a web micro-framework.
 - cxl8351 (Christopher Lee)
 - lr5469 (La Raw)
 - jwy4877 (Joshua Yadao)
+- ty3226 (Tydarius Young)
 
 
 ## Prerequisites
