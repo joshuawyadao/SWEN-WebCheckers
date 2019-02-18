@@ -1,3 +1,15 @@
+commit 571d27706b8f058d3fa4979162066b26d305ce5b
+Author: Tydarius Young <ty3226@rit.edu>
+Date:   Mon Feb 18 01:11:36 2019 -0500
+
+    added name to README.md file
+
+commit c578e29a3d76ae2de64782b3f8930100e85fff8a
+Author: jwy4877 <jwy4877@g.rit.edu>
+Date:   Sun Feb 17 12:53:50 2019 -0500
+
+    updated github.txt
+
 commit 05ffe0d725baeeed37fc68fad528fbff44d57cca
 Author: jwy4877 <jwy4877@g.rit.edu>
 Date:   Sun Feb 17 12:51:45 2019 -0500
