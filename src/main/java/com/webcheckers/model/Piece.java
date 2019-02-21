@@ -2,9 +2,21 @@ package com.webcheckers.model;
 
 public class Piece {
 
-    private enum type { SINGLE, KING; }
+    enum TYPE { SINGLE, KING }
+    enum COLOR { RED, WHITE }
 
-    private enum color { RED, WHITE; }
+    private TYPE type;
+    private COLOR color;
+
+    /**
+     * Constructor for piece
+     * @param pieceType the type of this piece
+     * @param pieceColor the color of this piece
+     */
+    public Piece( TYPE pieceType, COLOR pieceColor ) {
+        this.type = pieceType;
+        this.color = pieceColor;
+    }
 
     /**
      * The type of this piece
@@ -12,8 +24,8 @@ public class Piece {
      * an enumeration of { SINGLE or KING }
      * @return the type of piece
      */
-    public type getType() {
-        return type.SINGLE;
+    public TYPE getType() {
+        return this.type;
     }
 
     /**
@@ -22,8 +34,8 @@ public class Piece {
      * an enumeration of { RED or WHITE }
      * @return the color of the piece
      */
-    public color getColor() {
-        return color.RED;
+    public COLOR getColor() {
+        return this.color;
     }
 
 
