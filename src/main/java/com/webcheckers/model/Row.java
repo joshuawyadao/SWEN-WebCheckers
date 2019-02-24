@@ -6,7 +6,7 @@ public class Row implements Iterable {
 
     private int index; // { 0 to 7 }
 
-    private Space[] spaces = new Space[8];
+    private Space[] spaces;
 
     /**
      * General construtor for a row
@@ -32,7 +32,24 @@ public class Row implements Iterable {
      */
     @Override
     public Iterator<Space> iterator() {
-        return null;
+
+        Iterator<Space> iterator = new Iterator<Space>() {
+
+            private int index = 0;
+
+            @Override
+            public boolean hasNext() {
+                return index < 64 && spaces[index] != null;
+            }
+
+            @Override
+            public Space next() {
+                index++;
+                return spaces[index];
+            }
+        };
+
+        return iterator;
     }
 
 }

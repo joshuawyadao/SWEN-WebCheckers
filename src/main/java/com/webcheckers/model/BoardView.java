@@ -16,6 +16,23 @@ public class BoardView implements Iterable {
      */
     @Override
     public Iterator<Row> iterator() {
-        return null;
+
+        Iterator<Row> iterator = new Iterator<Row>() {
+
+            private int index = 0;
+
+            @Override
+            public boolean hasNext() {
+                return index < 8 && rows[index] != null;
+            }
+
+            @Override
+            public Row next() {
+                index++;
+                return rows[index];
+            }
+        };
+
+        return iterator;
     }
 }
