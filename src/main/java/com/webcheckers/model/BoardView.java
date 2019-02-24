@@ -22,7 +22,13 @@ public class BoardView implements Iterable {
                     piece = null;
                 } else {
                     sColor = Space.COLOR.DARK;
-                    piece = new Piece( Piece.TYPE.SINGLE, Piece.COLOR.RED );
+                    if( index < 2 ) {
+                        piece = new Piece( Piece.TYPE.SINGLE, Piece.COLOR.RED );
+                    } else if( index > 5 ) {
+                        piece = new Piece( Piece.TYPE.SINGLE, Piece.COLOR.WHITE );
+                    } else {
+                        piece = null;
+                    }
                 }
                 spaces[cellId] = new Space( cellId, piece, sColor );
                 if ( cellId != 7 ) {
