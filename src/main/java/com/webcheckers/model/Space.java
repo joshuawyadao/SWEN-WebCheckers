@@ -45,4 +45,8 @@ public class Space {
     public Piece getPiece() {
         return this.piece;
     }
+
+    // delete later
+    public COLOR getColor() { return this.color; }
+
 }

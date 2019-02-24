@@ -6,8 +6,51 @@ public class BoardView implements Iterable {
 
     private Row[] rows = new Row[8];
 
-    public BoardView( Row[] rows ) {
-        this.rows = rows;
+    public BoardView() {
+        int count = 1;
+        Piece piece;
+        Space[] spaces;
+        Space.COLOR sColor;
+
+
+        for( int index = 0; index <= 7; index++ ) {
+            spaces = new Space[8];
+            rows[index] = new Row( index, spaces );
+            for( int cellId = 0; cellId <= 7; cellId++ ) {
+                if ( count % 2 == 1 ) {
+                    sColor = Space.COLOR.LIGHT;
+                    piece = null;
+                } else {
+                    sColor = Space.COLOR.DARK;
+                    piece = new Piece( Piece.TYPE.SINGLE, Piece.COLOR.RED );
+                }
+                spaces[cellId] = new Space( cellId, piece, sColor );
+                if ( cellId != 7 ) {
+                    count++;
+                }
+            }
+        }
+    }
+
+    @Override
+    public String toString() {
+        String output = "";
+        for (int index = 0; index <= 7; index++) {
+            for (int cell = 0; cell <= 7; cell++) {
+                Space[] spaces = rows[index].getSpaces();
+                // output += ( "[ " + rows[index].getIndex() + ", " + spaces[cell].getCellIdx() + " ]" );
+                if (spaces[cell].getPiece() != null) {
+                    output += ("[ " + spaces[cell].getPiece().getColor() + " ]");
+                } else {
+                    output += ("[ empty ]");
+                }
+                //output += ( "[ " + spaces[cell].getColor() + " ]" );
+            }
+            output += "\n";
+
+        }
+        output += "\n";
+        return output;
     }
 
     /**

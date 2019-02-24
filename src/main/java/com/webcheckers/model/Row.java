@@ -26,6 +26,9 @@ public class Row implements Iterable {
         return this.index;
     }
 
+    // delete later
+    public Space[] getSpaces() { return this.spaces; }
+
     /**
      * Creates a java Iterator of the Spaces within a single row
      * @return Iterator<Space>
