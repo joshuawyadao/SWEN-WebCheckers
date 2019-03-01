@@ -6,6 +6,9 @@ public class BoardView implements Iterable {
 
     private Row[] rows = new Row[8];
 
+    /**
+     * Initializes board
+     */
     public BoardView() {
         int count = 1;
         Piece piece;
