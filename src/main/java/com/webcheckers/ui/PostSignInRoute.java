@@ -2,6 +2,7 @@ package com.webcheckers.ui;
 
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
+import com.webcheckers.util.Message;
 import spark.*;
 
 import java.util.HashMap;
@@ -14,7 +15,10 @@ import static spark.Spark.halt;
 public class PostSignInRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetSignInRoute.class.getName());
 
-    private final static String USERNAME_PARAM = "myUsername";
+    private final static String NAME_PARAM = "myUsername";
+
+    private final static Message INVALID_NAME = Message.error("INVALID NAME: Name MUST contain at least one " +
+                                                "alphanumeric character, and can optionally contain spaces");
 
     //private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
 
@@ -49,7 +53,7 @@ public class PostSignInRoute implements Route {
     public Object handle(Request request, Response response) {
         LOG.finer("PostSignInRoute is invoked.");
 
-        String usernameAttempt = request.queryParams(USERNAME_PARAM);
+        String usernameAttempt = request.queryParams(NAME_PARAM);
 
         Map<String, Object> vm = new HashMap<>();
 
@@ -73,6 +77,8 @@ public class PostSignInRoute implements Route {
             return null;
         }else{
             vm.put("signin_title", "Please Sign In");
+
+            vm.put("message", INVALID_NAME);
 
             return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
         }

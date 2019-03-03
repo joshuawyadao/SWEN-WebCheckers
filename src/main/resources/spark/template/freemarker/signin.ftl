@@ -18,18 +18,16 @@
 
   <div class="body">
 
+  <!-- Provide a message to the user, if supplied. -->
+  <#include "message.ftl">
+
   <form action="./signin" method="POST">
-          Please Enter Your Username:
+          Please Enter Your Name:
           <br/>
           <input name="myUsername"/>
           <br/><br/>
           <button type="submit">Ok</button>
-        </form>
-
-    <!-- Provide a message to the user, if supplied. -->
-    <#include "message.ftl">
-
-
+  </form>
 
   </div>
 

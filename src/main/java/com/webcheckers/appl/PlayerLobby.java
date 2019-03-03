@@ -13,12 +13,17 @@ public class PlayerLobby {
 
     public boolean isValidPlayer(String name){
         if(!players.containsKey(name)){
+            int alphanumericCount = 0;
             for(int i = 0; i < name.length(); i++){
                 if(!(Character.isLetterOrDigit(name.charAt(i))) && !(name.charAt(i) == ' '))
                     return false;
+
+                if(Character.isLetterOrDigit(name.charAt(i)))
+                    alphanumericCount++;
             }
 
-            return true;
+            if(alphanumericCount > 0)
+                return true;
         }
 
         return false;
