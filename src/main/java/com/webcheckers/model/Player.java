@@ -11,9 +11,12 @@ public class Player {
 
     private PlayerColor playerColor;
 
+    private boolean playing;
+
     public Player(String name){
         this.name = name;
         playerColor = PlayerColor.NOT_IN_GAME;
+        this.playing = false;
     }
 
     public String getName() {
@@ -30,6 +33,12 @@ public class Player {
     public PlayerColor getPlayerColor() {
         return playerColor;
     }
+
+    public void inGame(boolean is) {
+        this.playing = is;
+    }
+
+    public boolean isPlaying() { return this.playing; }
 
     public boolean equals(Object obj) {
         if(obj == this) return true;
