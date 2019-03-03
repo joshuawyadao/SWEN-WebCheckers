@@ -18,7 +18,7 @@ public class PostSignInRoute implements Route {
     private final static String NAME_PARAM = "myUsername";
 
     private final static Message INVALID_NAME = Message.error("INVALID NAME: Name MUST contain at least one " +
-                                                "alphanumeric character, and can optionally contain spaces");
+                                                "alphanumeric character, and can optionally contain spaces.");
 
     //private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
 
@@ -57,11 +57,13 @@ public class PostSignInRoute implements Route {
 
         Map<String, Object> vm = new HashMap<>();
 
-        if(playerLobby.isValidPlayer(usernameAttempt)){
+        Player attemptedPlayerLogin = new Player(usernameAttempt);
+
+        if(playerLobby.isValidPlayer(attemptedPlayerLogin)){
             Session session = request.session();
 
-            playerLobby.signInPlayer(usernameAttempt);
-            session.attribute("currentUser", playerLobby.getPlayer(usernameAttempt));
+            playerLobby.signInPlayer(attemptedPlayerLogin, request.session());
+            session.attribute("currentUser", attemptedPlayerLogin);
 
             //add currentUser to VM
             Player currentUser = session.attribute("currentUser");

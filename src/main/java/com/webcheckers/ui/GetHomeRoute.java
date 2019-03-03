@@ -62,8 +62,18 @@ public class GetHomeRoute implements Route {
     vm.put("message", WELCOME_MSG);
 
     if(httpSession.attribute("currentUser") != null) {
-      Player currentUser = httpSession.attribute("currentUser");
-      vm.put("currentUser", currentUser);
+        Player currentUser = httpSession.attribute("currentUser");
+        vm.put("currentUser", currentUser);
+        vm.put("players", playerLobby.getPlayers());
+    }else{
+        int currentNumOfPlayers = playerLobby.getNumOfPlayers();
+        if(currentNumOfPlayers != 1) {
+            vm.put("numOfPlayersMsg", "There are currently " + currentNumOfPlayers +
+                    " players who want to play WebCheckers with you!");
+        }else {
+            vm.put("numOfPlayersMsg", "There is currently 1 player who " +
+                    "wants to play WebCheckers with you!");
+        }
     }
 
     // render the View

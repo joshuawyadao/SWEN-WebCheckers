@@ -20,6 +20,22 @@
     <!-- Provide a message to the user, if supplied. -->
     <#include "message.ftl">
 
+    <#if currentUser??>
+        <h2> WebChecker Players: </h2>
+        <#list players as player>
+            <#if !currentUser.equals(player)>
+                <h3>
+                    <form action="./game?opponent=${player}" method="GET">
+                          <button type="submit"> Join Game </button>
+                          Opponent: ${player}
+                    </form>
+                </h3>
+            </#if>
+        </#list>
+    <#else>
+        <h3> ${numOfPlayersMsg} </h3>
+    </#if>
+
     <!-- TODO: future content on the Home:
             to start games,
             spectating active games,

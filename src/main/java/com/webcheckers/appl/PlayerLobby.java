@@ -1,24 +1,28 @@
 package com.webcheckers.appl;
 
 import com.webcheckers.model.Player;
+import spark.Session;
 
 import java.util.HashMap;
+import java.util.Set;
 
 public class PlayerLobby {
-    private HashMap<String, Player> players;
+    private HashMap<Player, Session> players;
 
     public PlayerLobby(){
         players = new HashMap<>();
     }
 
-    public boolean isValidPlayer(String name){
-        if(!players.containsKey(name)){
+    public boolean isValidPlayer(Player player){
+        if(!players.containsKey(player)){
             int alphanumericCount = 0;
-            for(int i = 0; i < name.length(); i++){
-                if(!(Character.isLetterOrDigit(name.charAt(i))) && !(name.charAt(i) == ' '))
+            String playerName = player.getName();
+
+            for(int i = 0; i < playerName.length(); i++){
+                if(!(Character.isLetterOrDigit(playerName.charAt(i))) && !(playerName.charAt(i) == ' '))
                     return false;
 
-                if(Character.isLetterOrDigit(name.charAt(i)))
+                if(Character.isLetterOrDigit(playerName.charAt(i)))
                     alphanumericCount++;
             }
 
@@ -29,12 +33,20 @@ public class PlayerLobby {
         return false;
     }
 
-    public void signInPlayer(String name){
-        players.put(name, new Player(name));
+    public void signInPlayer(Player player, Session playerSession){
+        players.put(player, playerSession);
     }
 
-    public Player getPlayer(String name){
-        return players.get(name);
+    public Session getPlayerSession(Player player){
+        return players.get(player);
+    }
+
+    public Set<Player> getPlayers(){
+        return players.keySet();
+    }
+
+    public int getNumOfPlayers(){
+        return players.size();
     }
 
 }
