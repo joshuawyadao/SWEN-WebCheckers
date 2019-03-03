@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Player;
 import spark.*;
 
 import java.util.HashMap;
@@ -47,7 +48,6 @@ public class PostSignInRoute implements Route {
     @Override
     public Object handle(Request request, Response response) {
         LOG.finer("PostSignInRoute is invoked.");
-        //
 
         String usernameAttempt = request.queryParams(USERNAME_PARAM);
 
@@ -57,10 +57,11 @@ public class PostSignInRoute implements Route {
             Session session = request.session();
 
             playerLobby.signInPlayer(usernameAttempt);
-            session.attribute("name", usernameAttempt);
+            session.attribute("currentUser", playerLobby.getPlayer(usernameAttempt));
 
             //add currentUser to VM
-            vm.put("currentUser", playerLobby.getPlayer(usernameAttempt));
+            Player currentUser = session.attribute("currentUser");
+            vm.put("currentUser", currentUser);
 
             vm.put("title", "Welcome!");
 
@@ -72,8 +73,6 @@ public class PostSignInRoute implements Route {
             return null;
         }else{
             vm.put("signin_title", "Please Sign In");
-
-            response.redirect("signin.ftl");
 
             return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
         }

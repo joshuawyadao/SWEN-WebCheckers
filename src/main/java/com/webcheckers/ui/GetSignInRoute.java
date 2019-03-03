@@ -11,8 +11,6 @@ import java.util.logging.Logger;
 public class GetSignInRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetSignInRoute.class.getName());
 
-    //private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
-
     private final TemplateEngine templateEngine;
 
     /**
@@ -44,9 +42,6 @@ public class GetSignInRoute implements Route {
         //
         Map<String, Object> vm = new HashMap<>();
         vm.put("signin_title", "Please Sign In");
-
-        // display a user message in the Home page
-        //vm.put("message", WELCOME_MSG);
 
         // render the View
         return templateEngine.render(new ModelAndView(vm , "signin.ftl"));

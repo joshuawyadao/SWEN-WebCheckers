@@ -61,9 +61,9 @@ public class GetHomeRoute implements Route {
     // display a user message in the Home page
     vm.put("message", WELCOME_MSG);
 
-    if(httpSession.attribute("name") != null) {
-      String name = httpSession.attribute("name");
-      vm.put("currentUser", playerLobby.getPlayer(name));
+    if(httpSession.attribute("currentUser") != null) {
+      Player currentUser = httpSession.attribute("currentUser");
+      vm.put("currentUser", currentUser);
     }
 
     // render the View
