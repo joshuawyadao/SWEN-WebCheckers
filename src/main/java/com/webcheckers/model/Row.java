@@ -42,13 +42,18 @@ public class Row implements Iterable {
 
             @Override
             public boolean hasNext() {
-                return index < 64 && spaces[index] != null;
+                return index < 7 && spaces[index] != null;
             }
 
+            // FIX LATER!!!!
             @Override
             public Space next() {
-                index++;
-                return spaces[index];
+                if(hasNext()) {
+                    index++;
+                    return spaces[index];
+                } else {
+                    return spaces[0];
+                }
             }
         };
 

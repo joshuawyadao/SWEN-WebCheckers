@@ -1,0 +1,96 @@
+commit 677d1f068fa2eeecf8dea3c1bd44f691dafc5b24
+Author: jwy4877 <jwy4877@g.rit.edu>
+Date:   Wed Feb 20 20:21:11 2019 -0500
+
+    Added more class variables and flushed out basics of methods including constructors
+
+commit f0f4500b9ea92f47cec1e0b1e6c8a02cb7f1124e
+Author: jwy4877 <jwy4877@g.rit.edu>
+Date:   Wed Feb 20 19:45:34 2019 -0500
+
+    Added BoardView, Piece, Row, and Space class with documentation
+
+commit eecf1aa92c6740d14e710aa7c2808f3721145304
+Author: jwy4877 <jwy4877@g.rit.edu>
+Date:   Mon Feb 18 12:23:06 2019 -0500
+
+    everyone is set up on GitHub
+
+commit 571d27706b8f058d3fa4979162066b26d305ce5b
+Author: Tydarius Young <ty3226@rit.edu>
+Date:   Mon Feb 18 01:11:36 2019 -0500
+
+    added name to README.md file
+
+commit c578e29a3d76ae2de64782b3f8930100e85fff8a
+Author: jwy4877 <jwy4877@g.rit.edu>
+Date:   Sun Feb 17 12:53:50 2019 -0500
+
+    updated github.txt
+
+commit 05ffe0d725baeeed37fc68fad528fbff44d57cca
+Author: jwy4877 <jwy4877@g.rit.edu>
+Date:   Sun Feb 17 12:51:45 2019 -0500
+
+    deleted teehee
+
+commit 809df9c81bb596699950f82e2747ada6ac02357e
+Author: jwy4877 <jwy4877@g.rit.edu>
+Date:   Sun Feb 17 12:49:42 2019 -0500
+
+    added teehee
+
+commit c7c2d7fb00549ca7214fbe66b579cd285742bd93
+Author: laraw <lr5469@rit.edu>
+Date:   Sun Feb 17 12:32:37 2019 -0500
+
+    inital commit - add lr5469 laraw
+
+commit 512dd06220bce310d0fe6afc300fb1b90a9123aa
+Author: cxl8351 <cxl8351@rit.edu>
+Date:   Sat Feb 16 19:15:52 2019 -0500
+
+    Added Christopher
+
+commit 5995517027702e016eadfd8876bbca949d67e84b
+Author: jwy4877 <jwy4877@g.rit.edu>
+Date:   Thu Feb 14 10:31:28 2019 -0500
+
+    added github.txt for logging git commits
+
+commit 8ae1b7be31e39845322deb968ae029682939008a
+Author: jwy4877 <jwy4877@g.rit.edu>
+Date:   Wed Feb 13 19:58:09 2019 -0500
+
+    Updated name format
+
+commit d9681227ab487d6402f9223e347fd0817719d348
+Merge: 94e79d5 4630b7e
+Author: jwy4877 <jwy4877@g.rit.edu>
+Date:   Wed Feb 13 19:52:03 2019 -0500
+
+    Merge branch 'master' of https://github.com/RIT-SWEN-261-10/team-project-2185-swen-261-10-d-10d
+
+commit 94e79d582ea4344ec402c9492161bb5ff9daf6c5
+Author: jwy4877 <jwy4877@g.rit.edu>
+Date:   Wed Feb 13 19:47:20 2019 -0500
+
+    Changed README.md and added my name to the fourth slot
+
+commit 4630b7eccb31264e5bec7a4fcca008f3680a3d43
+Author: Ryan Lei <rml1168>
+Date:   Wed Feb 13 13:54:30 2019 -0500
+
+    rml1168 editted readme.md
+
+commit 1a8c0b2e216ee0b89ce69a70ec46837b1d7c7f60
+Author: Kenn Martinez <KennUbuntu@ACHEPEHnvy.com>
+Date:   Thu Feb 7 16:01:14 2019 -0500
+
+    For your benefit
+
+commit 7aaad62534cec1f265ced16951251c2db0109408
+Author: KennBMartinez <kbmvse@rit.edu>
+Date:   Thu Feb 7 15:51:00 2019 -0500
+
+    Initial WEBCHECKERS SEED REPO for 2185

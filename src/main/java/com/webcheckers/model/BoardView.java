@@ -75,13 +75,17 @@ public class BoardView implements Iterable {
 
             @Override
             public boolean hasNext() {
-                return index < 8 && rows[index] != null;
+                return index < 7 && rows[index] != null;
             }
 
             @Override
             public Row next() {
-                index++;
-                return rows[index];
+                if(hasNext()) {
+                    index++;
+                    return rows[index];
+                } else {
+                    return rows[0];
+                }
             }
         };
 
