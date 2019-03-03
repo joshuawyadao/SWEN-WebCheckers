@@ -46,6 +46,10 @@ public class Space {
         return this.piece;
     }
 
+    public void setPiece( Piece piece ) {
+        this.piece = piece;
+    }
+
     // delete later
     public COLOR getColor() { return this.color; }
 
