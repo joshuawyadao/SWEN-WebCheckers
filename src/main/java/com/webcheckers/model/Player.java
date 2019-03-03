@@ -49,4 +49,8 @@ public class Player {
     public String toString() {
         return name;
     }
+
+    public void printProof(){
+        System.out.println("Proof");
+    }
 }

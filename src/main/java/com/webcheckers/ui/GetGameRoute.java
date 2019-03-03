@@ -74,6 +74,8 @@ public class GetGameRoute implements Route {
             vm.put("currentUser", currentUser);
             vm.put("viewMode", viewMode.PLAY);
 
+            System.out.println(request.queryParams("opponent"));
+
             Map<String,Object> emptyMap = new HashMap<>();
             //vm.put("modeOptionsAsJSON", )
             vm.put("redPlayer", currentUser);

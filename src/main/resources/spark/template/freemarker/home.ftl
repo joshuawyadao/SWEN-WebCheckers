@@ -25,9 +25,8 @@
         <#list players as player>
             <#if !currentUser.equals(player)>
                 <h3>
-                    <form action="./game?opponent=${player}" method="GET">
-                          <button type="submit"> Join Game </button>
-                          Opponent: ${player}
+                    <form method="GET">
+                          <a href = "./game?opponent=${player}"> ${player}'s Game </a>
                     </form>
                 </h3>
             </#if>
