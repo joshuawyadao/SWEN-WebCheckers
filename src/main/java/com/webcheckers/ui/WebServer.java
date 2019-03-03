@@ -60,6 +60,8 @@ public class WebServer {
    */
   public static final String SIGNIN_URL = "/signin";
 
+  public static final String GAME_URL = "/game";
+
   /**
    * The URL pattern to
    */
@@ -89,7 +91,7 @@ public class WebServer {
    */
   public WebServer(final PlayerLobby playerLobby, final TemplateEngine templateEngine, final Gson gson) {
     // validation
-    Objects.requireNonNull(templateEngine, "playerLobby must not be null");
+    Objects.requireNonNull(playerLobby, "playerLobby must not be null");
     Objects.requireNonNull(templateEngine, "templateEngine must not be null");
     Objects.requireNonNull(gson, "gson must not be null");
     //
@@ -158,6 +160,9 @@ public class WebServer {
 
     //Posts the user-inputted username to the server for validation
     post(SIGNIN_URL, new PostSignInRoute(playerLobby, templateEngine));
+
+
+    get(GAME_URL, new GetGameRoute(templateEngine));
 
     //
     LOG.config("WebServer is initialized.");
