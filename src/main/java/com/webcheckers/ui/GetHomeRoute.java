@@ -5,11 +5,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-import spark.ModelAndView;
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.TemplateEngine;
+import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Player;
+import spark.*;
 
 import com.webcheckers.util.Message;
 
@@ -21,8 +19,9 @@ import com.webcheckers.util.Message;
 public class GetHomeRoute implements Route {
   private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
-  private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
+  public static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
 
+  private final PlayerLobby playerLobby;
   private final TemplateEngine templateEngine;
 
   /**
@@ -31,7 +30,8 @@ public class GetHomeRoute implements Route {
    * @param templateEngine
    *   the HTML template rendering engine
    */
-  public GetHomeRoute(final TemplateEngine templateEngine) {
+  public GetHomeRoute(final PlayerLobby playerLobby, final TemplateEngine templateEngine) {
+    this.playerLobby = Objects.requireNonNull(playerLobby, "playerLobby is required");
     this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
     //
     LOG.config("GetHomeRoute is initialized.");
@@ -51,12 +51,20 @@ public class GetHomeRoute implements Route {
   @Override
   public Object handle(Request request, Response response) {
     LOG.finer("GetHomeRoute is invoked.");
-    //
-    Map<String, Object> vm = new HashMap<>();
+
+    Session httpSession = request.session();
+
+    final Map<String, Object> vm = new HashMap<>();
+
     vm.put("title", "Welcome!");
 
     // display a user message in the Home page
     vm.put("message", WELCOME_MSG);
+
+    if(httpSession.attribute("name") != null) {
+      String name = httpSession.attribute("name");
+      vm.put("currentUser", playerLobby.getPlayer(name));
+    }
 
     // render the View
     return templateEngine.render(new ModelAndView(vm , "home.ftl"));

@@ -7,17 +7,17 @@ public class Player {
         NOT_IN_GAME
     }
 
-    private String username;
+    private String name;
 
     private PlayerColor playerColor;
 
-    public Player(String username){
-        this.username = username;
+    public Player(String name){
+        this.name = name;
         playerColor = PlayerColor.NOT_IN_GAME;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
     public void setPlayerColor(boolean isPlayerOne) {
@@ -37,11 +37,11 @@ public class Player {
 
         final Player that = (Player) obj;
 
-        return this.username.equals(that.username);
+        return this.name.equals(that.name);
     }
 
     @Override
     public int hashCode() {
-        return username.hashCode();
+        return name.hashCode();
     }
 }
