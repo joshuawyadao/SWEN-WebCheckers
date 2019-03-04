@@ -17,6 +17,7 @@ public class GetGameRoute implements Route {
 
     private static final Message WELCOME_MSG = Message.info("Welcome to the game of Online Checkers.");
 
+    private final PlayerLobby playerLobby;
     private final TemplateEngine templateEngine;
 
     private final String COLOR_WHITE = "WHITE";
@@ -32,7 +33,8 @@ public class GetGameRoute implements Route {
      * @param templateEngine
      *   the HTML template rendering engine
      */
-    public GetGameRoute(final TemplateEngine templateEngine) {
+    public GetGameRoute(final PlayerLobby playerLobby, final TemplateEngine templateEngine) {
+        this.playerLobby = Objects.requireNonNull(playerLobby, "templateEngine is required");
         this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
         //
         LOG.config("GetGameRoute is initialized.");
@@ -51,42 +53,45 @@ public class GetGameRoute implements Route {
      */
     @Override
     public Object handle(Request request, Response response) {
-        LOG.finer("GetGameRoute is invoked.");
-
-        PlayerLobby playerLobby = new PlayerLobby();
-
-        Set<Player> players = playerLobby.getPlayers();
-
-        // We have a key set of players
-        // We would have to go through the players and grab their sessions....
-        // and also change the players sessions whenver a game is triggered...
-
-
         Map<String, Object> vm = new HashMap<>();
-
-
         Session httpSession = request.session();
 
-        vm.put("title","WEB CHECKERS");
+        Player currentUser = httpSession.attribute("currentUser");
+        vm.put("currentUser", currentUser);
 
-        if(httpSession.attribute("currentUser") != null) {
-            Player currentUser = httpSession.attribute("currentUser");
-            vm.put("currentUser", currentUser);
-            vm.put("viewMode", viewMode.PLAY);
+        vm.put("viewMode", viewMode.PLAY);
+        //Map<String,Object> modeOptionAsJSON = new HashMap<>();
+        //modeOptionAsJSON.put("Nothing", null);
+        //vm.put("modeOptionsAsJSON", modeOptionAsJSON);
 
-            System.out.println(request.queryParams("opponent"));
+        if(httpSession.attribute("redPlayer") == null && httpSession.attribute("whitePlayer") == null){
+            Player opponent = new Player(request.queryParams("opponent"));
+            boolean isPlayerOne = request.queryParams("isPlayerOne").equals("true");
 
-            Map<String,Object> emptyMap = new HashMap<>();
-            //vm.put("modeOptionsAsJSON", )
-            vm.put("redPlayer", currentUser);
-            vm.put("whitePlayer", currentUser);
-            vm.put("activeColor", WHITE);
-            BoardView boardView = new BoardView();
-            vm.put("board", boardView);
-            //vm.put("message","TEST_MESSAGE");
+            if(isPlayerOne){
+                httpSession.attribute("redPlayer", currentUser);
+                httpSession.attribute("whitePlayer", opponent);
+
+                vm.put("redPlayer", currentUser);
+                vm.put("whitePlayer", opponent);
+                vm.put("activeColor", COLOR_RED);
+                
+            }else{
+                httpSession.attribute("redPlayer", opponent);
+                httpSession.attribute("whitePlayer", currentUser);
+
+                vm.put("redPlayer", opponent);
+                vm.put("whitePlayer", currentUser);
+                vm.put("activeColor", COLOR_WHITE);
+            }
+
         }
 
+        vm.put("title", "Enjoy Your Game!");
 
+        BoardView boardView = new BoardView();
+        vm.put("board", boardView);
+        //vm.put("message","TEST_MESSAGE");
 
         // render the View
         return templateEngine.render(new ModelAndView(vm , "game.ftl"));
