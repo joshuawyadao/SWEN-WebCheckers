@@ -1,3 +1,203 @@
+commit d0eabaa82820afee48959d7d2e48965186e835e5
+Author: Tydarius Young <ty3226@rit.edu>
+Date:   Sun Mar 3 21:36:14 2019 -0500
+
+    +Names display somehow correctly
+
+commit 22ecc8027164a6278d7375d45aa18f8daf33ec36
+Author: ty3226 <ty3226@rit.edu>
+Date:   Sun Mar 3 18:47:43 2019 -0500
+
+    +Can receive the opponent from another player after clicking their game
+
+commit 83128a38eb10c11aff69366991a6979bfee3084a
+Author: jwy4877 <jwy4877@g.rit.edu>
+Date:   Sun Mar 3 16:17:47 2019 -0500
+
+    Loaded game page!!!
+
+commit 07ab8b45ffbbc7e191b2fe41191232d664fac5ee
+Author: cxl8351 <cxl8351@rit.edu>
+Date:   Sun Mar 3 16:11:08 2019 -0500
+
+    Save Point
+
+commit 13663cf88f4b424bc40b2eae40dcd81786db3a86
+Author: cxl8351 <cxl8351@rit.edu>
+Date:   Sun Mar 3 16:03:16 2019 -0500
+
+    Save Point
+
+commit a6de7bbeaa5f8e886162da1bd9c7441f30eb1ad3
+Merge: b72227b a304be4
+Author: cxl8351 <cxl8351@rit.edu>
+Date:   Sun Mar 3 14:30:19 2019 -0500
+
+    Merge remote-tracking branch 'origin/StartAGame' into StartAGame
+    
+    # Conflicts:
+    #       src/main/java/com/webcheckers/ui/WebServer.java
+
+commit a304be447dd84ae7019d559c3e848bf82e7b547d
+Author: jwy4877 <jwy4877@g.rit.edu>
+Date:   Sun Mar 3 14:11:14 2019 -0500
+
+    Added getGameRoute()
+
+commit b72227b247fd642b4f95eb8e7b5976841d25f6b7
+Merge: 0d1f1a2 de2d065
+Author: cxl8351 <cxl8351@rit.edu>
+Date:   Sun Mar 3 14:06:10 2019 -0500
+
+    Merge branch 'StartAGame' of https://github.com/RIT-SWEN-261-10/team-project-2185-swen-261-10-d-10d into StartAGame
+
+commit de2d06552429e042d582a3bfaf599c075d3c8693
+Merge: 4ede35d b8c9fdd
+Author: jwy4877 <jwy4877@g.rit.edu>
+Date:   Sun Mar 3 14:05:26 2019 -0500
+
+    Merge remote-tracking branch 'origin/StartAGame' into StartAGame
+
+commit 0d1f1a28f047c364c7654beb4c2abd0615e47808
+Author: Tydarius Young <ty3226@rit.edu>
+Date:   Sun Mar 3 04:10:42 2019 -0500
+
+    +Webapp now shows list of players (except for the currentUser) after logging in
+    +Added a button to join each players game (pressing this button passes that player/ player's name in as argument for the GET Game Route
+    +Changed PlayerLobby to store a HashMap of Players and their sessions
+    +All Acceptance Criteria have been met
+    +All Solution Tasks have likely been met (with the exception of one, which may just be due to misunderstanding)
+    -Still need to add more comments and further clean up code
+
+commit e71373ad0e7fee86cb0a892791c9eafe7e299b79
+Merge: 28b4e3a b8c9fdd
+Author: Tydarius Young <ty3226@rit.edu>
+Date:   Sun Mar 3 01:21:04 2019 -0500
+
+    Merge branch 'StartAGame' of https://github.com/RIT-SWEN-261-10/team-project-2185-swen-261-10-d-10d
+
+commit 28b4e3aede6378fce3bd245da405243b50728425
+Author: Tydarius Young <ty3226@rit.edu>
+Date:   Sun Mar 3 01:13:17 2019 -0500
+
+    +Fixed issues with PostSignInRoute
+    +Webapp now correctly redirects to the Sign In Page when receiving an invalid name
+    -Still need to show number of players online before signing in
+    -Still need list of player online after signing in
+    -May need to make small changes to PlayerLobby
+
+commit 68a1f944792a00ff047a5b40869ec01f50078d79
+Author: Tydarius Young <ty3226@rit.edu>
+Date:   Sun Mar 3 00:38:44 2019 -0500
+
+    +Changed the logic of the code to store a Player object in the HTTP Session
+    -Still need to implement everything that mentioned in last commit
+    -Still need to remove Herobrine
+
+commit c23564a6bceee8010b018b2c2e563a7110a99485
+Author: Tydarius Young <ty3226@rit.edu>
+Date:   Sun Mar 3 00:26:25 2019 -0500
+
+    +Created PlayerLobby class
+    +Modified Player Class to work with PlayerLobby class and predefined .ftl files
+    +Created PostSignIn class (still need to add proper redirection for invalid usernames)
+    +The site now redirects back to home successful and gets Error 404 if not
+    -Need to make further improvements to PostSignIn class
+    -Need to clean up code in a lot of places and add comments
+    -Still need to display list of online players after redirecting
+    -Still need to remove Herobrine
+
+commit b8c9fddd3d67da9b43a29b42141132c25e03f0d6
+Author: cxl8351 <cxl8351@rit.edu>
+Date:   Fri Mar 1 20:22:07 2019 -0500
+
+    Implemented Move java class and added setPiece method in Space.
+
+commit 38f759e6bd60d43a5e88ccfb7701bfd64a53f7f9
+Author: Tydarius Young <ty3226@rit.edu>
+Date:   Fri Mar 1 17:40:43 2019 -0500
+
+    +Created Player class
+
+commit 4ede35d0b1d29615586bef774f72fd08f76ee001
+Merge: 21ac8dc 9b957a8
+Author: jwy4877 <jwy4877@g.rit.edu>
+Date:   Fri Mar 1 13:13:42 2019 -0500
+
+    Merge branches 'PlayerSignIn' and 'StartAGame' of https://github.com/RIT-SWEN-261-10/team-project-2185-swen-261-10-d-10d into StartAGame
+
+commit 21ac8dc94c332453d06d9dde73cdec372fff2cea
+Author: jwy4877 <jwy4877@g.rit.edu>
+Date:   Fri Mar 1 13:09:40 2019 -0500
+
+    Javascript BUG corrected
+
+commit 9b957a879ab8bead203dc34bf42d8daac365a3cf
+Author: Tydarius Young <ty3226@rit.edu>
+Date:   Fri Mar 1 02:34:10 2019 -0500
+
+    --------------------------------------------------
+    Key for how I do Commits (Ty Young):
+    + = Additions I made
+    - = Something that needs to be added
+    * = Comments for the next developer
+    --------------------------------------------------
+    +Created signin.ftl (which displays a simple sign- in page)
+    *signin.ftl has a variable that stores the username entered at
+     the sign- in page called "myUsername"
+    *This variable should be used during the Post Sign- In Route to check
+     if the username entered is already in use
+    -Still need to implement Post Sign Route
+    -May ask professor if signin.ftl is satisfactory
+
+commit 67e8f2ad8260edbed6292be1427c247a92552c21
+Author: jwy4877 <jwy4877@g.rit.edu>
+Date:   Sun Feb 24 14:52:34 2019 -0500
+
+    Completely set up board correctly :)
+
+commit 8e8630536006cf68d9e7bf05492813611941150c
+Author: jwy4877 <jwy4877@g.rit.edu>
+Date:   Sun Feb 24 14:26:57 2019 -0500
+
+    initialized board set up and tested
+
+commit 170548dce13b8157a26fd18fda9bf0a00c033d56
+Author: cxl8351 <cxl8351@rit.edu>
+Date:   Sun Feb 24 14:08:21 2019 -0500
+
+    Implemented iterators for BoardView and Row. Implemented Move
+
+commit ef1a1328a9ccc6607fd5d165b48625535e0e290d
+Author: cxl8351 <cxl8351@rit.edu>
+Date:   Fri Feb 22 18:56:33 2019 -0500
+
+    Initial Player Sign in commit
+
+commit ca5b86c270750d7cb8a23c65881728e5366cb01a
+Author: cxl8351 <cxl8351@rit.edu>
+Date:   Fri Feb 22 18:43:07 2019 -0500
+
+    Initial Player Sign in commit
+
+commit 677d1f068fa2eeecf8dea3c1bd44f691dafc5b24
+Author: jwy4877 <jwy4877@g.rit.edu>
+Date:   Wed Feb 20 20:21:11 2019 -0500
+
+    Added more class variables and flushed out basics of methods including constructors
+
+commit f0f4500b9ea92f47cec1e0b1e6c8a02cb7f1124e
+Author: jwy4877 <jwy4877@g.rit.edu>
+Date:   Wed Feb 20 19:45:34 2019 -0500
+
+    Added BoardView, Piece, Row, and Space class with documentation
+
+commit eecf1aa92c6740d14e710aa7c2808f3721145304
+Author: jwy4877 <jwy4877@g.rit.edu>
+Date:   Mon Feb 18 12:23:06 2019 -0500
+
+    everyone is set up on GitHub
+
 commit 571d27706b8f058d3fa4979162066b26d305ce5b
 Author: Tydarius Young <ty3226@rit.edu>
 Date:   Mon Feb 18 01:11:36 2019 -0500
