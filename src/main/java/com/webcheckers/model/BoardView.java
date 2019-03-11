@@ -26,9 +26,9 @@ public class BoardView implements Iterable {
                 } else {
                     sColor = Space.COLOR.DARK;
                     if( index < 2 ) {
-                        piece = new Piece( Piece.TYPE.SINGLE, Piece.COLOR.RED );
-                    } else if( index > 5 ) {
                         piece = new Piece( Piece.TYPE.SINGLE, Piece.COLOR.WHITE );
+                    } else if( index > 5 ) {
+                        piece = new Piece( Piece.TYPE.SINGLE, Piece.COLOR.RED );
                     } else {
                         piece = null;
                     }
