@@ -2,31 +2,21 @@ package com.webcheckers.ui;
 
 import com.webcheckers.appl.CheckersGame;
 import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.model.BoardView;
 import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
 import spark.*;
-import sun.misc.VM;
 
 import java.util.*;
 import java.util.logging.Logger;
-
-import static com.webcheckers.model.Player.PlayerColor.WHITE;
 
 public class GetGameRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetGameRoute.class.getName());
 
     private static final Message WELCOME_MSG = Message.info("Welcome to the game of Online Checkers.");
+    private static final String VIEW_NAME = "game.ftl";
 
     private final PlayerLobby playerLobby;
     private final TemplateEngine templateEngine;
-
-    private final String COLOR_WHITE = "WHITE";
-    private final String COLOR_RED = "RED";
-
-    public enum viewMode{
-        PLAY
-    }
 
     /**
      * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
@@ -62,9 +52,9 @@ public class GetGameRoute implements Route {
             String opponentName  = request.queryParams("opponent");
             Session opponentSession = playerLobby.getPlayerSessionByName(opponentName);
             Player opponent = opponentSession.attribute("currentUser");
-            CheckersGame thisCheckersGame = new CheckersGame(currentUser, opponent, CheckersGame.ViewMode.PLAY);
+            CheckersGame thisCheckersGame = new CheckersGame(currentUser, opponent, CheckersGame.ViewMode.PLAY, playerLobby);
 
-            thisCheckersGame.intializeGame();
+            thisCheckersGame.initializeGame();
             currentSession.attribute("thisCheckersGame", thisCheckersGame);
             opponentSession.attribute("thisCheckersGame", thisCheckersGame);
         }
@@ -81,7 +71,7 @@ public class GetGameRoute implements Route {
         vm.put("title", "Enjoy Your Game!");
 
         // render the View
-        return templateEngine.render(new ModelAndView(vm , "game.ftl"));
+        return templateEngine.render(new ModelAndView(vm , VIEW_NAME));
     }
 
 }

@@ -2,8 +2,13 @@ package com.webcheckers.appl;
 
 import com.webcheckers.model.BoardView;
 import com.webcheckers.model.Player;
-
+/*
+ *  This class holds all the information for a CheckersGame (meaning all the variables
+ *  needed to render 'game.ftl') and contains the methods that are needed for the game
+ *  to function from start to end
+ */
 public class CheckersGame {
+    //Enumeration for the View Mode
     public enum ViewMode{
         PLAY,
         SPECTATE
@@ -14,13 +19,14 @@ public class CheckersGame {
     private ViewMode viewMode;
     private BoardView checkerBoard;
 
-    public CheckersGame(Player redPlayer, Player whitePlayer, ViewMode viewMode){
+    public CheckersGame(Player redPlayer, Player whitePlayer, ViewMode viewMode, PlayerLobby playerLobby){
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
         this.viewMode = viewMode;
         this.checkerBoard = new BoardView();
     }
 
+    //Accessors
     public Player getRedPlayer() {
         return redPlayer;
     }
@@ -37,7 +43,8 @@ public class CheckersGame {
         return checkerBoard;
     }
 
-    public void intializeGame(){
+    //Joins both players to the checkers game
+    public void initializeGame(){
         redPlayer.joinGame(Player.PlayerColor.RED);
         whitePlayer.joinGame(Player.PlayerColor.WHITE);
     }

@@ -23,11 +23,16 @@ public class Player {
         return name;
     }
 
+    //methods called whenever a player joins a game,
+    //it takes the player's color in as a parameter to
+    //distinguish which player is joining the game
     public void joinGame(PlayerColor playerColor){
         this.playerColor = playerColor;
         this.playing = true;
     }
 
+    //method called when a game is over (either resigned
+    //or ended naturally)
     public void leaveGame(){
         this.playerColor = PlayerColor.NONE;
         this.playing = false;
@@ -37,6 +42,8 @@ public class Player {
         return playerColor;
     }
 
+    //Commented this out since the 'joinGame' method and
+    //'leaveGame' method take care of this
 //    public void inGame(boolean is) {
 //        this.playing = is;
 //    }

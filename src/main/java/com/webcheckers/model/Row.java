@@ -57,6 +57,8 @@ public class Row implements Iterable {
 //            }
 //        };
 
+        //We can also make 'spaces' an List, instead of an array to
+        //avoid this line before the return
         List<Space> spacesAsList = Arrays.asList(spaces);
         return spacesAsList.iterator();
     }

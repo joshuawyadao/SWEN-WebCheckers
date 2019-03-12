@@ -6,6 +6,7 @@ import java.util.List;
 
 public class BoardView implements Iterable<Row> {
 
+    //constant for the max amount of rows in the board
     private final int MAX_ROWS = 8;
     private Row[] rows = new Row[MAX_ROWS];
 
@@ -17,7 +18,10 @@ public class BoardView implements Iterable<Row> {
         Space[] spaces;
         Space.COLOR sColor;
 
-
+        //changed some of the logic for this for loop to incorporate
+        //the board's column and row max constants, as determining if a
+        //a square is LIGHT OR DARK without the use another variable and
+        //if- statement
         for(int index = 0; index < MAX_ROWS; index++ ) {
             spaces = new Space[Row.MAX_COLUMNS];
             rows[index] = new Row( index, spaces );
@@ -95,6 +99,8 @@ public class BoardView implements Iterable<Row> {
 //            }
 //        };
 
+        //We can also make 'rows' an List, instead of an array to
+        //avoid this line before the return
         List<Row> rowsAsList = Arrays.asList(rows);
         return rowsAsList.iterator();
     }

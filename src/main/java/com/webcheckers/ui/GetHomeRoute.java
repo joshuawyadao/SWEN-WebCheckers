@@ -23,6 +23,7 @@ public class GetHomeRoute implements Route {
   private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
   public static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
+  private static final String VIEW_NAME = "home.ftl";
 
   private final PlayerLobby playerLobby;
   private final TemplateEngine templateEngine;
@@ -69,6 +70,8 @@ public class GetHomeRoute implements Route {
         vm.put("currentUser", currentUser);
         vm.put("players", playerLobby.getPlayers());
 
+        //if the player has been challenged to a game redirect them to the
+        //GET Game Route, with the appropriate 'opponent' parameter
         if(currentUser.isPlaying()){
             CheckersGame thisCheckerGame = httpSession.attribute("thisCheckersGame");
             response.redirect(WebServer.GAME_URL + "?opponent=" + thisCheckerGame.getRedPlayer());
@@ -87,6 +90,6 @@ public class GetHomeRoute implements Route {
     }
 
     // render the View
-    return templateEngine.render(new ModelAndView(vm , "home.ftl"));
+    return templateEngine.render(new ModelAndView(vm , VIEW_NAME));
   }
 }
