@@ -34,7 +34,7 @@ public class GetGameRoute implements Route {
      *   the HTML template rendering engine
      */
     public GetGameRoute(final PlayerLobby playerLobby, final TemplateEngine templateEngine) {
-        this.playerLobby = Objects.requireNonNull(playerLobby, "templateEngine is required");
+        this.playerLobby = Objects.requireNonNull(playerLobby, "playerLobby is required");
         this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
         //
         LOG.config("GetGameRoute is initialized.");
@@ -57,14 +57,8 @@ public class GetGameRoute implements Route {
         Session httpSession = request.session();
 
         Player currentUser = httpSession.attribute("currentUser");
-        vm.put("currentUser", currentUser);
 
-        vm.put("viewMode", viewMode.PLAY);
-        //Map<String,Object> modeOptionAsJSON = new HashMap<>();
-        //modeOptionAsJSON.put("Nothing", null);
-        //vm.put("modeOptionsAsJSON", modeOptionAsJSON);
-
-        if(httpSession.attribute("redPlayer") == null && httpSession.attribute("whitePlayer") == null){
+        if(httpSession.attribute("thisCheckersGame") == null){
             Player opponent = new Player(request.queryParams("opponent"));
             boolean isPlayerOne = request.queryParams("isPlayerOne").equals("true");
 
@@ -87,11 +81,11 @@ public class GetGameRoute implements Route {
 
         }
 
+        vm.put("viewMode", viewMode.PLAY);
+        vm.put("currentUser", currentUser);
         vm.put("title", "Enjoy Your Game!");
-
         BoardView boardView = new BoardView();
         vm.put("board", boardView);
-        //vm.put("message","TEST_MESSAGE");
 
         // render the View
         return templateEngine.render(new ModelAndView(vm , "game.ftl"));

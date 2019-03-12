@@ -5,7 +5,7 @@ import java.util.*;
 public class Row implements Iterable {
 
     private int index; // { 0 to 7 }
-
+    public final static int MAX_COLUMNS = 8;
     private Space[] spaces;
 
     /**
@@ -36,28 +36,29 @@ public class Row implements Iterable {
     @Override
     public Iterator<Space> iterator() {
 
-        Iterator<Space> iterator = new Iterator<Space>() {
+//        Iterator<Space> iterator = new Iterator<Space>() {
+//
+//            private int index = 0;
+//
+//            @Override
+//            public boolean hasNext() {
+//                return index < (MAX_COLUMNS - 1);
+//            }
+//
+//            // FIX LATER!!!!
+//            @Override
+//            public Space next() {
+//                if(hasNext()) {
+//                    index++;
+//                    return spaces[index];
+//                } else {
+//                    return spaces[0];
+//                }
+//            }
+//        };
 
-            private int index = 0;
-
-            @Override
-            public boolean hasNext() {
-                return index < 7;
-            }
-
-            // FIX LATER!!!!
-            @Override
-            public Space next() {
-                if(hasNext()) {
-                    index++;
-                    return spaces[index];
-                } else {
-                    return spaces[0];
-                }
-            }
-        };
-
-        return iterator;
+        List<Space> spacesAsList = Arrays.asList(spaces);
+        return spacesAsList.iterator();
     }
 
 }

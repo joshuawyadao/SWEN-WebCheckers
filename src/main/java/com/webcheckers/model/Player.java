@@ -4,7 +4,7 @@ public class Player {
     public enum PlayerColor{
         RED,
         WHITE,
-        NOT_IN_GAME
+        NONE
     }
 
     private String name;
@@ -15,7 +15,7 @@ public class Player {
 
     public Player(String name){
         this.name = name;
-        playerColor = PlayerColor.NOT_IN_GAME;
+        playerColor = PlayerColor.NONE;
         this.playing = false;
     }
 
@@ -23,11 +23,8 @@ public class Player {
         return name;
     }
 
-    public void setPlayerColor(boolean isPlayerOne) {
-        if(isPlayerOne)
-            playerColor = PlayerColor.RED;
-        else
-            playerColor = PlayerColor.WHITE;
+    public void setPlayerColor(PlayerColor playerColor) {
+        this.playerColor = playerColor;
     }
 
     public PlayerColor getPlayerColor() {
@@ -57,9 +54,5 @@ public class Player {
     @Override
     public String toString() {
         return name;
-    }
-
-    public void printProof(){
-        System.out.println("Proof");
     }
 }
