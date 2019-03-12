@@ -5,11 +5,14 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import com.webcheckers.appl.CheckersGame;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
 import spark.*;
 
 import com.webcheckers.util.Message;
+
+import static spark.Spark.halt;
 
 /**
  * The UI Controller to GET the Home page.
@@ -65,6 +68,13 @@ public class GetHomeRoute implements Route {
         Player currentUser = httpSession.attribute("currentUser");
         vm.put("currentUser", currentUser);
         vm.put("players", playerLobby.getPlayers());
+
+        if(currentUser.isPlaying()){
+            CheckersGame thisCheckerGame = httpSession.attribute("thisCheckersGame");
+            response.redirect(WebServer.GAME_URL + "?opponent=" + thisCheckerGame.getRedPlayer());
+            halt();
+            return null;
+        }
     }else{
         int currentNumOfPlayers = playerLobby.getNumOfPlayers();
         if(currentNumOfPlayers != 1) {

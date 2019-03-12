@@ -37,8 +37,8 @@ public class PlayerLobby {
         players.put(player, playerSession);
     }
 
-    public Session getPlayerSession(Player player){
-        return players.get(player);
+    public Session getPlayerSessionByName(String playerName){
+        return players.get(new Player(playerName));
     }
 
     public Set<Player> getPlayers(){

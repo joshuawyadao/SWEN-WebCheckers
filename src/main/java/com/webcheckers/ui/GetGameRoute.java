@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.appl.CheckersGame;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.BoardView;
 import com.webcheckers.model.Player;
@@ -54,38 +55,30 @@ public class GetGameRoute implements Route {
     @Override
     public Object handle(Request request, Response response) {
         Map<String, Object> vm = new HashMap<>();
-        Session httpSession = request.session();
+        Session currentSession = request.session();
+        Player currentUser = currentSession.attribute("currentUser");
 
-        Player currentUser = httpSession.attribute("currentUser");
+        if(currentSession.attribute("thisCheckersGame") == null){
+            String opponentName  = request.queryParams("opponent");
+            Session opponentSession = playerLobby.getPlayerSessionByName(opponentName);
+            Player opponent = opponentSession.attribute("currentUser");
+            CheckersGame thisCheckersGame = new CheckersGame(currentUser, opponent, CheckersGame.ViewMode.PLAY);
 
-        if(httpSession.attribute("thisCheckersGame") == null){
-            Player opponent = new Player(request.queryParams("opponent"));
-            boolean isPlayerOne = request.queryParams("isPlayerOne").equals("true");
-
-            if(isPlayerOne){
-                httpSession.attribute("redPlayer", currentUser);
-                httpSession.attribute("whitePlayer", opponent);
-
-                vm.put("redPlayer", currentUser);
-                vm.put("whitePlayer", opponent);
-                vm.put("activeColor", COLOR_RED);
-                
-            }else{
-                httpSession.attribute("redPlayer", opponent);
-                httpSession.attribute("whitePlayer", currentUser);
-
-                vm.put("redPlayer", opponent);
-                vm.put("whitePlayer", currentUser);
-                vm.put("activeColor", COLOR_WHITE);
-            }
-
+            thisCheckersGame.intializeGame();
+            currentSession.attribute("thisCheckersGame", thisCheckersGame);
+            opponentSession.attribute("thisCheckersGame", thisCheckersGame);
         }
 
-        vm.put("viewMode", viewMode.PLAY);
+        CheckersGame thisCheckersGame = currentSession.attribute("thisCheckersGame");
+
+        vm.put("redPlayer", thisCheckersGame.getRedPlayer());
+        vm.put("whitePlayer", thisCheckersGame.getWhitePlayer());
+        vm.put("activeColor", currentUser.getPlayerColor());
+        vm.put("viewMode", thisCheckersGame.getViewMode());
+        vm.put("board", thisCheckersGame.getCheckerBoard());
+
         vm.put("currentUser", currentUser);
         vm.put("title", "Enjoy Your Game!");
-        BoardView boardView = new BoardView();
-        vm.put("board", boardView);
 
         // render the View
         return templateEngine.render(new ModelAndView(vm , "game.ftl"));

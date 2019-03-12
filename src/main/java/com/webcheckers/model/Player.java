@@ -23,17 +23,23 @@ public class Player {
         return name;
     }
 
-    public void setPlayerColor(PlayerColor playerColor) {
+    public void joinGame(PlayerColor playerColor){
         this.playerColor = playerColor;
+        this.playing = true;
+    }
+
+    public void leaveGame(){
+        this.playerColor = PlayerColor.NONE;
+        this.playing = false;
     }
 
     public PlayerColor getPlayerColor() {
         return playerColor;
     }
 
-    public void inGame(boolean is) {
-        this.playing = is;
-    }
+//    public void inGame(boolean is) {
+//        this.playing = is;
+//    }
 
     public boolean isPlaying() { return this.playing; }
 
