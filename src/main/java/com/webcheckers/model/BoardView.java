@@ -79,26 +79,6 @@ public class BoardView implements Iterable<Row> {
     @Override
     public Iterator<Row> iterator() {
 
-//        Iterator<Row> iterator = new Iterator<Row>() {
-//
-//            private int index = 0;
-//
-//            @Override
-//            public boolean hasNext() {
-//                return index < (MAX_ROWS - 1);
-//            }
-//
-//            @Override
-//            public Row next() {
-//                if(hasNext()) {
-//                    index++;
-//                    return rows[index];
-//                } else {
-//                    return rows[0];
-//                }
-//            }
-//        };
-
         //We can also make 'rows' an List, instead of an array to
         //avoid this line before the return
         List<Row> rowsAsList = Arrays.asList(rows);

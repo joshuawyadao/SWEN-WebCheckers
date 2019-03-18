@@ -1,5 +1,6 @@
-package com.webcheckers.appl;
+package com.webcheckers.ui;
 
+import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.BoardView;
 import com.webcheckers.model.Player;
 /*

@@ -1,6 +1,7 @@
 package com.webcheckers.model;
 
 public class Player {
+
     public enum PlayerColor{
         RED,
         WHITE,
@@ -8,16 +9,19 @@ public class Player {
     }
 
     private String name;
-
     private PlayerColor playerColor;
-
     private boolean playing;
 
+    /**
+     * Constructor of player
+     * @param name the name of the player
+     */
     public Player(String name){
         this.name = name;
         playerColor = PlayerColor.NONE;
         this.playing = false;
     }
+
 
     public String getName() {
         return name;
@@ -42,12 +46,6 @@ public class Player {
         return playerColor;
     }
 
-    //Commented this out since the 'joinGame' method and
-    //'leaveGame' method take care of this
-//    public void inGame(boolean is) {
-//        this.playing = is;
-//    }
-
     public boolean isPlaying() { return this.playing; }
 
     public boolean equals(Object obj) {
@@ -64,8 +62,4 @@ public class Player {
         return name.hashCode();
     }
 
-    @Override
-    public String toString() {
-        return name;
-    }
 }
