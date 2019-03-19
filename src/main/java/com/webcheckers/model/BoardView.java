@@ -4,12 +4,13 @@ import java.util.Iterator;
 
 public class BoardView implements Iterable {
 
-    private Row[] rows = new Row[8];
+    private Row[] rows;
 
     /**
      * Initializes board
      */
     public BoardView() {
+        rows = new Row[8];
         int count = 1;
         Piece piece;
         Space[] spaces;
@@ -25,13 +26,13 @@ public class BoardView implements Iterable {
                     piece = null;
                 } else {
                     sColor = Space.COLOR.DARK;
-                    if( index < 2 ) {
+//                    if( index < 2 ) {
                         piece = new Piece( Piece.TYPE.SINGLE, Piece.COLOR.RED );
-                    } else if( index > 5 ) {
-                        piece = new Piece( Piece.TYPE.SINGLE, Piece.COLOR.WHITE );
-                    } else {
-                        piece = null;
-                    }
+//                    } else if( index > 5 ) {
+//                        piece = new Piece( Piece.TYPE.SINGLE, Piece.COLOR.WHITE );
+//                    } else {
+//                        piece = null;
+//                    }
                 }
                 spaces[cellId] = new Space( cellId, piece, sColor );
                 if ( cellId != 7 ) {
