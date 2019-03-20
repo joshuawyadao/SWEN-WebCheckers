@@ -9,12 +9,12 @@ geometry: margin=1in
 > and appear in the generated PDF in italics._
 
 ## Team Information
-* Team name: TEAMNAME
+* Team name: 10d
 * Team members
-  * MEMBER1
-  * MEMBER2
-  * MEMBER3
-  * MEMBER4
+  * rml1168 (Ryan Lei)
+  * cxl8351 (Christopher Lee)
+  * jwy4877 (Joshua Yadao)
+  * ty3226 (Tydarius Young)
 
 ## Executive Summary
 
