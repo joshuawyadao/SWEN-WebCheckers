@@ -15,6 +15,7 @@ public class PlayerLobbyTester {
     @Test
     public void testCreateLobby(){
         final PlayerLobby CuT = new PlayerLobby();
+
         assertNotNull(CuT, "PlayerLobby created unsuccessfully.");
     }
 
