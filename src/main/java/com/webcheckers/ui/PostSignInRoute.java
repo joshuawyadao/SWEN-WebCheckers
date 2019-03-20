@@ -82,7 +82,7 @@ public class PostSignInRoute implements Route {
 
             vm.put("message", INVALID_NAME);
 
-            return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
+            return templateEngine.render(new ModelAndView(vm , GetSignInRoute.VIEW_NAME));
         }
 
     }

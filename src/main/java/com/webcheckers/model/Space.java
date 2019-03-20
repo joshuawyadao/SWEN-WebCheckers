@@ -46,11 +46,12 @@ public class Space {
         return this.piece;
     }
 
+    /**
+     * Sets a piece on a space.
+     * @param piece the piece to be placed
+     */
     public void setPiece( Piece piece ) {
         this.piece = piece;
     }
-
-    // delete later
-    public COLOR getColor() { return this.color; }
 
 }
