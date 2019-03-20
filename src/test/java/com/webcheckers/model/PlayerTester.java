@@ -30,6 +30,7 @@ public class PlayerTester {
     @Test
     public void testJoinGameNone() {
         final Player CuT = new Player("TestPlayer");
+
         CuT.joinGame(Player.PlayerColor.NONE);
 
         assertEquals(Player.PlayerColor.NONE, CuT.getPlayerColor(), "TestPlayer joined game correctly");
@@ -39,6 +40,7 @@ public class PlayerTester {
     @Test
     public void testJoinGameRed() {
         final Player CuT = new Player("TestPlayer");
+
         CuT.joinGame(Player.PlayerColor.RED);
 
         assertEquals(Player.PlayerColor.RED, CuT.getPlayerColor(), "TestPlayer joined game correctly");
@@ -48,6 +50,7 @@ public class PlayerTester {
     @Test
     public void testJoinGameWhite() {
         final Player CuT = new Player("TestPlayer");
+
         CuT.joinGame(Player.PlayerColor.WHITE);
 
         assertEquals(Player.PlayerColor.WHITE, CuT.getPlayerColor(), "TestPlayer joined game correctly");
@@ -57,6 +60,7 @@ public class PlayerTester {
     @Test
     public void testLeaveGameNone() {
         final Player CuT = new Player("TestPlayer");
+
         CuT.leaveGame();
 
         assertEquals(Player.PlayerColor.NONE, CuT.getPlayerColor(),"TestPlayer has no color");
@@ -66,6 +70,7 @@ public class PlayerTester {
     @Test
     public void testLeaveGameRed() {
         final Player CuT = new Player("TestPlayer");
+
         CuT.joinGame(Player.PlayerColor.RED);
         CuT.leaveGame();
 
@@ -76,6 +81,7 @@ public class PlayerTester {
     @Test
     public void testLeaveGameWhite() {
         final Player CuT = new Player("TestPlayer");
+
         CuT.joinGame(Player.PlayerColor.WHITE);
         CuT.leaveGame();
 
@@ -93,6 +99,7 @@ public class PlayerTester {
     @Test
     public void testGetPlayerColorRed() {
         final Player CuT = new Player("TestPlayer");
+
         CuT.joinGame(Player.PlayerColor.RED);
 
         assertEquals(Player.PlayerColor.RED, CuT.getPlayerColor(), "TestPlayer has no color");
@@ -101,6 +108,7 @@ public class PlayerTester {
     @Test
     public void testGetPlayerColorWhite() {
         final Player CuT = new Player("TestPlayer");
+
         CuT.joinGame(Player.PlayerColor.WHITE);
 
         assertEquals(Player.PlayerColor.WHITE, CuT.getPlayerColor(), "TestPlayer has no color");
@@ -109,6 +117,7 @@ public class PlayerTester {
     @Test
     public void testIsPlayingNone() {
         final Player CuT = new Player("TestPlayer");
+
         CuT.joinGame(Player.PlayerColor.NONE);
 
         assertFalse(CuT.isPlaying(), "TestPlayer is playing");
@@ -117,6 +126,7 @@ public class PlayerTester {
     @Test
     public void testIsPlayingRed() {
         final Player CuT = new Player("TestPlayer");
+
         CuT.joinGame(Player.PlayerColor.RED);
 
         assertTrue(CuT.isPlaying(), "TestPlayer is playing");
@@ -125,6 +135,7 @@ public class PlayerTester {
     @Test
     public void testIsPlayingWhite() {
         final Player CuT = new Player("TestPlayer");
+
         CuT.joinGame(Player.PlayerColor.WHITE);
 
         assertTrue(CuT.isPlaying(), "TestPlayer is playing");
@@ -171,6 +182,7 @@ public class PlayerTester {
     @Test
     public void testHashCodeRed() {
         final Player CuT = new Player("TestPlayer");
+
         CuT.joinGame(Player.PlayerColor.RED);
 
         assertEquals(CuT.getName().hashCode() +
@@ -180,6 +192,7 @@ public class PlayerTester {
     @Test
     public void testHashCodeWhite() {
         final Player CuT = new Player("TestPlayer");
+
         CuT.joinGame(Player.PlayerColor.WHITE);
 
         assertEquals(CuT.getName().hashCode() +

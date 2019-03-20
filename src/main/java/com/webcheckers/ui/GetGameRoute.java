@@ -11,8 +11,8 @@ import java.util.logging.Logger;
 public class GetGameRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetGameRoute.class.getName());
 
-    private static final Message WELCOME_MSG = Message.info("Welcome to the game of Online Checkers.");
-    private static final String VIEW_NAME = "game.ftl";
+    public static final Message WELCOME_MSG = Message.info("Welcome to the game of Online Checkers.");
+    public static final String VIEW_NAME = "game.ftl";
 
     private final PlayerLobby playerLobby;
     private final TemplateEngine templateEngine;
