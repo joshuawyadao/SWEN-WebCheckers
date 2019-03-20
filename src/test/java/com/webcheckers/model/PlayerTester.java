@@ -1,42 +1,60 @@
 package com.webcheckers.model;
 
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-@Tag("Model-tier")
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Tester for {@link Player}
+ */
+@Tag("Model-tier")
 public class PlayerTester {
 
-    @Test
-    public void testPlayerCreation() {
-        final Player CuT = new Player("Test Player");
-        assertNotNull(CuT, "Player is not null");
+
+    private Player player;
+
+    public PlayerTester(){
+        player = new Player("TestPlayer");
     }
 
     @Test
-    public void testPlayerName() {
-        final Player CuT = new Player("Test Player");
-        assertEquals("Test Player", CuT.getName(), "Player name set correctly");
+    public void testGetName(){
+        assertEquals("TestPlayer", player.getName(), "testGetName has failed.");
     }
 
     @Test
-    public void testPlayerNoColor() {
-        final Player CuT = new Player("Test Player");
-        assertEquals(Player.PlayerColor.NOT_IN_GAME, CuT.getPlayerColor());
+    public void testJoinGame(){
+
     }
 
     @Test
-    public void testPlayerOneColor() {
-        final Player CuT = new Player("Test Player");
-        CuT.setPlayerColor(true);
-        assertEquals(Player.PlayerColor.RED, CuT.getPlayerColor());
+    public void testLeaveGame(){
+
     }
 
     @Test
-    public void testPlayerTwoColor() {
-        final Player CuT = new Player("Test Player");
-        CuT.setPlayerColor(false);
-        assertEquals(Player.PlayerColor.WHITE, CuT.getPlayerColor());
+    public void testGetPlayerColor(){
+
     }
+
+    @Test
+    public void testIsPlaying(){
+
+    }
+
+    @Test
+    public void testEquals(){
+
+    }
+
+    @Test
+    public void testHashCode(){
+
+    }
+
+
+
+
+
 }

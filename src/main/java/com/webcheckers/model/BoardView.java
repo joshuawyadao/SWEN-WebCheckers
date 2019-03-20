@@ -1,43 +1,49 @@
 package com.webcheckers.model;
 
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 
-public class BoardView implements Iterable {
+public class BoardView implements Iterable<Row> {
 
-    private Row[] rows;
+    //constant for the max amount of rows in the board
+    private final int MAX_ROWS = 8;
+    private Row[] rows = new Row[MAX_ROWS];
 
     /**
      * Initializes board
      */
     public BoardView() {
-        rows = new Row[8];
-        int count = 1;
         Piece piece;
         Space[] spaces;
         Space.COLOR sColor;
 
-
-        for( int index = 0; index <= 7; index++ ) {
-            spaces = new Space[8];
+        //changed some of the logic for this for loop to incorporate
+        //the board's column and row max constants, as determining if a
+        //a square is LIGHT OR DARK without the use another variable and
+        //if- statement
+        for(int index = 0; index < MAX_ROWS; index++ ) {
+            spaces = new Space[Row.MAX_COLUMNS];
             rows[index] = new Row( index, spaces );
-            for( int cellId = 0; cellId <= 7; cellId++ ) {
-                if ( count % 2 == 1 ) {
+
+            for(int cellId = 0; cellId < Row.MAX_COLUMNS; cellId++ ) {
+
+                if ( (index + cellId) % 2 == 0) {
                     sColor = Space.COLOR.LIGHT;
                     piece = null;
                 } else {
                     sColor = Space.COLOR.DARK;
-//                    if( index < 2 ) {
+
+                    if( index < 3 ) {
+                        piece = new Piece( Piece.TYPE.SINGLE, Piece.COLOR.WHITE );
+                    } else if( index > 4 ) {
                         piece = new Piece( Piece.TYPE.SINGLE, Piece.COLOR.RED );
-//                    } else if( index > 5 ) {
-//                        piece = new Piece( Piece.TYPE.SINGLE, Piece.COLOR.WHITE );
-//                    } else {
-//                        piece = null;
-//                    }
+                    } else {
+                        piece = null;
+                    }
                 }
+
                 spaces[cellId] = new Space( cellId, piece, sColor );
-                if ( cellId != 7 ) {
-                    count++;
-                }
             }
         }
     }
@@ -50,7 +56,10 @@ public class BoardView implements Iterable {
                 Space[] spaces = rows[index].getSpaces();
                 // output += ( "[ " + rows[index].getIndex() + ", " + spaces[cell].getCellIdx() + " ]" );
                 if (spaces[cell].getPiece() != null) {
-                    output += ("[ " + spaces[cell].getPiece().getColor() + " ]");
+                    if(spaces[cell].getPiece().getColor() == Piece.COLOR.RED)
+                        output += ("[  " + spaces[cell].getPiece().getColor() + "  ]");
+                    else
+                        output += ("[ " + spaces[cell].getPiece().getColor() + " ]");
                 } else {
                     output += ("[ empty ]");
                 }
@@ -70,26 +79,9 @@ public class BoardView implements Iterable {
     @Override
     public Iterator<Row> iterator() {
 
-        Iterator<Row> iterator = new Iterator<Row>() {
-
-            private int index = 0;
-
-            @Override
-            public boolean hasNext() {
-                return index < 7;
-            }
-
-            @Override
-            public Row next() {
-                if(hasNext()) {
-                    index++;
-                    return rows[index];
-                } else {
-                    return rows[0];
-                }
-            }
-        };
-
-        return iterator;
+        //We can also make 'rows' an List, instead of an array to
+        //avoid this line before the return
+        List<Row> rowsAsList = Arrays.asList(rows);
+        return rowsAsList.iterator();
     }
 }

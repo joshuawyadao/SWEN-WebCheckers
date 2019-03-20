@@ -37,6 +37,11 @@ public class PlayerLobby {
         players.put(player, playerSession);
     }
 
+    //Get a player's session through only entering their name
+    public Session getPlayerSessionByName(String playerName){
+        return players.get(new Player(playerName));
+    }
+
     public Session getPlayerSession(Player player){
         return players.get(player);
     }

@@ -1,35 +1,52 @@
 package com.webcheckers.model;
 
 public class Player {
+
     public enum PlayerColor{
         RED,
         WHITE,
-        NOT_IN_GAME
+        NONE
     }
 
     private String name;
-
     private PlayerColor playerColor;
+    private boolean playing;
 
+    /**
+     * Constructor of player
+     * @param name the name of the player
+     */
     public Player(String name){
         this.name = name;
-        playerColor = PlayerColor.NOT_IN_GAME;
+        playerColor = PlayerColor.NONE;
+        this.playing = false;
     }
+
 
     public String getName() {
         return name;
     }
 
-    public void setPlayerColor(boolean isPlayerOne) {
-        if(isPlayerOne)
-            playerColor = PlayerColor.RED;
-        else
-            playerColor = PlayerColor.WHITE;
+    //methods called whenever a player joins a game,
+    //it takes the player's color in as a parameter to
+    //distinguish which player is joining the game
+    public void joinGame(PlayerColor playerColor){
+        this.playerColor = playerColor;
+        this.playing = true;
+    }
+
+    //method called when a game is over (either resigned
+    //or ended naturally)
+    public void leaveGame(){
+        this.playerColor = PlayerColor.NONE;
+        this.playing = false;
     }
 
     public PlayerColor getPlayerColor() {
         return playerColor;
     }
+
+    public boolean isPlaying() { return this.playing; }
 
     public boolean equals(Object obj) {
         if(obj == this) return true;
@@ -45,12 +62,4 @@ public class Player {
         return name.hashCode();
     }
 
-    @Override
-    public String toString() {
-        return name;
-    }
-
-    public void printProof(){
-        System.out.println("Proof");
-    }
 }

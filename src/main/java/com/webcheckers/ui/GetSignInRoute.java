@@ -1,6 +1,5 @@
 package com.webcheckers.ui;
 
-import com.webcheckers.util.Message;
 import spark.*;
 
 import java.util.HashMap;
@@ -10,6 +9,8 @@ import java.util.logging.Logger;
 
 public class GetSignInRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetSignInRoute.class.getName());
+
+    public static final String VIEW_NAME = "signin.ftl";
 
     private final TemplateEngine templateEngine;
 
@@ -44,6 +45,6 @@ public class GetSignInRoute implements Route {
         vm.put("signin_title", "Please Sign In");
 
         // render the View
-        return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
+        return templateEngine.render(new ModelAndView(vm , VIEW_NAME));
     }
 }

@@ -5,11 +5,14 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import com.webcheckers.appl.CheckersGame;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
 import spark.*;
 
 import com.webcheckers.util.Message;
+
+import static spark.Spark.halt;
 
 /**
  * The UI Controller to GET the Home page.
@@ -20,6 +23,7 @@ public class GetHomeRoute implements Route {
   private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
   public static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
+  private static final String VIEW_NAME = "home.ftl";
 
   private final PlayerLobby playerLobby;
   private final TemplateEngine templateEngine;
@@ -65,6 +69,15 @@ public class GetHomeRoute implements Route {
         Player currentUser = httpSession.attribute("currentUser");
         vm.put("currentUser", currentUser);
         vm.put("players", playerLobby.getPlayers());
+
+        //if the player has been challenged to a game redirect them to the
+        //GET Game Route, with the appropriate 'opponent' parameter
+        if(currentUser.isPlaying()){
+            CheckersGame thisCheckerGame = httpSession.attribute("thisCheckersGame");
+            response.redirect(WebServer.GAME_URL + "?opponent=" + thisCheckerGame.getRedPlayer());
+            halt();
+            return null;
+        }
     }else{
         int currentNumOfPlayers = playerLobby.getNumOfPlayers();
         if(currentNumOfPlayers != 1) {
@@ -77,6 +90,6 @@ public class GetHomeRoute implements Route {
     }
 
     // render the View
-    return templateEngine.render(new ModelAndView(vm , "home.ftl"));
+    return templateEngine.render(new ModelAndView(vm , VIEW_NAME));
   }
 }
