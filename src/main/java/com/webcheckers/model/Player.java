@@ -33,7 +33,7 @@ public class Player {
     //it takes the player's color in as a parameter to
     //distinguish which player is joining the game
     public void joinGame(PlayerColor playerColor){
-        if( playerColor != PlayerColor.NONE ) {
+        if( this.playerColor != PlayerColor.NONE ) {
             this.playerColor = playerColor;
             this.playing = true;
         }
@@ -42,8 +42,10 @@ public class Player {
     //method called when a game is over (either resigned
     //or ended naturally)
     public void leaveGame(){
-        this.playerColor = PlayerColor.NONE;
-        this.playing = false;
+        if ( this.isPlaying() ) {
+            this.playerColor = PlayerColor.NONE;
+            this.playing = false;
+        }
     }
 
     public PlayerColor getPlayerColor() {

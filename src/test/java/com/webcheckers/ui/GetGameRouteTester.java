@@ -1,7 +1,6 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.appl.PlayerLobby;
-import javafx.print.PageLayout;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -13,6 +12,7 @@ import static org.mockito.Mockito.*;
 
 @Tag("UI-tier")
 public class GetGameRouteTester {
+
     /**
      * The component-under-test (CuT).
      *
@@ -41,8 +41,16 @@ public class GetGameRouteTester {
         CuT = new GetGameRoute(lobby, engine);
     }
 
+    /**
+     * Testing aspects of the GetGameRoute class
+     * Tested:
+     *      ViewModel: Non-NULL (Object)
+     *      ViewModel is a map: Map<String, Object> (boolean)
+     *      View_Name: "game.ftl" (String)
+     *
+     */
     @Test
-    public void testLoadingSigninPage(){
+    public void testLoadingGamePage(){
         final TemplateEngineTester testHelper = new TemplateEngineTester();
         when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
 
