@@ -48,4 +48,5 @@ public class SpaceTest {
 //        final Space CuT = new Space (DEFAULT_IDX, DEFAULT_PIECE, DEFAULT_COLOR);
 //        assertEquals(Space.COLOR.DARK, CuT.getColor(), "Space Dark color works");
 //    }
+
 }
