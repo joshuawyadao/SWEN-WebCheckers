@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
  * Tester for {@link Player}
  */
 @Tag("Model-tier")
-public class PlayerTester {
+public class PlayerTest {
 
     /**
      * Testing creation of a player all of the aspects of the player for non-NULL values

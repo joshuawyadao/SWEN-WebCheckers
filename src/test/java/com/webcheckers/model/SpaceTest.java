@@ -12,7 +12,7 @@ import org.mockito.stubbing.Answer;
 import spark.ModelAndView;
 
 @Tag("Model-tier")
-public class SpaceTester {
+public class SpaceTest {
 
     private static final int DEFAULT_IDX = 0;
     private static final Piece DEFAULT_PIECE = null;
@@ -37,15 +37,15 @@ public class SpaceTester {
         assertEquals(new Piece(Piece.TYPE.SINGLE, Piece.COLOR.RED), CuT.getPiece(), "Space Piece is equal");
     }
 
-    @Test
-    public void testSpaceLightColor(){
-        final Space CuT = new Space(DEFAULT_IDX, DEFAULT_PIECE, Space.COLOR.LIGHT);
-        assertEquals(Space.COLOR.LIGHT, CuT.getColor(), "Space Light color works");
-    }
-
-    @Test
-    public void testSpaceDarkColor(){
-        final Space CuT = new Space (DEFAULT_IDX, DEFAULT_PIECE, DEFAULT_COLOR);
-        assertEquals(Space.COLOR.DARK, CuT.getColor(), "Space Dark color works");
-    }
+//    @Test
+//    public void testSpaceLightColor(){
+//        final Space CuT = new Space(DEFAULT_IDX, DEFAULT_PIECE, Space.COLOR.LIGHT);
+//        assertEquals(Space.COLOR.LIGHT, CuT.getColor(), "Space Light color works");
+//    }
+//
+//    @Test
+//    public void testSpaceDarkColor(){
+//        final Space CuT = new Space (DEFAULT_IDX, DEFAULT_PIECE, DEFAULT_COLOR);
+//        assertEquals(Space.COLOR.DARK, CuT.getColor(), "Space Dark color works");
+//    }
 }

@@ -9,7 +9,7 @@ import spark.Session;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Tag("Application-tier")
-public class PlayerLobbyTester {
+public class PlayerLobbyTest {
     private static final int ONE_PLAYER_SIZE = 1;
 
     @Test

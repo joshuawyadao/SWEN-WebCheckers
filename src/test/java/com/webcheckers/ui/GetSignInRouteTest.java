@@ -1,6 +1,5 @@
 package com.webcheckers.ui;
 
-import com.webcheckers.appl.PlayerLobby;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -9,20 +8,17 @@ import spark.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-
 @Tag("UI-tier")
-public class GetGameRouteTester {
-
+public class GetSignInRouteTest {
     /**
      * The component-under-test (CuT).
      *
      */
-    private GetGameRoute CuT;
+    private GetSignInRoute CuT;
 
     // mock objects
     private Request request;
     private Session session;
-    private PlayerLobby lobby;
     private TemplateEngine engine;
     private Response response;
 
@@ -36,22 +32,13 @@ public class GetGameRouteTester {
         when(request.session()).thenReturn(session);
         response = mock(Response.class);
         engine = mock(TemplateEngine.class);
-        lobby = mock(PlayerLobby.class);
 
-        CuT = new GetGameRoute(lobby, engine);
+        CuT = new GetSignInRoute(engine);
     }
 
-    /**
-     * Testing aspects of the GetGameRoute class
-     * Tested:
-     *      ViewModel: Non-NULL (Object)
-     *      ViewModel is a map: Map<String, Object> (boolean)
-     *      View_Name: "game.ftl" (String)
-     *
-     */
     @Test
-    public void testLoadingGamePage(){
-        final TemplateEngineTester testHelper = new TemplateEngineTester();
+    public void testLoadingSigninPage(){
+        final TemplateEngineTest testHelper = new TemplateEngineTest();
         when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
 
         // Invoke the test
@@ -61,8 +48,11 @@ public class GetGameRouteTester {
         //   * model is a non-null Map
         testHelper.assertViewModelExists();
         testHelper.assertViewModelIsaMap();
+        //   * model contains all necessary View-Model data
+        testHelper.assertViewModelAttribute(GetSignInRoute.SIGNIN_TITLE_ATTR, GetSignInRoute.SIGNIN_TITLE);
 
         //   * test view name
-        testHelper.assertViewName(GetGameRoute.VIEW_NAME);
+        testHelper.assertViewName(GetSignInRoute.VIEW_NAME);
     }
+
 }
