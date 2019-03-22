@@ -39,5 +39,19 @@ public class Piece {
     }
 
 
+    @Override
+    public boolean equals(Object obj){
+        if (this == obj)return true;
+        if (!(obj instanceof Piece))return false;
+        Piece that = (Piece)obj;
+        return that.color.equals(this.color) && that.type.equals(this.type);
+    }
+
+    @Override
+    public int hashCode(){
+        return (int)Math.pow(this.color.hashCode() , this.type.hashCode());
+    }
+
+
 
 }
