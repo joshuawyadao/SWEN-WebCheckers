@@ -1,7 +1,5 @@
 package com.webcheckers.model;
 
-import com.sun.xml.internal.ws.api.message.ExceptionHasMessage;
-
 public class Player {
 
     public enum PlayerColor{
