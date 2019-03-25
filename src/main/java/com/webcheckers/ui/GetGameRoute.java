@@ -1,6 +1,8 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
 import spark.*;
@@ -51,20 +53,20 @@ public class GetGameRoute implements Route {
             String opponentName  = request.queryParams("opponent");
             Session opponentSession = playerLobby.getPlayerSessionByName(opponentName);
             Player opponent = opponentSession.attribute("currentUser");
-            CheckersGame thisCheckersGame = new CheckersGame(currentUser, opponent, CheckersGame.ViewMode.PLAY, playerLobby);
+//            GameCenter gameCenter = new GameCenter(currentUser, opponent, Game.ViewMode.PLAY, playerLobby);
 
-            thisCheckersGame.initializeGame();
-            currentSession.attribute("thisCheckersGame", thisCheckersGame);
-            opponentSession.attribute("thisCheckersGame", thisCheckersGame);
+//            gameCenter.initializeGame();
+//            currentSession.attribute("thisCheckersGame", gameCenter);
+//            opponentSession.attribute("thisCheckersGame", gameCenter);
         }
 
-        CheckersGame thisCheckersGame = currentSession.attribute("thisCheckersGame");
+        GameCenter gameCenter = currentSession.attribute("thisCheckersGame");
 
-        vm.put("redPlayer", thisCheckersGame.getRedPlayer());
-        vm.put("whitePlayer", thisCheckersGame.getWhitePlayer());
-        vm.put("activeColor", currentUser.getPlayerColor());
-        vm.put("viewMode", thisCheckersGame.getViewMode());
-        vm.put("board", thisCheckersGame.getCheckerBoard());
+//        vm.put("redPlayer", gameCenter.getRedPlayer());
+//        vm.put("whitePlayer", gameCenter.getWhitePlayer());
+//        vm.put("activeColor", currentUser.getPlayerColor());
+//        vm.put("viewMode", gameCenter.getViewMode());
+//        vm.put("board", gameCenter.getCheckerBoard());
 
         vm.put("currentUser", currentUser);
         vm.put("title", "Enjoy Your Game!");
