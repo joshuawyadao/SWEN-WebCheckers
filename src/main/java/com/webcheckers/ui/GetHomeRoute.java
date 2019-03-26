@@ -22,6 +22,7 @@ public class GetHomeRoute implements Route {
   private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
   public static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
+  public static final String CURRENT_USER_ATTR = "currentUser";
   private static final String VIEW_NAME = "home.ftl";
 
   private final PlayerLobby playerLobby;
@@ -64,16 +65,15 @@ public class GetHomeRoute implements Route {
     // display a user message in the Home page
     vm.put("message", WELCOME_MSG);
 
-    if(httpSession.attribute("currentUser") != null) {
-        Player currentUser = httpSession.attribute("currentUser");
-        vm.put("currentUser", currentUser);
+    if(httpSession.attribute(CURRENT_USER_ATTR) != null) {
+        Player currentUser = httpSession.attribute(CURRENT_USER_ATTR);
+        vm.put(CURRENT_USER_ATTR, currentUser);
         vm.put("players", playerLobby.getPlayers());
 
         //if the player has been challenged to a game redirect them to the
         //GET Game Route, with the appropriate 'opponent' parameter
-        if(currentUser.isPlaying()){
-            CheckersGame thisCheckerGame = httpSession.attribute("thisCheckersGame");
-            response.redirect(WebServer.GAME_URL + "?opponent=" + thisCheckerGame.getRedPlayer());
+        if(currentUser.isPlaying() && (httpSession.attribute(GetGameRoute.GAME_ID_ATTR) != null)){
+            response.redirect(WebServer.GAME_URL);
             halt();
             return null;
         }

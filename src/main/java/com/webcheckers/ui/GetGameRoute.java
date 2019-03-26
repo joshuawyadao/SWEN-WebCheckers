@@ -15,8 +15,11 @@ public class GetGameRoute implements Route {
 
     public static final Message WELCOME_MSG = Message.info("Welcome to the game of Online Checkers.");
     public static final String VIEW_NAME = "game.ftl";
+    public static final String GAME_ID_ATTR = "gameId";
+    private static final String OPPONENT_NAME = "opponent";
 
     private final PlayerLobby playerLobby;
+    private final GameCenter gameCenter;
     private final TemplateEngine templateEngine;
 
     /**
@@ -25,7 +28,8 @@ public class GetGameRoute implements Route {
      * @param templateEngine
      *   the HTML template rendering engine
      */
-    public GetGameRoute(final PlayerLobby playerLobby, final TemplateEngine templateEngine) {
+    public GetGameRoute(final PlayerLobby playerLobby, final GameCenter gameCenter, final TemplateEngine templateEngine) {
+        this.gameCenter = Objects.requireNonNull(gameCenter, "gameCenter is required");
         this.playerLobby = Objects.requireNonNull(playerLobby, "playerLobby is required");
         this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
         //
@@ -47,28 +51,31 @@ public class GetGameRoute implements Route {
     public Object handle(Request request, Response response) {
         Map<String, Object> vm = new HashMap<>();
         Session currentSession = request.session();
-        Player currentUser = currentSession.attribute("currentUser");
+        Player currentUser = currentSession.attribute(GetHomeRoute.CURRENT_USER_ATTR);
 
-        if(currentSession.attribute("thisCheckersGame") == null){
-            String opponentName  = request.queryParams("opponent");
+        if(currentSession.attribute(GAME_ID_ATTR) == null){
+            String opponentName  = request.queryParams(OPPONENT_NAME);
             Session opponentSession = playerLobby.getPlayerSessionByName(opponentName);
-            Player opponent = opponentSession.attribute("currentUser");
-//            GameCenter gameCenter = new GameCenter(currentUser, opponent, Game.ViewMode.PLAY, playerLobby);
+            Player opponent = opponentSession.attribute(GetHomeRoute.CURRENT_USER_ATTR);
 
-//            gameCenter.initializeGame();
-//            currentSession.attribute("thisCheckersGame", gameCenter);
-//            opponentSession.attribute("thisCheckersGame", gameCenter);
+            String newGameId = gameCenter.newGame(currentUser, opponent, Game.ViewMode.PLAY);
+            currentSession.attribute(GAME_ID_ATTR, newGameId);
+            opponentSession.attribute(GAME_ID_ATTR, newGameId);
         }
 
-        GameCenter gameCenter = currentSession.attribute("thisCheckersGame");
+        String gameId = currentSession.attribute(GAME_ID_ATTR);
+        Game currentGame = gameCenter.getGame(gameId);
 
-//        vm.put("redPlayer", gameCenter.getRedPlayer());
-//        vm.put("whitePlayer", gameCenter.getWhitePlayer());
-//        vm.put("activeColor", currentUser.getPlayerColor());
-//        vm.put("viewMode", gameCenter.getViewMode());
-//        vm.put("board", gameCenter.getCheckerBoard());
+        vm.put("redPlayer", currentGame.getRedPlayer());
+        vm.put("whitePlayer", currentGame.getWhitePlayer());
+        vm.put("activeColor", currentGame.getPlayerColor(currentUser));
+        vm.put("viewMode", currentGame.getViewMode());
 
-        vm.put("currentUser", currentUser);
+        boolean isRed = currentGame.getPlayerColor(currentUser) == Player.PlayerColor.RED;
+        BoardView boardView = new BoardView(currentGame.getCheckerBoard(), isRed);
+        vm.put("board", boardView);
+
+        vm.put(GetHomeRoute.CURRENT_USER_ATTR, currentUser);
         vm.put("title", "Enjoy Your Game!");
 
         // render the View

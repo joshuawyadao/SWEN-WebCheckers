@@ -12,16 +12,21 @@ public class GameCenter {
         currentGames = new HashMap<>();
     }
 
-    public static String createGameId(Player redPlayer, Player whitePlayer){
+    public String newGame(Player redPlayer, Player whitePlayer, Game.ViewMode viewMode){
+        String gameId = createGameId(redPlayer, whitePlayer);
+        Game newGame = new Game(redPlayer, whitePlayer, viewMode);
+        newGame.initializeGame();
+
+        currentGames.put(gameId, newGame);
+
+        return gameId;
+    }
+
+    public Game getGame(String gameId){
+        return currentGames.get(gameId);
+    }
+
+    private static String createGameId(Player redPlayer, Player whitePlayer){
         return redPlayer.getName() + "Vs" + whitePlayer.getName();
-    }
-
-    public String newGame(Player redPlayer, Player whitePlayer){
-        return "";
-    }
-
-    public void initializeGame(){
-//        redPlayer.joinGame(Player.PlayerColor.RED);
-//        whitePlayer.joinGame(Player.PlayerColor.WHITE);
     }
 }

@@ -15,13 +15,12 @@ public class BoardView implements Iterable<Row> {
     private ArrayList<Row> rows = new ArrayList<>();
 
     public BoardView(Board board, boolean isRed){
-
         for(int rowNum = 0; rowNum < MAX_ROWS; rowNum++){
             rows.add(new Row(rowNum, board.getRow(rowNum)));
         }
 
         if(!isRed){
-            for(int rowNum = MAX_ROWS; rowNum >= 0; rowNum--){
+            for(int rowNum = MAX_ROWS - 1; rowNum >= 0; rowNum--){
                 rows.add(new Row(rowNum, board.getRow(rowNum)));
             }
         }

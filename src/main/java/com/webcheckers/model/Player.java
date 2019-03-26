@@ -31,7 +31,7 @@ public class Player {
     //it takes the player's color in as a parameter to
     //distinguish which player is joining the game
     public void joinGame(PlayerColor playerColor){
-        if( this.playerColor != PlayerColor.NONE ) {
+        if( playerColor != PlayerColor.NONE ) {
             this.playerColor = playerColor;
             this.playing = true;
         }
@@ -63,11 +63,6 @@ public class Player {
 
     @Override
     public int hashCode() {
-        if( isPlaying() ) {
-            return name.hashCode() + playerColor.hashCode() + 1;
-        } else {
-            return name.hashCode() + playerColor.hashCode();
-        }
+        return name.hashCode();
     }
-
 }

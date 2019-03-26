@@ -6,6 +6,7 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 import com.google.gson.Gson;
+import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.ui.WebServer;
 
@@ -60,8 +61,11 @@ public final class  Application {
     //Create only one Player Lobby that holds a HashMap of all Players
     final PlayerLobby playerLobby = new PlayerLobby();
 
+    //Create only one Game Center that holds all games currently being played
+    final GameCenter gameCenter = new GameCenter();
+
     // inject the game center and freemarker engine into web server
-    final WebServer webServer = new WebServer(playerLobby, templateEngine, gson);
+    final WebServer webServer = new WebServer(playerLobby, gameCenter, templateEngine, gson);
 
     // inject web server into application
     final Application app = new Application(webServer);

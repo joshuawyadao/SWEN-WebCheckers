@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import java.util.Map;
+
 public class Game {
     //Enumeration for the View Mode
     public enum ViewMode{
@@ -7,11 +9,11 @@ public class Game {
         SPECTATE
     }
 
-    private String gameId;
     private Player redPlayer;
     private Player whitePlayer;
     private ViewMode viewMode;
     private Board checkerBoard;
+    private Map<String, Object> modeOptionsAsJSON;
 
     public Game(Player redPlayer, Player whitePlayer, ViewMode viewMode){
         this.redPlayer = redPlayer;
@@ -37,6 +39,13 @@ public class Game {
         return checkerBoard;
     }
 
+    public Player.PlayerColor getPlayerColor(Player currentPlayer){
+        return currentPlayer.getPlayerColor();
+    }
 
+    public void initializeGame(){
+        redPlayer.joinGame(Player.PlayerColor.RED);
+        whitePlayer.joinGame(Player.PlayerColor.WHITE);
+    }
 
 }
