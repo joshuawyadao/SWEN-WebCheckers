@@ -1,6 +1,6 @@
 package com.webcheckers.ui;
 
-import com.webcheckers.model.Board;
+import com.webcheckers.model.*;
 import com.webcheckers.ui.Row;
 
 import java.util.ArrayList;
@@ -15,13 +15,18 @@ public class BoardView implements Iterable<Row> {
     private ArrayList<Row> rows = new ArrayList<>();
 
     public BoardView(Board board, boolean isRed){
-        for(int rowNum = 0; rowNum < MAX_ROWS; rowNum++){
-            rows.add(new Row(rowNum, board.getRow(rowNum)));
-        }
-
-        if(!isRed){
-            for(int rowNum = MAX_ROWS - 1; rowNum >= 0; rowNum--){
+        if(isRed) {
+            for( int rowNum = 0; rowNum < MAX_ROWS; rowNum++ ) {
                 rows.add(new Row(rowNum, board.getRow(rowNum)));
+            }
+        } else {
+            for( int rowNum = MAX_ROWS - 1; rowNum >= 0; rowNum-- ) {
+                Space[] tempRow = board.getRow(rowNum);
+                Space[] setRows = new Space[MAX_ROWS];
+                for( int index = 0; index < MAX_ROWS; index++ ) {
+                    setRows[index] = tempRow[MAX_ROWS - 1 - index];
+                }
+                rows.add(new Row(rowNum, setRows));
             }
         }
     }
