@@ -15,7 +15,7 @@ public class BoardView implements Iterable<Row> {
     private ArrayList<Row> rows = new ArrayList<>();
 
     public BoardView(Board board, boolean isRed){
-        if(isRed) {
+        if(!isRed) {
             for( int rowNum = 0; rowNum < MAX_ROWS; rowNum++ ) {
                 rows.add(new Row(rowNum, board.getRow(rowNum)));
             }
