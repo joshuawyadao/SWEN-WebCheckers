@@ -26,4 +26,13 @@ public class Position {
     public int getCell() {
         return this.cell;
     }
+
+    public boolean equals( Object pos ) {
+        if(pos == this) return true;
+        if(!(pos instanceof Position)) return false;
+
+        final Position that = (Position) pos;
+
+        return this.row == that.getRow() && this.cell == that.getCell();
+    }
 }
