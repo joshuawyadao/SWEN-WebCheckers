@@ -1,11 +1,14 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.stream.JsonReader;
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Move;
 import spark.*;
 
+import java.io.BufferedReader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -32,14 +35,39 @@ public class PostValidateMoveRoute implements Route {
 
         Map<String, Object> vm = new HashMap<>();
         String moveAsJSONString = gson.toJson(request.queryParams("actionData"));
-        Move move = gson.fromJson(moveAsJSONString, Move.class);
+
+        //See createCorrectJSONFormat method for more information
+        String correctJSONMoveString = createCorrectJSONFormat(moveAsJSONString);
+        Move move = gson.fromJson(correctJSONMoveString, Move.class);
 
         System.out.println("Move Start Row = " + move.getStart().getRow());
         System.out.println("Move Start Cell = " + move.getStart().getCell());
         System.out.println("Move End Row = " + move.getEnd().getRow());
-        System.out.println("Move End Cell = " + move.getEnd().getRow());
+        System.out.println("Move End Cell = " + move.getEnd().getCell());
 
         // render the View
         return templateEngine.render(new ModelAndView(vm , GetGameRoute.VIEW_NAME));
+    }
+
+    //The JSON String returned by 'actionData' is not immediately in the correct format to be
+    //converted from a JSON Object into an instance of the Move Class. This method correctly
+    //formats the JSON String so it can be immediately converted into an instance of the Move class.
+    //Incorrect Format Example (the string received):
+    //  "{\"start\":{\"row\":2,\"cell\":3},\"end\":{\"row\":3,\"cell\":2}}"
+    //Correct Format Example (returned by this method):
+    //  {'start':{'row':2,'cell':3},'end':{'row':3,'cell':2}}
+    private static String createCorrectJSONFormat(String incorrectJSONString){
+        //1.) Replace all backslashes (\) with apostrophes (')
+        String correctJSONString = incorrectJSONString.replace("\\", "'");
+        //2.) Replace all instances of an apostrophe followed by a double- quote ('") with a single
+        //    apostrophe ('). This was the result of the replacements that occurred in Step 1
+        correctJSONString = correctJSONString.replaceAll("'\"", "'");
+        //3.) Replace all instances of only double- quotes(") with a the empty string (""),
+        //    therefore removing all instances of only double-quotes. This occurs at the
+        //    beginning and the end of the incorrect string recieved by 'actionData'
+        correctJSONString = correctJSONString.replace("\"", "");
+
+        //4.) Return the correctly formatted string
+        return correctJSONString;
     }
 }
