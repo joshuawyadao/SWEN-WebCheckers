@@ -2,12 +2,12 @@ package com.webcheckers.model;
 
 public class Move {
 
+    private Board checkerBoard;
     private Position start;
     private Position end;
 
-    private final int ORIGIN = 0;
-
-    public Move() {
+    public Move(Board board) {
+        this.checkerBoard = board;
         this.start = null;
         this.end = null;
     }
@@ -28,30 +28,38 @@ public class Move {
         return this.end;
     }
 
-//    /**
-//     * Sets start and end to a Position value if move is validated
-//     * Otherwise start and end remain null
-//     * @param startingPos
-//     * @param endingPos
-//     */
-//    public void movePiece( Position startingPos, Position endingPos ) {
-//        if( validMove( startingPos, endingPos ) ) {
-//            this.start = startingPos;
-//            this.end = endingPos;
-//        }
-//    }
+    private boolean checkStartSpace( Position startingPos ) {
+        Space[][] board = this.checkerBoard.getBoard();
+        return !board[startingPos.getRow()][startingPos.getCell()].isValid();
+    }
 
-    /**
-     * Only covering basic movement for now
-     * @param startingPos
-     * @param endingPos
-     * @return
-     */
-    private boolean validMove( Position startingPos, Position endingPos ) {
+    private boolean checkEndSpace ( Position endingPos ) {
+        Space[][] board = this.checkerBoard.getBoard();
+        return board[endingPos.getRow()][endingPos.getCell()].isValid();
+    }
+
+    public boolean validSimpleMove( Position startingPos, Position endingPos ) {
         int diffRow = Math.abs( startingPos.getRow() - endingPos.getRow() );
         int diffCell = Math.abs (startingPos.getCell() - endingPos.getCell() );
 
-        if ( ( diffRow <= 1 && diffCell <= 1 ) && !startingPos.equals( endingPos ) ) {
+        if ( ( diffRow == 1 && diffCell == 1 ) && !startingPos.equals( endingPos ) &&
+                checkStartSpace( startingPos ) &&
+                checkEndSpace( endingPos ) ) {
+            this.start = startingPos;
+            this.end = endingPos;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean validSimpleJump( Position startingPos, Position endingPos ) {
+        int diffRow = Math.abs( startingPos.getRow() - endingPos.getRow() );
+        int diffCell = Math.abs (startingPos.getCell() - endingPos.getCell() );
+
+        if ( ( diffRow == 2 && diffCell == 2 ) && !startingPos.equals( endingPos ) &&
+                checkStartSpace( startingPos ) &&
+                checkEndSpace( endingPos ) ) {
             this.start = startingPos;
             this.end = endingPos;
             return true;
