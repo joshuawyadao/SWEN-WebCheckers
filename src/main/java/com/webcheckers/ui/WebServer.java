@@ -63,6 +63,8 @@ public class WebServer {
 
   public static final String GAME_URL = "/game";
 
+  public static final String VALIDATE_MOVE_URL = "/validateMove";
+
   /**
    * The URL pattern to
    */
@@ -159,14 +161,17 @@ public class WebServer {
     // Shows the Checkers game Home page.
     get(HOME_URL, new GetHomeRoute(playerLobby, templateEngine));
 
-    //Shows the Checkers game Sign-In page
+    //Shows the Checkers game Sign-In page.
     get(SIGNIN_URL, new GetSignInRoute(templateEngine));
 
-    //Posts the user-inputted username to the server for validation
+    //Posts the user-inputted username to the server for validation.
     post(SIGNIN_URL, new PostSignInRoute(playerLobby, templateEngine));
 
-
+    //Shows the Web Checkers game page.
     get(GAME_URL, new GetGameRoute(playerLobby, gameCenter, templateEngine));
+
+    //Posts the user- inputted move to the server for validation.
+    post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(gameCenter, gson, templateEngine));
 
     //
     LOG.config("WebServer is initialized.");
