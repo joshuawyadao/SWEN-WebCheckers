@@ -52,7 +52,7 @@ public class Move {
         int diffCell = Math.abs( startingPos.getCell() - endingPos.getCell() );
         Position between = null;
 
-        if( startingPos.difference( endingPos ) == 1 ) {
+        if( startingPos.compare( endingPos ) == 1 ) {
             between = new Position(startingPos.getRow() + 1, startingPos.getCell() + 1);
         } else {
             between = new Position( startingPos.getRow() - 1, startingPos.getCell() - 1 );
