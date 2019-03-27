@@ -27,6 +27,21 @@ public class Position {
         return this.cell;
     }
 
+
+    public int difference( Position other ) {
+
+        if ( this.equals( other ) ) {
+            return 0;
+        } else {
+            if( this.row < other.getRow() ) {
+                return 1;
+            } else {
+                return -1;
+            }
+        }
+
+    }
+
     public boolean equals( Object pos ) {
         if(pos == this) return true;
         if(!(pos instanceof Position)) return false;

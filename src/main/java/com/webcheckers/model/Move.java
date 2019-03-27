@@ -2,11 +2,11 @@ package com.webcheckers.model;
 
 public class Move {
 
-    private Board checkerBoard;
+    private Space[][] checkerBoard;
     private Position start;
     private Position end;
 
-    public Move(Board board) {
+    public Move( Space[][] board ) {
         this.checkerBoard = board;
         this.start = null;
         this.end = null;
@@ -28,25 +28,19 @@ public class Move {
         return this.end;
     }
 
-    private boolean checkStartSpace( Position startingPos ) {
-        Space[][] board = this.checkerBoard.getBoard();
-        return !board[startingPos.getRow()][startingPos.getCell()].isValid();
-    }
-
-    private boolean checkEndSpace ( Position endingPos ) {
-        Space[][] board = this.checkerBoard.getBoard();
-        return board[endingPos.getRow()][endingPos.getCell()].isValid();
+    private boolean checkSpace( Position pos ) {
+        return this.checkerBoard[pos.getCell()][pos.getRow()].isValid();
     }
 
     public boolean validSimpleMove( Position startingPos, Position endingPos ) {
         int diffRow = Math.abs( startingPos.getRow() - endingPos.getRow() );
-        int diffCell = Math.abs (startingPos.getCell() - endingPos.getCell() );
+        int diffCell = Math.abs( startingPos.getCell() - endingPos.getCell() );
 
         if ( ( diffRow == 1 && diffCell == 1 ) && !startingPos.equals( endingPos ) &&
-                checkStartSpace( startingPos ) &&
-                checkEndSpace( endingPos ) ) {
+                !checkSpace( startingPos ) && checkSpace( endingPos ) ) {
             this.start = startingPos;
             this.end = endingPos;
+
             return true;
         } else {
             return false;
@@ -55,13 +49,20 @@ public class Move {
 
     public boolean validSimpleJump( Position startingPos, Position endingPos ) {
         int diffRow = Math.abs( startingPos.getRow() - endingPos.getRow() );
-        int diffCell = Math.abs (startingPos.getCell() - endingPos.getCell() );
+        int diffCell = Math.abs( startingPos.getCell() - endingPos.getCell() );
+        Position between = null;
+
+        if( startingPos.difference( endingPos ) == 1 ) {
+            between = new Position(startingPos.getRow() + 1, startingPos.getCell() + 1);
+        } else {
+            between = new Position( startingPos.getRow() - 1, startingPos.getCell() - 1 );
+        }
 
         if ( ( diffRow == 2 && diffCell == 2 ) && !startingPos.equals( endingPos ) &&
-                checkStartSpace( startingPos ) &&
-                checkEndSpace( endingPos ) ) {
+                !checkSpace( startingPos ) && !checkSpace( between ) && checkSpace( endingPos ) ) {
             this.start = startingPos;
             this.end = endingPos;
+
             return true;
         } else {
             return false;
