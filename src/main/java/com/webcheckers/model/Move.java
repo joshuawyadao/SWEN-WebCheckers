@@ -29,7 +29,14 @@ public class Move {
     }
 
     private boolean checkSpace( Position pos ) {
-        return this.checkerBoard[pos.getCell()][pos.getRow()].isValid();
+        return this.checkerBoard[pos.getRow()][pos.getCell()].isValid();
+    }
+
+    private boolean differentPieces( Position firstPos, Position secondPos ) {
+        Piece firstPiece = this.checkerBoard[firstPos.getRow()][firstPos.getCell()].getPiece();
+        Piece secondPiece = this.checkerBoard[secondPos.getRow()][firstPos.getCell()].getPiece();
+
+        return firstPiece.getColor() != secondPiece.getColor();
     }
 
     public boolean validSimpleMove( Position startingPos, Position endingPos ) {
@@ -59,7 +66,8 @@ public class Move {
         }
 
         if ( ( diffRow == 2 && diffCell == 2 ) && !startingPos.equals( endingPos ) &&
-                !checkSpace( startingPos ) && !checkSpace( between ) && checkSpace( endingPos ) ) {
+                !checkSpace( startingPos ) && !checkSpace( between ) && checkSpace( endingPos ) &&
+                differentPieces( startingPos, between ) ) {
             this.start = startingPos;
             this.end = endingPos;
 
