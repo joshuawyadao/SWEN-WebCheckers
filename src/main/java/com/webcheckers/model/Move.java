@@ -2,16 +2,72 @@ package com.webcheckers.model;
 
 public class Move {
 
-    public Move(){}
+    private Space[][] checkerBoard;
+    private Position start;
+    private Position end;
 
-    public void movePiece( Space src, Space dst ) {
-        if( validMove( src, dst ) ) {
-            dst.setPiece(src.getPiece());
-            src.setPiece(null);
+    public Move( Space[][] board ) {
+        this.checkerBoard = board;
+        this.start = null;
+        this.end = null;
+    }
+
+    /**
+     * The starting position of the move
+     * @return the position
+     */
+    public Position getStart() {
+        return this.start;
+    }
+
+    /**
+     * The ending position of the move
+     * @return the position
+     */
+    public Position getEnd() {
+        return this.end;
+    }
+
+    private boolean checkSpace( Position pos ) {
+        return this.checkerBoard[pos.getCell()][pos.getRow()].isValid();
+    }
+
+    public boolean validSimpleMove( Position startingPos, Position endingPos ) {
+        int diffRow = Math.abs( startingPos.getRow() - endingPos.getRow() );
+        int diffCell = Math.abs( startingPos.getCell() - endingPos.getCell() );
+
+        if ( ( diffRow == 1 && diffCell == 1 ) && !startingPos.equals( endingPos ) &&
+                !checkSpace( startingPos ) && checkSpace( endingPos ) ) {
+            this.start = startingPos;
+            this.end = endingPos;
+
+            return true;
+        } else {
+            return false;
         }
     }
 
-    private boolean validMove( Space src, Space dst ) {
-        return true;
+    public boolean validSimpleJump( Position startingPos, Position endingPos ) {
+        int diffRow = Math.abs( startingPos.getRow() - endingPos.getRow() );
+        int diffCell = Math.abs( startingPos.getCell() - endingPos.getCell() );
+        Position between = null;
+
+        if( startingPos.compare( endingPos ) == 1 ) {
+            between = new Position(startingPos.getRow() + 1, startingPos.getCell() + 1);
+        } else {
+            between = new Position( startingPos.getRow() - 1, startingPos.getCell() - 1 );
+        }
+
+        if ( ( diffRow == 2 && diffCell == 2 ) && !startingPos.equals( endingPos ) &&
+                !checkSpace( startingPos ) && !checkSpace( between ) && checkSpace( endingPos ) ) {
+            this.start = startingPos;
+            this.end = endingPos;
+
+            return true;
+        } else {
+            return false;
+        }
     }
+
+
 }

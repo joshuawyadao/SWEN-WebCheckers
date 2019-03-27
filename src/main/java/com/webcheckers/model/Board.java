@@ -7,6 +7,9 @@ import com.webcheckers.model.Space;
 public class Board {
 
     private Space[][] board;
+    private final int BOARD_SIDE = 8;
+    private final int RED_SIDE = 3;
+    private final int WHITE_SIDE = 4;
 
     /**
      * BoardModel Constructor
@@ -24,10 +27,10 @@ public class Board {
 
         // Set up the board - with no pieces
 
-        this.board = new Space[8][8];
+        this.board = new Space[BOARD_SIDE][BOARD_SIDE];
 
-        for( int r = 0; r < 8; r++ ) {
-            for( int c = 0; c < 8; c++ ) {
+        for( int r = 0; r < BOARD_SIDE; r++ ) {
+            for( int c = 0; c < BOARD_SIDE; c++ ) {
                 if(r % 2 == 0) {
                     if(c % 2 == 0) {
                         board[r][c] = new Space(c, null, Space.COLOR.LIGHT);
@@ -48,14 +51,14 @@ public class Board {
 
         // Set up the pieces
 
-        for( int r = 0; r < 8; r++ ){
-            for( int c = 0; c < 8; c++ ){
-                if( r < 3 ) {
+        for( int r = 0; r < BOARD_SIDE; r++ ){
+            for( int c = 0; c < BOARD_SIDE; c++ ){
+                if( r < RED_SIDE ) {
                     if( board[r][c].isValid() ) {
                         board[r][c].setPiece(new Piece(Piece.TYPE.SINGLE, Piece.COLOR.RED));
                     }
                 }
-                else if( r > 4 ) {
+                else if( r > WHITE_SIDE ) {
                     if( board[r][c].isValid() ){
                         board[r][c].setPiece(new Piece(Piece.TYPE.SINGLE, Piece.COLOR.WHITE));
                     }
