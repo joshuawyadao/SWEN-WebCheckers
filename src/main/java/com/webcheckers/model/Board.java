@@ -84,6 +84,41 @@ public class Board {
         return board[rowNum];
     }
 
+    public String makeMove( Position startPos, Position endingPos ) {
+        return "";
+    }
+
+    private int playerPiecesLeft( Piece.COLOR color ) {
+        int numOfPieces = 0;
+
+        for( int row = 0; row < BOARD_SIDE; row++ ) {
+            for( int col = 0; col < BOARD_SIDE; col++ ) {
+                if( this.board[row][col].getPiece().getColor() == color ) {
+                    numOfPieces++;
+                }
+            }
+        }
+
+        return numOfPieces;
+
+    }
+
+    public boolean finishedGame() {
+        return playerPiecesLeft( Piece.COLOR.RED ) == 0 || playerPiecesLeft( Piece.COLOR.WHITE ) == 0;
+    }
+
+    public Player.PlayerColor winnerColor() {
+        if( finishedGame() ) {
+            if( playerPiecesLeft( Piece.COLOR.RED ) == 0 ) {
+                return Player.PlayerColor.WHITE;
+            } else {
+                return Player.PlayerColor.RED;
+            }
+        } else {
+            return Player.PlayerColor.NONE;
+        }
+    }
+
 }
 
 
