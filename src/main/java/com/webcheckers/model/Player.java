@@ -52,6 +52,16 @@ public class Player {
 
     public boolean isPlaying() { return this.playing; }
 
+    public Piece.COLOR playerColorToPieceColor() {
+        if( this.playerColor == PlayerColor.RED ) {
+            return Piece.COLOR.RED;
+        } else if( this.playerColor == PlayerColor.WHITE ) {
+            return Piece.COLOR.WHITE;
+        } else {
+            return null;
+        }
+    }
+
     public boolean equals(Object obj) {
         if(obj == this) return true;
         if(!(obj instanceof Player)) return false;

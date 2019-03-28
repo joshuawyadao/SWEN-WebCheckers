@@ -49,6 +49,10 @@ public class Position {
 
     }
 
+    public int difference( Position other ) {
+        return Math.abs( this.getRow() - other.getRow() );
+    }
+
     /**
      * Compares another object with this one
      * @param pos object to be compared with

@@ -3,6 +3,7 @@ package com.webcheckers.model;
 import java.util.Map;
 
 public class Game {
+
     //Enumeration for the View Mode
     public enum ViewMode{
         PLAY,
@@ -24,28 +25,35 @@ public class Game {
 
     //Accessors
     public Player getRedPlayer() {
-        return redPlayer;
+        return this.redPlayer;
     }
 
     public Player getWhitePlayer() {
-        return whitePlayer;
+        return this.whitePlayer;
     }
 
     public ViewMode getViewMode() {
-        return viewMode;
+        return this.viewMode;
     }
 
     public Board getCheckerBoard(){
-        return checkerBoard;
+        return this.checkerBoard;
     }
 
-    public Player.PlayerColor getPlayerColor(Player currentPlayer){
+    public Player.PlayerColor getPlayerColor( Player currentPlayer ){
         return currentPlayer.getPlayerColor();
     }
 
-    public void initializeGame(){
-        redPlayer.joinGame(Player.PlayerColor.RED);
-        whitePlayer.joinGame(Player.PlayerColor.WHITE);
+    public void initializeGame() {
+        this.redPlayer.joinGame( Player.PlayerColor.RED );
+        this.whitePlayer.joinGame( Player.PlayerColor.WHITE );
+    }
+
+    public void makeMove( Player player, Position startingPos, Position endingPos ) {
+        int typeOfMove = startingPos.difference( endingPos );
+        if( this.checkerBoard.validateMove( startingPos, endingPos, typeOfMove ) ) {
+            this.checkerBoard.movePiece( startingPos, endingPos, player.playerColorToPieceColor() );
+        }
     }
 
 }

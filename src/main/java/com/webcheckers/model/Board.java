@@ -3,6 +3,7 @@ package com.webcheckers.model;
 import com.webcheckers.model.Piece;
 import com.webcheckers.model.Player;
 import com.webcheckers.model.Space;
+import javafx.geometry.Pos;
 
 public class Board {
 
@@ -84,8 +85,25 @@ public class Board {
         return board[rowNum];
     }
 
-    public String makeMove( Position startPos, Position endingPos ) {
-        return "";
+    public boolean validateMove( Position startPos, Position endingPos, int typeOfMove ) {
+        Move playerMove = new Move( board );
+        boolean validMove = false;
+
+        if( typeOfMove == 1 ) {
+            if( playerMove.validSimpleMove( startPos, endingPos ) ) {
+                validMove = true;
+            }
+        } else if( typeOfMove == 2 ) {
+            if (playerMove.validSimpleJump(startPos, endingPos)) {
+                validMove = true;
+            }
+        }
+        return validMove;
+    }
+
+    public void movePiece( Position startPos, Position endingPos, Piece.COLOR pieceColor ) {
+        this.board[endingPos.getRow()][endingPos.getCell()].setPiece( new Piece( Piece.TYPE.SINGLE, pieceColor ) );
+        this.board[startPos.getRow()][startPos.getCell()].setPiece( null );
     }
 
     private int playerPiecesLeft( Piece.COLOR color ) {
