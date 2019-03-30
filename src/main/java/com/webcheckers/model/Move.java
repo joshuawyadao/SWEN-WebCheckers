@@ -54,7 +54,7 @@ public class Move {
         }
     }
 
-    public boolean validSimpleJump( Position startingPos, Position endingPos ) {
+    public Position validSimpleJump( Position startingPos, Position endingPos ) {
         int diffRow = Math.abs( startingPos.getRow() - endingPos.getRow() );
         int diffCell = Math.abs( startingPos.getCell() - endingPos.getCell() );
         Position between = null;
@@ -71,9 +71,10 @@ public class Move {
             this.start = startingPos;
             this.end = endingPos;
 
-            return true;
+
+            return between;
         } else {
-            return false;
+            return null;
         }
     }
 

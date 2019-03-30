@@ -50,7 +50,7 @@ public class Position {
     }
 
     public int difference( Position other ) {
-        return Math.abs( this.getRow() - other.getRow() );
+        return ( this.getRow() - other.getRow() );
     }
 
     /**

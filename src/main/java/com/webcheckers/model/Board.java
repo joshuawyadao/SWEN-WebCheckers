@@ -89,17 +89,45 @@ public class Board {
         return board[rowNum];
     }
 
-    public boolean validateMove( Position startPos, Position endingPos, int typeOfMove ) {
+    public boolean validateMove(Position startPos, Position endingPos, int typeOfMove, Piece piece ) {
         Move playerMove = new Move( board );
         boolean validMove = false;
 
-        if( typeOfMove == 1 ) {
-            if( playerMove.validSimpleMove( startPos, endingPos ) ) {
-                validMove = true;
+        if( piece.getType() == Piece.TYPE.SINGLE && piece.getColor() == Piece.COLOR.RED ) { // Red single move
+            if (typeOfMove == -1) {
+                if (playerMove.validSimpleMove(startPos, endingPos)) {
+                    validMove = true;
+                }
+            } else if (typeOfMove == -2) {
+                Position captured = playerMove.validSimpleJump(startPos, endingPos);
+                if (captured != null) {
+                    this.board[captured.getRow()][captured.getCell()] = null;
+                    validMove = true;
+                }
             }
-        } else if( typeOfMove == 2 ) {
-            if (playerMove.validSimpleJump(startPos, endingPos)) {
-                validMove = true;
+        } else if( piece.getType() == Piece.TYPE.SINGLE && piece.getColor() == Piece.COLOR.WHITE ){ // White single move
+            if (typeOfMove == 1) {
+                if (playerMove.validSimpleMove(startPos, endingPos)) {
+                    validMove = true;
+                }
+            } else if (typeOfMove == 2) {
+                Position captured = playerMove.validSimpleJump(startPos, endingPos);
+                if (captured != null) {
+                    this.board[captured.getRow()][captured.getCell()] = null;
+                    validMove = true;
+                }
+            }
+        } else { // King movement
+            if (Math.abs( typeOfMove ) == 1) {
+                if (playerMove.validSimpleMove(startPos, endingPos)) {
+                    validMove = true;
+                }
+            } else if (Math.abs(typeOfMove) == 2) {
+                Position captured = playerMove.validSimpleJump(startPos, endingPos);
+                if (captured != null) {
+                    this.board[captured.getRow()][captured.getCell()] = null;
+                    validMove = true;
+                }
             }
         }
         return validMove;

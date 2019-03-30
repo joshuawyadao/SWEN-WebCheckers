@@ -59,8 +59,9 @@ public class Game {
         int typeOfMove = startingPos.difference( endingPos );
         Board turn = new Board();
         turn.copyBoard( getRecentTurn() );
+        Piece selectPiece = turn.getBoard()[startingPos.getRow()][startingPos.getCell()].getPiece();
 
-        if( turn.validateMove( startingPos, endingPos, typeOfMove ) ) {
+        if( turn.validateMove( startingPos, endingPos, typeOfMove, selectPiece ) ) {
             turn.movePiece( startingPos, endingPos, player.playerColorToPieceColor() );
             previousMoves.push( turn );
             return true;
