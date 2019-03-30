@@ -54,4 +54,14 @@ public class Space {
         this.piece = piece;
     }
 
+    public Space copySpace() {
+        Piece tempPiece;
+        if( this.piece != null ) {
+            tempPiece = new Piece( this.piece.getType(), this.piece.getColor() );
+        } else {
+            tempPiece = null;
+        }
+        return new Space( this.cellIdx, tempPiece, this.color );
+    }
+
 }

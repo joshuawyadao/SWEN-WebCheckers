@@ -1,6 +1,7 @@
 package com.webcheckers.model;
 
 import java.util.Map;
+import java.util.Stack;
 
 public class Game {
 
@@ -15,12 +16,15 @@ public class Game {
     private ViewMode viewMode;
     private Board checkerBoard;
     private Map<String, Object> modeOptionsAsJSON;
+    private Stack<Board> previousMoves;
 
     public Game(Player redPlayer, Player whitePlayer, ViewMode viewMode){
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
         this.viewMode = viewMode;
         this.checkerBoard = new Board();
+        this.previousMoves = new Stack<>();
+        previousMoves.push(checkerBoard);
     }
 
     //Accessors
@@ -40,6 +44,8 @@ public class Game {
         return this.checkerBoard;
     }
 
+    public Board getRecentTurn() { return this.previousMoves.peek(); }
+
     public Player.PlayerColor getPlayerColor( Player currentPlayer ){
         return currentPlayer.getPlayerColor();
     }
@@ -51,9 +57,12 @@ public class Game {
 
     public boolean makeMove( Player player, Position startingPos, Position endingPos ) {
         int typeOfMove = startingPos.difference( endingPos );
+        Board turn = new Board();
+        turn.copyBoard( getRecentTurn() );
 
-        if( this.checkerBoard.validateMove( startingPos, endingPos, typeOfMove ) ) {
-            this.checkerBoard.movePiece( startingPos, endingPos, player.playerColorToPieceColor() );
+        if( turn.validateMove( startingPos, endingPos, typeOfMove ) ) {
+            turn.movePiece( startingPos, endingPos, player.playerColorToPieceColor() );
+            previousMoves.push( turn );
             return true;
         }
 

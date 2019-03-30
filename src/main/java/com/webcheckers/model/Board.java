@@ -5,12 +5,15 @@ import com.webcheckers.model.Player;
 import com.webcheckers.model.Space;
 import javafx.geometry.Pos;
 
+import java.util.Stack;
+
 public class Board {
 
-    private Space[][] board;
     private final int BOARD_SIDE = 8;
     private final int RED_SIDE = 3;
     private final int WHITE_SIDE = 4;
+
+    private Space[][] board;
 
     /**
      * BoardModel Constructor
@@ -66,6 +69,7 @@ public class Board {
                 }
             }
         }
+
     }
 
     /**
@@ -134,6 +138,15 @@ public class Board {
             }
         } else {
             return Player.PlayerColor.NONE;
+        }
+    }
+
+    public void copyBoard( Board source ) {
+        Space[][] sourceBoard = source.getBoard();
+        for( int row = 0; row < BOARD_SIDE; row++ ) {
+            for( int col = 0; col < BOARD_SIDE; col++ ) {
+                this.board[row][col] = sourceBoard[row][col].copySpace();
+            }
         }
     }
 

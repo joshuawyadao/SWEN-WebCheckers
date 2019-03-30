@@ -1,5 +1,6 @@
 package com.webcheckers.appl;
 
+import com.webcheckers.model.Board;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Move;
 import com.webcheckers.model.Player;
@@ -27,12 +28,12 @@ public class GameCenter {
         return currentGames.get(gameId);
     }
 
-    private static String createGameId(Player redPlayer, Player whitePlayer){
-        return redPlayer.getName() + "Vs" + whitePlayer.getName();
-    }
-
     public boolean requestMove(String gameId, Player currentPlayer, Move move){
         Game game = currentGames.get(gameId);
         return game.makeMove(currentPlayer, move.getStart(), move.getEnd());
+    }
+
+    private static String createGameId(Player redPlayer, Player whitePlayer){
+        return redPlayer.getName() + "Vs" + whitePlayer.getName();
     }
 }

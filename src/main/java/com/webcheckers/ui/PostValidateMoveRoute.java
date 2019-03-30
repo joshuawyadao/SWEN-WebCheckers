@@ -31,12 +31,12 @@ public class PostValidateMoveRoute implements Route {
         this.gson = Objects.requireNonNull(gson, "gson is required");
         this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
         //
-        LOG.config("GetHomeRoute is initialized.");
+        LOG.config("PostValidateMoveRoute is initialized.");
     }
 
     @Override
     public Object handle(Request request, Response response) {
-        LOG.finer("PostSignInRoute is invoked.");
+        LOG.finer("PostValidateMoveRoute is invoked.");
 
         Map<String, Object> vm = new HashMap<>();
         Session currentSession = request.session();
@@ -60,14 +60,13 @@ public class PostValidateMoveRoute implements Route {
         vm.put("viewMode", currentGame.getViewMode());
 
         boolean isRed = currentGame.getPlayerColor(currentUser) == Player.PlayerColor.RED;
-        BoardView boardView = new BoardView(currentGame.getCheckerBoard(), isRed);
+        BoardView boardView = new BoardView(currentGame.getRecentTurn(), isRed);
         vm.put("board", boardView);
 
         vm.put(GetHomeRoute.CURRENT_USER_ATTR, currentUser);
         vm.put("title", "Enjoy Your Game!");
 
         // render the View
-//        return templateEngine.render(new ModelAndView(vm , GetGameRoute.VIEW_NAME));
         Message moveInfo = null;
         if(isValid){
             moveInfo = Message.info("Outstanding move!");
@@ -75,11 +74,7 @@ public class PostValidateMoveRoute implements Route {
             moveInfo = Message.error("Not valid Move!");
         }
 
-        //String moveInfoASJSON = gson.toJson(moveInfo);
         return gson.toJson(moveInfo);
-
-        //return templateEngine.render(new ModelAndView(vm , "game.ftl"));
-        //return null;
     }
 
     //The JSON String returned by 'actionData' is not immediately in the correct format to be
