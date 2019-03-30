@@ -1,6 +1,7 @@
 package com.webcheckers.appl;
 
 import com.webcheckers.model.Game;
+import com.webcheckers.model.Move;
 import com.webcheckers.model.Player;
 
 import java.util.HashMap;
@@ -28,5 +29,10 @@ public class GameCenter {
 
     private static String createGameId(Player redPlayer, Player whitePlayer){
         return redPlayer.getName() + "Vs" + whitePlayer.getName();
+    }
+
+    public boolean requestMove(String gameId, Player currentPlayer, Move move){
+        Game game = currentGames.get(gameId);
+        return game.makeMove(currentPlayer, move.getStart(), move.getEnd());
     }
 }

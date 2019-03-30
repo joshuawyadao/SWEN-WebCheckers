@@ -49,11 +49,15 @@ public class Game {
         this.whitePlayer.joinGame( Player.PlayerColor.WHITE );
     }
 
-    public void makeMove( Player player, Position startingPos, Position endingPos ) {
+    public boolean makeMove( Player player, Position startingPos, Position endingPos ) {
         int typeOfMove = startingPos.difference( endingPos );
+
         if( this.checkerBoard.validateMove( startingPos, endingPos, typeOfMove ) ) {
             this.checkerBoard.movePiece( startingPos, endingPos, player.playerColorToPieceColor() );
+            return true;
         }
+
+        return false;
     }
 
 }
