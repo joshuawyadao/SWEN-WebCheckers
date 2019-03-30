@@ -33,6 +33,12 @@ public class GameCenter {
         return game.makeMove(currentPlayer, move.getStart(), move.getEnd());
     }
 
+    public boolean submitTurn(String gameId){
+        Game game = currentGames.get(gameId);
+
+        return game.submitTurn();
+    }
+
     private static String createGameId(Player redPlayer, Player whitePlayer){
         return redPlayer.getName() + "Vs" + whitePlayer.getName();
     }

@@ -13,6 +13,7 @@ public class Game {
 
     private Player redPlayer;
     private Player whitePlayer;
+    private Player activePlayer;
     private ViewMode viewMode;
     private Board checkerBoard;
     private Map<String, Object> modeOptionsAsJSON;
@@ -20,6 +21,7 @@ public class Game {
 
     public Game(Player redPlayer, Player whitePlayer, ViewMode viewMode){
         this.redPlayer = redPlayer;
+        this.activePlayer = redPlayer;
         this.whitePlayer = whitePlayer;
         this.viewMode = viewMode;
         this.checkerBoard = new Board();
@@ -42,6 +44,10 @@ public class Game {
 
     public Board getCheckerBoard(){
         return this.checkerBoard;
+    }
+
+    public Player getActivePlayer() {
+        return activePlayer;
     }
 
     public Board getRecentTurn() { return this.previousMoves.peek(); }
@@ -68,6 +74,20 @@ public class Game {
         }
 
         return false;
+    }
+
+    public boolean submitTurn() {
+        this.checkerBoard = this.previousMoves.peek();
+        this.previousMoves = new Stack<>();
+        this.previousMoves.push(checkerBoard);
+
+        if( this.activePlayer.equals(this.redPlayer) ) {
+            this.activePlayer = this.whitePlayer;
+        } else {
+            this.activePlayer = this.redPlayer;
+        }
+
+        return true;
     }
 
 }
