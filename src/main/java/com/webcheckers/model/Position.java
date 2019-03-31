@@ -5,6 +5,11 @@ public class Position {
     private int row;  // { 0 to 7 }
     private int cell;  // { 0 to 7 }
 
+    /**
+     * Constructor for position
+     * @param row the row number
+     * @param cell the cell number
+     */
     public Position( int row, int cell ) {
         this.row = row;
         this.cell = cell;

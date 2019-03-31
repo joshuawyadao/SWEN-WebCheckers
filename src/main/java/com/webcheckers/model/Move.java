@@ -6,6 +6,10 @@ public class Move {
     private Position start;
     private Position end;
 
+    /**
+     * Constructor for board
+     * @param board the board
+     */
     public Move( Space[][] board ) {
         this.checkerBoard = board;
         this.start = null;
@@ -28,6 +32,11 @@ public class Move {
         return this.end;
     }
 
+    /**
+     * checks space at a position
+     * @param pos the space of the position
+     * @return true if the space is valid, false otherwise
+     */
     private boolean checkSpace( Position pos ) {
         return this.checkerBoard[pos.getRow()][pos.getCell()].isValid();
     }

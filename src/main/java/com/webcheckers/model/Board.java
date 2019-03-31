@@ -140,10 +140,10 @@ public class Board {
     }
 
     /**
-     *
-     * @param startPos
-     * @param endingPos
-     * @param pieceColor
+     * Moves a piece
+     * @param startPos the starting position of the piece
+     * @param endingPos the ending position of the piece
+     * @param pieceColor the piece's color
      */
     public void movePiece( Position startPos, Position endingPos, Piece.COLOR pieceColor ) {
         this.board[endingPos.getRow()][endingPos.getCell()].setPiece( new Piece( Piece.TYPE.SINGLE, pieceColor ) );
@@ -151,9 +151,9 @@ public class Board {
     }
 
     /**
-     *
-     * @param color
-     * @return
+     * Determine the amount of pieces a player has left
+     * @param color the color of the pieces to determine
+     * @return the amount of pieces of a player of a specified color
      */
     private int playerPiecesLeft( Piece.COLOR color ) {
         int numOfPieces = 0;
@@ -171,16 +171,16 @@ public class Board {
     }
 
     /**
-     *
-     * @return
+     * Determine if the game is finished
+     * @return true if either players no longer have pieces. False otherwise
      */
     public boolean finishedGame() {
         return playerPiecesLeft( Piece.COLOR.RED ) == 0 || playerPiecesLeft( Piece.COLOR.WHITE ) == 0;
     }
 
     /**
-     *
-     * @return
+     * Determines the winner of the game
+     * @return the winner's respective color
      */
     public Player.PlayerColor winnerColor() {
         if( finishedGame() ) {
@@ -195,8 +195,8 @@ public class Board {
     }
 
     /**
-     *
-     * @param source
+     * Copies the board
+     * @param source the board to be copied
      */
     public void copyBoard( Board source ) {
         Space[][] sourceBoard = source.getBoard();

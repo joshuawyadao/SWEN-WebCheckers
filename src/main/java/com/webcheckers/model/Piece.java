@@ -39,6 +39,11 @@ public class Piece {
     }
 
 
+    /**
+     * Determine if two pieces are equal
+     * @param obj the ideal piece
+     * @return true if they are the same, false otherwise
+     */
     @Override
     public boolean equals(Object obj){
         if (this == obj)return true;
@@ -47,6 +52,10 @@ public class Piece {
         return that.color.equals(this.color) && that.type.equals(this.type);
     }
 
+    /**
+     * Hashcode for a piece
+     * @return a unique hashcode for the piece
+     */
     @Override
     public int hashCode(){
         return (int)Math.pow(this.color.hashCode() , this.type.hashCode());

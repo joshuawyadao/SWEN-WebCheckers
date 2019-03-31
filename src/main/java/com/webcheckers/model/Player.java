@@ -22,14 +22,18 @@ public class Player {
         this.playing = false;
     }
 
-
+    /**
+     * Gets the name of the player
+     * @return the name of the player
+     */
     public String getName() {
         return name;
     }
 
-    //methods called whenever a player joins a game,
-    //it takes the player's color in as a parameter to
-    //distinguish which player is joining the game
+    /**
+     * Distinguishes which player is joining a game by their color
+     * @param playerColor the color's player to join the game
+     */
     public void joinGame(PlayerColor playerColor){
         if( playerColor != PlayerColor.NONE ) {
             this.playerColor = playerColor;
@@ -37,8 +41,9 @@ public class Player {
         }
     }
 
-    //method called when a game is over (either resigned
-    //or ended naturally)
+    /**
+     * Allows the player to leave the game
+     */
     public void leaveGame(){
         if ( this.isPlaying() ) {
             this.playerColor = PlayerColor.NONE;
@@ -46,12 +51,24 @@ public class Player {
         }
     }
 
+    /**
+     * Gets the player's color
+     * @return the player's color
+     */
     public PlayerColor getPlayerColor() {
         return playerColor;
     }
 
+    /**
+     * Determine if the player is playing
+     * @return true if is playing, false otherwise
+     */
     public boolean isPlaying() { return this.playing; }
 
+    /**
+     * Returns a player's piece color
+     * @return the player's piece color
+     */
     public Piece.COLOR playerColorToPieceColor() {
         if( this.playerColor == PlayerColor.RED ) {
             return Piece.COLOR.RED;
@@ -62,6 +79,11 @@ public class Player {
         }
     }
 
+    /**
+     * Player equal's method
+     * @param obj the ideal player object
+     * @return true if they are the same, false otherwise
+     */
     public boolean equals(Object obj) {
         if(obj == this) return true;
         if(!(obj instanceof Player)) return false;
@@ -71,6 +93,10 @@ public class Player {
         return this.name.equals(that.name);
     }
 
+    /**
+     * Create a unique hashcode
+     * @return the unique hashcode
+     */
     @Override
     public int hashCode() {
         return name.hashCode();
