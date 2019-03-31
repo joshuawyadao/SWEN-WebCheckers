@@ -36,6 +36,9 @@ public class Move {
         Piece firstPiece = this.checkerBoard[firstPos.getRow()][firstPos.getCell()].getPiece();
         Piece secondPiece = this.checkerBoard[secondPos.getRow()][firstPos.getCell()].getPiece();
 
+        System.out.println("firstPiece: " + firstPiece);
+        System.out.println("secondPiece: " + secondPiece);
+
         return firstPiece.getColor() != secondPiece.getColor();
     }
 
@@ -57,22 +60,36 @@ public class Move {
     public Position validSimpleJump( Position startingPos, Position endingPos ) {
         int diffRow = Math.abs( startingPos.getRow() - endingPos.getRow() );
         int diffCell = Math.abs( startingPos.getCell() - endingPos.getCell() );
-        Position between = null;
+        Position between = startingPos.between( endingPos );
 
-        if( startingPos.compare( endingPos ) == 1 ) {
-            between = new Position(startingPos.getRow() + 1, startingPos.getCell() + 1);
-        } else {
-            between = new Position( startingPos.getRow() - 1, startingPos.getCell() - 1 );
-        }
+        System.out.println("start vals: ");
+        System.out.println("\trow: " + startingPos.getRow());
+        System.out.println("\tcell: " + startingPos.getCell());
+        System.out.println("between vals: ");
+        System.out.println("\trow: " + between.getRow());
+        System.out.println("\tcell: " + between.getCell());
+        System.out.println("end vals: ");
+        System.out.println("\trow: " + endingPos.getRow());
+        System.out.println("\tcell: " + endingPos.getCell());
+
+//        System.out.println("between pos: " + between);
+//        System.out.println("checkSpace: " + checkSpace(between));
+        System.out.println("between space: " + this.checkerBoard[between.getRow()][between.getCell()]);
+        System.out.println("between piece: " + this.checkerBoard[between.getRow()][between.getCell()].getPiece());
 
         if ( ( diffRow == 2 && diffCell == 2 ) && !startingPos.equals( endingPos ) &&
-                !checkSpace( startingPos ) && !checkSpace( between ) && checkSpace( endingPos ) &&
-                differentPieces( startingPos, between ) ) {
-            this.start = startingPos;
-            this.end = endingPos;
+                !checkSpace( startingPos ) && !checkSpace( between ) && checkSpace( endingPos ) ) {
+            Piece betweenPiece = this.checkerBoard[between.getRow()][between.getCell()].getPiece();
+            Piece startingPiece = this.checkerBoard[startingPos.getRow()][startingPos.getCell()].getPiece();
+            if( betweenPiece.getColor() != startingPiece.getColor() ) {
+                this.start = startingPos;
+                this.end = endingPos;
 
 
-            return between;
+                return between;
+            } else {
+                return null;
+            }
         } else {
             return null;
         }

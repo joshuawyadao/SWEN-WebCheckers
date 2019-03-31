@@ -53,6 +53,14 @@ public class Position {
         return ( this.getRow() - other.getRow() );
     }
 
+    public Position between( Position other ) {
+        int difRow = ( other.getRow() - this.row ) / 2;
+        int difCell = ( other.getCell() - this.cell ) / 2;
+
+
+        return new Position( this.row + difRow, this.cell + difCell );
+    }
+
     /**
      * Compares another object with this one
      * @param pos object to be compared with
