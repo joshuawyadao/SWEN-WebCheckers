@@ -65,7 +65,7 @@ public class PostSignInRoute implements Route {
             playerLobby.signInPlayer(attemptedPlayerLogin, request.session());
             session.attribute(GetHomeRoute.CURRENT_USER_ATTR, attemptedPlayerLogin);
 
-            //add currentUser to VM
+            //add currentUser as Session attribute
             Player currentUser = session.attribute(GetHomeRoute.CURRENT_USER_ATTR);
             vm.put(GetHomeRoute.CURRENT_USER_ATTR, currentUser);
 
