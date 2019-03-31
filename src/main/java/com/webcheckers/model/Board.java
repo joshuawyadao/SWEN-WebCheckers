@@ -206,6 +206,7 @@ public class Board {
 //        }
 //    }
 
+
     public boolean pieceMovedCorrectDirection( Position position ) {
         List<Position> adjacentSpaces = adjacentSpaces( position );
 
