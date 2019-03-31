@@ -112,15 +112,25 @@ public class PlayerLobbyTest {
         final Player player1 = new Player("PlayerOne");
         assertEquals(TEST_LOGIN_SUCCESSFUL.toString(), CuT.signInPlayer(player1, testPlayerSession).toString());
 
-        assertEquals(CuT.getPlayerSession(player1), testPlayerSession);
+        assertEquals(testPlayerSession, CuT.getPlayerSession(player1));
     }
 
     @Test
-    public void testGetPlayerSessionByName(){
+    public void testGetPlayerSessionByName_Found(){
         final String player1Name = "PlayerOne";
         final Player player1 = new Player(player1Name);
         assertEquals(TEST_LOGIN_SUCCESSFUL.toString(), CuT.signInPlayer(player1, testPlayerSession).toString());
 
-        assertEquals(CuT.getPlayerSessionByName(player1Name), testPlayerSession);
+        assertEquals(testPlayerSession, CuT.getPlayerSessionByName(player1Name));
+    }
+
+    @Test
+    public void testGetPlayerSessionByName_NotFound(){
+        final String player1Name = "PlayerOne";
+        final String player2Name = "PlayerTwo";
+        final Player player1 = new Player(player1Name);
+        assertEquals(TEST_LOGIN_SUCCESSFUL.toString(), CuT.signInPlayer(player1, testPlayerSession).toString());
+
+        assertEquals(null, CuT.getPlayerSessionByName(player2Name));
     }
 }

@@ -19,12 +19,30 @@ public class BoardViewTest {
     private BoardView CuT;
 
     @Test
-    public void testCreateBoardView(){
+    public void testCreateBoardView_Red(){
         final boolean isRed = true;
-        Board testBoard = new Board();
+        final Board testBoard = new Board();
         CuT = new BoardView(testBoard, isRed);
 
         assertNotNull(CuT, "BoardView created unsuccessfully.");
+    }
+
+    @Test
+    public void testCreateBoardView_White(){
+        final boolean isRed = false;
+        final Board testBoard = new Board();
+        CuT = new BoardView(testBoard, isRed);
+
+        assertNotNull(CuT, "BoardView created unsuccessfully.");
+    }
+
+    @Test
+    public void testIteratorNotNull(){
+        final boolean isRed = false;
+        final Board testBoard = new Board();
+        CuT = new BoardView(testBoard, isRed);
+
+        assertNotNull(CuT.iterator(), "BoardView Iterator created unsuccessfully.");
     }
 
 }

@@ -46,20 +46,13 @@ public class PlayerLobby {
 
     //Get a player's session through only entering their name
     public Session getPlayerSessionByName(String playerName){
-        boolean foundPlayer = false;
-        Player target = null;
-
         for(Player player: players.keySet()){
-            if((player.getName().equals(playerName)) && !foundPlayer){
-                target = player;
-                foundPlayer = true;
+            if((player.getName().equals(playerName))){
+                return players.get(player);
             }
         }
 
-        if(foundPlayer)
-            return players.get(target);
-        else
-            return null;
+        return null;
     }
 
     public Session getPlayerSession(Player player){
