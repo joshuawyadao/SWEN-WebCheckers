@@ -1,19 +1,29 @@
 package com.webcheckers.appl;
 
-import com.webcheckers.model.Board;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Move;
 import com.webcheckers.model.Player;
 
 import java.util.HashMap;
+import java.util.Map;
 
+/**
+ * GameCenter Class
+ * GameCenter retains all available Games that are currently being played.
+ */
 public class GameCenter {
-    HashMap<String, Game> currentGames;
-
+    private HashMap<String, Game> currentGames;
     public GameCenter( ){
         currentGames = new HashMap<>();
     }
 
+    /**
+     * newGame creates a new checkers game that players can interact with
+     * @param redPlayer the player to be red
+     * @param whitePlayer the player to be white
+     * @param viewMode the mode to situate the game with
+     * @return a gameID, that is, a unique string to identify the newly made game
+     */
     public String newGame(Player redPlayer, Player whitePlayer, Game.ViewMode viewMode){
         String gameId = createGameId(redPlayer, whitePlayer);
         Game newGame = new Game(redPlayer, whitePlayer, viewMode);
@@ -24,8 +34,23 @@ public class GameCenter {
         return gameId;
     }
 
+    /**
+     * Gets an active game by their unique gameID
+     * @param gameId the unique string to find the game with
+     * @return the game identified by the gameID
+     */
     public Game getGame(String gameId){
         return currentGames.get(gameId);
+    }
+
+    /**
+     * Creates a new, unique ID to identify a game with
+     * @param redPlayer the redPlayer
+     * @param whitePlayer the whitePlayer
+     * @return a new ID, that is, a string
+     */
+    private static String createGameId(Player redPlayer, Player whitePlayer){
+        return redPlayer.getName() + "Vs" + whitePlayer.getName();
     }
 
     public boolean requestMove(String gameId, Player currentPlayer, Move move){
@@ -45,7 +70,24 @@ public class GameCenter {
         return game.backup();
     }
 
-    private static String createGameId(Player redPlayer, Player whitePlayer){
-        return redPlayer.getName() + "Vs" + whitePlayer.getName();
+
+    /**
+     * Searches through the list of current games to determine
+     * if a given player is within one.
+     * @param player The player to be searched for
+     * @return true if the player is within a current game. False otherwise
+     */
+    public boolean hasGame(Player player) {
+        for (Map.Entry<String, Game> game : currentGames.entrySet()) {
+            if (game.getValue().getWhitePlayer().equals(player)
+                    || (game.getValue().getRedPlayer().equals(player))) {
+                return true;
+            }
+        }
+
+        return false;
+
     }
+
+
 }
