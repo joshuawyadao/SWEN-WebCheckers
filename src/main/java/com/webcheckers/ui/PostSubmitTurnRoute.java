@@ -53,7 +53,7 @@ public class PostSubmitTurnRoute implements Route {
         vm.put("title", "Enjoy Your Game!");
 
         // render the View
-        Message moveInfo = null;
+        Message moveInfo;
 
         if(isValid){
             moveInfo = Message.info("Submitted a Turn");

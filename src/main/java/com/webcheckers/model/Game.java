@@ -64,6 +64,7 @@ public class Game {
     public boolean makeMove( Player player, Position startingPos, Position endingPos ) {
         int typeOfMove = startingPos.difference( endingPos );
         Board turn = new Board();
+
         turn.copyBoard( getRecentTurn() );
         Piece selectPiece = turn.getBoard()[startingPos.getRow()][startingPos.getCell()].getPiece();
 
@@ -77,7 +78,7 @@ public class Game {
     }
 
     public boolean submitTurn() {
-        this.checkerBoard = this.previousMoves.peek();
+        this.checkerBoard = this.previousMoves.pop();
         this.previousMoves = new Stack<>();
         this.previousMoves.push(checkerBoard);
 
@@ -87,6 +88,11 @@ public class Game {
             this.activePlayer = this.redPlayer;
         }
 
+        return true;
+    }
+
+    public boolean backup(){
+        this.previousMoves.pop();
         return true;
     }
 

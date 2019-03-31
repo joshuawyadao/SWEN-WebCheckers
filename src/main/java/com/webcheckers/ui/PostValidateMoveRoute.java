@@ -49,10 +49,6 @@ public class PostValidateMoveRoute implements Route {
         Move move = gson.fromJson(correctJSONMoveString, Move.class);
         boolean isValid = gameCenter.requestMove(gameId, currentUser, move);
 
-//        System.out.println("Move Start Row = " + move.getStart().getRow());
-//        System.out.println("Move Start Cell = " + move.getStart().getCell());
-//        System.out.println("Move End Row = " + move.getEnd().getRow());
-//        System.out.println("Move End Cell = " + move.getEnd().getCell());
         Game currentGame = gameCenter.getGame(gameId);
         vm.put("redPlayer", currentGame.getRedPlayer());
         vm.put("whitePlayer", currentGame.getWhitePlayer());
@@ -66,8 +62,7 @@ public class PostValidateMoveRoute implements Route {
         vm.put(GetHomeRoute.CURRENT_USER_ATTR, currentUser);
         vm.put("title", "Enjoy Your Game!");
 
-        // render the View
-        Message moveInfo = null;
+        Message moveInfo;
         if(isValid){
             moveInfo = Message.info("Outstanding move!");
         }else{

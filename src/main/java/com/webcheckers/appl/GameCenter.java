@@ -39,6 +39,12 @@ public class GameCenter {
         return game.submitTurn();
     }
 
+    public boolean backupMove(String gameId){
+        Game game = currentGames.get(gameId);
+
+        return game.backup();
+    }
+
     private static String createGameId(Player redPlayer, Player whitePlayer){
         return redPlayer.getName() + "Vs" + whitePlayer.getName();
     }

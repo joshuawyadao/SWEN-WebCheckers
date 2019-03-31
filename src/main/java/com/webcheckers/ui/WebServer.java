@@ -173,7 +173,11 @@ public class WebServer {
     //Posts the user- inputted move to the server for validation.
     post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(gameCenter, gson, templateEngine));
 
+
     post("/submitTurn", new PostSubmitTurnRoute(gameCenter, gson, templateEngine));
+
+
+    post("/backupMove", new PostBackupMoveRoute(gameCenter, gson, templateEngine));
 
     //
     LOG.config("WebServer is initialized.");
