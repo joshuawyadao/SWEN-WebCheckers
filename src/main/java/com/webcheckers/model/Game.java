@@ -79,15 +79,13 @@ public class Game {
     }
 
     public boolean validateTurn() {
-        Board selectedBoard = this.checkerBoard;
+//        Board selectedBoard = this.checkerBoard;
         for( Board turn : previousMoves ) {
-            Position movedPos = selectedBoard.differentPiece(turn.getBoard());
-
-            if (movedPos != null && !selectedBoard.pieceMovedCorrectDirection(movedPos)) {
+            if( !turn.movedPieceCorrectly() ) {
                 return false;
             }
 
-            selectedBoard = turn;
+//            selectedBoard = turn;
         }
 
         return true;

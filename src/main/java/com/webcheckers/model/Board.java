@@ -198,14 +198,18 @@ public class Board {
 //        return null;
 //    }
 
-//    public boolean movedPieceCorrectly() {
-//        for( int row = 0; row < BOARD_SIDE; row++ ) {
-//            for( int col = 0; col < BOARD_SIDE; col++ ) {
-//
-//            }
-//        }
-//    }
-
+    public boolean movedPieceCorrectly() {
+        Position pos;
+        for( int row = 0; row < BOARD_SIDE; row++ ) {
+            for( int col = 0; col < BOARD_SIDE; col++ ) {
+                pos = new Position( row, col );
+                if( !pieceMovedCorrectDirection( pos ) ) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
     public boolean pieceMovedCorrectDirection( Position position ) {
         List<Position> adjacentSpaces = adjacentSpaces( position );
