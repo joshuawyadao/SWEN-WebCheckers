@@ -78,7 +78,25 @@ public class Game {
         return false;
     }
 
+    public boolean validateTurn() {
+        Board selectedBoard = this.checkerBoard;
+        for( Board turn : previousMoves ) {
+            Position movedPos = selectedBoard.differentPiece(turn.getBoard());
+
+            if (movedPos != null && !selectedBoard.pieceMovedCorrectDirection(movedPos)) {
+                return false;
+            }
+
+            selectedBoard = turn;
+        }
+
+        return true;
+    }
+
     public boolean submitTurn() {
+        if( !validateTurn() ) {
+            return false;
+        }
         this.checkerBoard = this.previousMoves.pop();
         this.previousMoves = new Stack<>();
         this.previousMoves.push(checkerBoard);
