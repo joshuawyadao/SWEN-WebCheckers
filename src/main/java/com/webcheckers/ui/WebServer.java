@@ -173,6 +173,8 @@ public class WebServer {
     //Posts the user- inputted move to the server for validation.
     post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(gameCenter, gson));
 
+    post("/resignGame", new PostResignGameRoute(gson, gameCenter, templateEngine, playerLobby));
+
     //Submits the user- inputted move to the server and, if valid, reflects the
     //change on the board to both players
     post("/submitTurn", new PostSubmitTurnRoute(gameCenter, gson));

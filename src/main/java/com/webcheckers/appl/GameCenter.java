@@ -28,6 +28,10 @@ public class GameCenter {
         return currentGames.get(gameId);
     }
 
+    public void removeGame(String gameId) {
+        currentGames.remove(gameId);
+    }
+
     public boolean requestMove(String gameId, Player currentPlayer, Move move){
         Game game = currentGames.get(gameId);
         return game.makeMove(currentPlayer, move.getStart(), move.getEnd());
