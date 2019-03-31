@@ -89,8 +89,8 @@ public class Board {
         return board[rowNum];
     }
 
-    public boolean validateMove(Position startPos, Position endingPos, int typeOfMove, Piece piece ) {
-        Move playerMove = new Move( board );
+    public boolean validateMove(Position startPos, Position endingPos, int typeOfMove, Piece piece, Board viewBoard ) {
+        Move playerMove = new Move( viewBoard.getBoard() );
         boolean validMove = false;
 
         //CHANGED: add this if statement to prevent null pointer exeception when
@@ -107,7 +107,7 @@ public class Board {
             } else if (typeOfMove == -2) {
                 Position captured = playerMove.validSimpleJump(startPos, endingPos);
                 if (captured != null) {
-                    this.board[captured.getRow()][captured.getCell()] = null;
+                    this.board[captured.getRow()][captured.getCell()].setPiece(null);
                     validMove = true;
                 }
             }
@@ -119,7 +119,7 @@ public class Board {
             } else if (typeOfMove == 2) {
                 Position captured = playerMove.validSimpleJump(startPos, endingPos);
                 if (captured != null) {
-                    this.board[captured.getRow()][captured.getCell()] = null;
+                    this.board[captured.getRow()][captured.getCell()].setPiece(null);
                     validMove = true;
                 }
             }
@@ -131,7 +131,7 @@ public class Board {
             } else if (Math.abs(typeOfMove) == 2) {
                 Position captured = playerMove.validSimpleJump(startPos, endingPos);
                 if (captured != null) {
-                    this.board[captured.getRow()][captured.getCell()] = null;
+                    this.board[captured.getRow()][captured.getCell()].setPiece(null);
                     validMove = true;
                 }
             }

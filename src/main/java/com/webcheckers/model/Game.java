@@ -69,7 +69,7 @@ public class Game {
         turn.copyBoard( this.checkerBoard );
         Piece selectPiece = turn.getBoard()[startingPos.getRow()][startingPos.getCell()].getPiece();
 
-        if( turn.validateMove( startingPos, endingPos, typeOfMove, selectPiece ) ) {
+        if( turn.validateMove( startingPos, endingPos, typeOfMove, selectPiece, getRecentTurn() ) ) {
             turn.movePiece( startingPos, endingPos, player.playerColorToPieceColor() );
             previousMoves.push( turn );
             return true;
@@ -95,6 +95,18 @@ public class Game {
     public boolean backup(){
         this.previousMoves.pop();
         return true;
+    }
+
+    public Player completedGame() {
+        if( this.checkerBoard.finishedGame() ) {
+            Player.PlayerColor winnerColor = this.checkerBoard.winnerColor();
+            if( winnerColor == Player.PlayerColor.RED ) {
+                return this.redPlayer;
+            } else {
+                return this.whitePlayer;
+            }
+        }
+        return null;
     }
 
 }
