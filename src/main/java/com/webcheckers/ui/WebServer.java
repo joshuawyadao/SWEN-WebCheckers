@@ -171,13 +171,15 @@ public class WebServer {
     get(GAME_URL, new GetGameRoute(playerLobby, gameCenter, templateEngine));
 
     //Posts the user- inputted move to the server for validation.
-    post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(gameCenter, gson, templateEngine));
+    post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(gameCenter, gson));
 
+    //Submits the user- inputted move to the server and, if valid, reflects the
+    //change on the board to both players
+    post("/submitTurn", new PostSubmitTurnRoute(gameCenter, gson));
 
-    post("/submitTurn", new PostSubmitTurnRoute(gameCenter, gson, templateEngine));
-
-
-    post("/backupMove", new PostBackupMoveRoute(gameCenter, gson, templateEngine));
+    //Posts a request to the server to take back one previous turn the user
+    //made, before submission
+    post("/backupMove", new PostBackupMoveRoute(gameCenter, gson));
 
     //
     LOG.config("WebServer is initialized.");

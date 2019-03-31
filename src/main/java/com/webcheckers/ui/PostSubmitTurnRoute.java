@@ -2,9 +2,7 @@ package com.webcheckers.ui;
 
 import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
-import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
-import com.webcheckers.model.Move;
 import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
 import spark.*;
@@ -15,16 +13,14 @@ import java.util.Objects;
 import java.util.logging.Logger;
 
 public class PostSubmitTurnRoute implements Route {
-    private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
+    private static final Logger LOG = Logger.getLogger(PostSubmitTurnRoute.class.getName());
 
     private final GameCenter gameCenter;
     private final Gson gson;
-    private final TemplateEngine templateEngine;
 
-    public PostSubmitTurnRoute(final GameCenter gameCenter, final Gson gson, final TemplateEngine templateEngine ) {
+    public PostSubmitTurnRoute(final GameCenter gameCenter, final Gson gson ) {
         this.gameCenter = Objects.requireNonNull(gameCenter, "gameCenter is required");
         this.gson = Objects.requireNonNull(gson, "gson is required");
-        this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
         //
         LOG.config("PostSubmitTurnRoute is initialized.");
     }

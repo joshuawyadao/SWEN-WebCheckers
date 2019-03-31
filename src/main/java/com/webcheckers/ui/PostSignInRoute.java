@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 import static spark.Spark.halt;
 
 public class PostSignInRoute implements Route {
-    private static final Logger LOG = Logger.getLogger(GetSignInRoute.class.getName());
+    private static final Logger LOG = Logger.getLogger(PostSignInRoute.class.getName());
 
     private final static String NAME_PARAM = "myUsername";
 

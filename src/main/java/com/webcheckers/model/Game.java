@@ -64,8 +64,9 @@ public class Game {
     public boolean makeMove( Player player, Position startingPos, Position endingPos ) {
         int typeOfMove = startingPos.difference( endingPos );
         Board turn = new Board();
-
-        turn.copyBoard( getRecentTurn() );
+        //CHANGED: 'getRecentedTurn()' to 'this.checkerboard' so that multiple single moves
+        //are not longer allowed
+        turn.copyBoard( this.checkerBoard );
         Piece selectPiece = turn.getBoard()[startingPos.getRow()][startingPos.getCell()].getPiece();
 
         if( turn.validateMove( startingPos, endingPos, typeOfMove, selectPiece ) ) {

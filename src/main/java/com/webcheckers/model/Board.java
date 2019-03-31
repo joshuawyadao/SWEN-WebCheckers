@@ -93,6 +93,12 @@ public class Board {
         Move playerMove = new Move( board );
         boolean validMove = false;
 
+        //CHANGED: add this if statement to prevent null pointer exeception when
+        //moving a piece that this not currently in game's 'this.checkerboard'
+        //this allows a simple to only occur oncein one turn
+        if(piece == null)
+            return false;
+
         if( piece.getType() == Piece.TYPE.SINGLE && piece.getColor() == Piece.COLOR.RED ) { // Red single move
             if (typeOfMove == -1) {
                 if (playerMove.validSimpleMove(startPos, endingPos)) {
