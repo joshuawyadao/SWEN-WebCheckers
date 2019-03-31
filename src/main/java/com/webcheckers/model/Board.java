@@ -149,7 +149,8 @@ public class Board {
 
         for( int row = 0; row < BOARD_SIDE; row++ ) {
             for( int col = 0; col < BOARD_SIDE; col++ ) {
-                if( this.board[row][col].getPiece().getColor() == color ) {
+                Piece piece = this.board[row][col].getPiece();
+                if( piece != null && piece.getColor() == color ) {
                     numOfPieces++;
                 }
             }
@@ -184,19 +185,26 @@ public class Board {
         }
     }
 
-    public Position differentPiece( Space[][] comparison ) {
-        for( int row = 0; row < BOARD_SIDE; row++ ) {
-            for( int col = 0; col < BOARD_SIDE; col++ ) {
-                Space currentBoardSpace = this.board[row][col];
-                Space comparisonSpace = comparison[row][col];
-                if( !currentBoardSpace.equals( comparisonSpace ) && currentBoardSpace.getPiece() != null ) {
-                    return new Position( row, col );
-                }
-            }
-        }
-        return null;
-    }
+//    public Position differentPiece( Space[][] comparison ) {
+//        for( int row = 0; row < BOARD_SIDE; row++ ) {
+//            for( int col = 0; col < BOARD_SIDE; col++ ) {
+//                Space currentBoardSpace = this.board[row][col];
+//                Space comparisonSpace = comparison[row][col];
+//                if( !currentBoardSpace.equals( comparisonSpace ) && currentBoardSpace.getPiece() != null ) {
+//                    return new Position( row, col );
+//                }
+//            }
+//        }
+//        return null;
+//    }
 
+//    public boolean movedPieceCorrectly() {
+//        for( int row = 0; row < BOARD_SIDE; row++ ) {
+//            for( int col = 0; col < BOARD_SIDE; col++ ) {
+//
+//            }
+//        }
+//    }
 
     public boolean pieceMovedCorrectDirection( Position position ) {
         List<Position> adjacentSpaces = adjacentSpaces( position );
