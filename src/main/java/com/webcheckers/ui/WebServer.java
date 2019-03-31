@@ -182,6 +182,7 @@ public class WebServer {
     post("/backupMove", new PostBackupMoveRoute(gameCenter, gson));
 
     post("/checkTurn", new PostCheckTurnRoute(gameCenter, gson, playerLobby));
+
     //
     LOG.config("WebServer is initialized.");
   }

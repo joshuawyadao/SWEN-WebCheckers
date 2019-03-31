@@ -19,6 +19,12 @@ public class Game {
     private Map<String, Object> modeOptionsAsJSON;
     private Stack<Board> previousMoves;
 
+    /**
+     *
+     * @param redPlayer
+     * @param whitePlayer
+     * @param viewMode
+     */
     public Game(Player redPlayer, Player whitePlayer, ViewMode viewMode){
         this.redPlayer = redPlayer;
         this.activePlayer = redPlayer;
@@ -29,11 +35,22 @@ public class Game {
         previousMoves.push(checkerBoard);
     }
 
+    //
     //Accessors
+    //
+
+    /**
+     *
+     * @return
+     */
     public Player getRedPlayer() {
         return this.redPlayer;
     }
 
+    /**
+     *
+     * @return
+     */
     public Player getWhitePlayer() {
         return this.whitePlayer;
     }

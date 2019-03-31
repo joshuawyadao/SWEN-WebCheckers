@@ -53,20 +53,35 @@ public class GameCenter {
         return redPlayer.getName() + "Vs" + whitePlayer.getName();
     }
 
+    /**
+     * Moves a piece of a game
+     * @param gameId the gameID of the game
+     * @param currentPlayer the current player
+     * @param move how is the piece going to be moved
+     * @return true if the movement is successful, false if not
+     */
     public boolean requestMove(String gameId, Player currentPlayer, Move move){
         Game game = currentGames.get(gameId);
         return game.makeMove(currentPlayer, move.getStart(), move.getEnd());
     }
 
+    /**
+     * Submits a turn so the other player can play
+     * @param gameId the game ID of the game
+     * @return true if successful, false if it is not
+     */
     public boolean submitTurn(String gameId){
         Game game = currentGames.get(gameId);
-
         return game.submitTurn();
     }
 
+    /**
+     * Backs-up a move
+     * @param gameId the game ID of the game
+     * @return true if successful, false if not
+     */
     public boolean backupMove(String gameId){
         Game game = currentGames.get(gameId);
-
         return game.backup();
     }
 
