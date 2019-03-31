@@ -203,7 +203,9 @@ public class Board {
 
         for( Position pos : adjacentSpaces ) {
             Piece piece = this.board[pos.getRow()][pos.getCell()].getPiece();
-            if( piece != null ) {
+            Space currentSpace = this.board[position.getRow()][position.getCell()];
+            Space posSpace = this.board[pos.getRow()][pos.getCell()];
+            if( piece != null &&  !currentSpace.equals(posSpace) ) {
                 return false;
             }
         }
@@ -217,23 +219,69 @@ public class Board {
         int cell = position.getCell();
         Piece piece = this.board[row][cell].getPiece();
 
-        if( piece.getColor() == Piece.COLOR.RED ) { // red pieces
-            if( cell < 7 ) { // left boundary
-                adjacentSpaces.add( new Position( row + 1, cell + 1 ) );
+        if (piece.getColor() == Piece.COLOR.RED) { // red pieces
+            if( cell > 2 && cell < 6 ) { // left boundary
+                if( !this.board[row + 1][cell + 1].isValid() && this.board[row + 2][cell + 2].isValid() ) {
+                    adjacentSpaces.add(new Position(row + 1, cell + 1));
+                }
+                if( !this.board[row + 1][cell - 1].isValid() && this.board[row + 2][cell - 2].isValid() ) {
+                    adjacentSpaces.add(new Position(row + 1, cell - 1));
+                }
             }
-            if( cell > 0 ) { // right boundary
-                adjacentSpaces.add(new Position(row + 1, cell - 1));
+            if( cell == 1 && row == 1) {
+                if( !this.board[row + 1][cell + 1].isValid() && this.board[row + 2][cell + 2].isValid() ) {
+                    adjacentSpaces.add(new Position( row + 1, cell + 1 ) );
+                }
+            }
+            if( cell == 7 && row == 1) {
+                if( !this.board[row + 1][cell - 1].isValid() && this.board[row + 2][cell - 2].isValid() ) {
+                    adjacentSpaces.add(new Position( row + 1, cell - 1 ) );
+                }
             }
         } else { // white pieces
-            if( cell < 7 ) { // left boundary
-                adjacentSpaces.add( new Position( row - 1, cell + 1 ) );
+            if(cell > 2 && cell < 6 ) { // left boundary
+                if( !this.board[row - 1][cell + 1].isValid() && this.board[row - 2][cell + 2].isValid() ) {
+                    adjacentSpaces.add(new Position(row - 1, cell + 1));
+                }
+                if( !this.board[row - 1][cell - 1].isValid() && this.board[row - 2][cell - 2].isValid() ) {
+                    adjacentSpaces.add(new Position(row - 1, cell - 1));
+                }
             }
-            if( cell > 0 ) { // right boundary
-                adjacentSpaces.add(new Position(row - 1, cell - 1));
+            if( cell == 1 && row == 6) {
+                if( !this.board[row - 1][cell + 1].isValid() && this.board[row - 2][cell + 2].isValid() ) {
+                    adjacentSpaces.add(new Position( row - 1, cell + 1 ) );
+                }
+            }
+            if( cell == 7 && row == 6) {
+                if( !this.board[row - 1][cell - 1].isValid() && this.board[row - 2][cell - 2].isValid() ) {
+                    adjacentSpaces.add(new Position( row - 1, cell - 1 ) );
+                }
             }
         }
 
         return adjacentSpaces;
+    }
+
+    public void kingPieces() {
+        int row = 0;
+        Piece piece;
+        for( int col = 0; col < BOARD_SIDE; col++ ) {
+            piece = this.board[row][col].getPiece();
+
+            if( piece != null && piece.getColor() == Piece.COLOR.WHITE ) {
+                this.board[row][col].setPiece( new Piece( Piece.TYPE.KING, Piece.COLOR.WHITE ) );
+            }
+        }
+
+        row = 7;
+        for( int col = 0; col < BOARD_SIDE; col++ ) {
+            piece = this.board[row][col].getPiece();
+
+            if( piece != null && piece.getColor() == Piece.COLOR.RED ) {
+                this.board[row][col].setPiece( new Piece( Piece.TYPE.KING, Piece.COLOR.RED ) );
+            }
+        }
+
     }
 
 }

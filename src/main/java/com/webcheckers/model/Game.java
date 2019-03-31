@@ -98,6 +98,7 @@ public class Game {
             return false;
         }
         this.checkerBoard = this.previousMoves.pop();
+        this.checkerBoard.kingPieces();
         this.previousMoves = new Stack<>();
         this.previousMoves.push(checkerBoard);
 
