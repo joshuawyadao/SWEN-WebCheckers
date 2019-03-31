@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
@@ -25,6 +26,7 @@ public class GetGameRouteTest {
     private PlayerLobby lobby;
     private TemplateEngine engine;
     private Response response;
+    private GameCenter gameCenter;
 
     /**
      * Setup new mock objects for each test.
@@ -37,8 +39,9 @@ public class GetGameRouteTest {
         response = mock(Response.class);
         engine = mock(TemplateEngine.class);
         lobby = mock(PlayerLobby.class);
+        gameCenter = mock(GameCenter.class);
 
-        CuT = new GetGameRoute(lobby, engine);
+        CuT = new GetGameRoute(lobby, gameCenter, engine);
     }
 
     /**

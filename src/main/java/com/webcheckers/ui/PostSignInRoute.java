@@ -17,9 +17,6 @@ public class PostSignInRoute implements Route {
 
     private final static String NAME_PARAM = "myUsername";
 
-    private final static Message INVALID_NAME = Message.error("INVALID NAME: Name MUST contain at least one " +
-                                                "alphanumeric character, and can optionally contain spaces.");
-
     //private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
 
     private final PlayerLobby playerLobby;
@@ -53,20 +50,19 @@ public class PostSignInRoute implements Route {
     public Object handle(Request request, Response response) {
         LOG.finer("PostSignInRoute is invoked.");
 
+        Map<String, Object> vm = new HashMap<>();
+        Session playerSession = request.session();
+
         String usernameAttempt = request.queryParams(NAME_PARAM);
 
-        Map<String, Object> vm = new HashMap<>();
-
         Player attemptedPlayerLogin = new Player(usernameAttempt);
+        Message loginResult = playerLobby.signInPlayer(attemptedPlayerLogin, playerSession);
 
-        if(playerLobby.isValidPlayer(attemptedPlayerLogin)){
-            Session session = request.session();
-
-            playerLobby.signInPlayer(attemptedPlayerLogin, request.session());
-            session.attribute(GetHomeRoute.CURRENT_USER_ATTR, attemptedPlayerLogin);
+        if(loginResult.getType() != Message.Type.ERROR){
+            playerSession.attribute(GetHomeRoute.CURRENT_USER_ATTR, attemptedPlayerLogin);
 
             //add currentUser as Session attribute
-            Player currentUser = session.attribute(GetHomeRoute.CURRENT_USER_ATTR);
+            Player currentUser = playerSession.attribute(GetHomeRoute.CURRENT_USER_ATTR);
             vm.put(GetHomeRoute.CURRENT_USER_ATTR, currentUser);
 
             vm.put("title", "Welcome!");
@@ -80,7 +76,7 @@ public class PostSignInRoute implements Route {
         }else{
             vm.put("signin_title", "Please Sign In");
 
-            vm.put("message", INVALID_NAME);
+            vm.put("message", loginResult);
 
             return templateEngine.render(new ModelAndView(vm , GetSignInRoute.VIEW_NAME));
         }
