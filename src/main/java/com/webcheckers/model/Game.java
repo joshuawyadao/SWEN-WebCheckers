@@ -18,6 +18,7 @@ public class Game {
     private Board checkerBoard;
     private Map<String, Object> modeOptionsAsJSON;
     private Stack<Board> previousMoves;
+    private Player resignedPlayer;
 
     public Game(Player redPlayer, Player whitePlayer, ViewMode viewMode){
         this.redPlayer = redPlayer;
@@ -27,6 +28,7 @@ public class Game {
         this.checkerBoard = new Board();
         this.previousMoves = new Stack<>();
         previousMoves.push(checkerBoard);
+        this.resignedPlayer = null;
     }
 
     //Accessors
@@ -124,6 +126,14 @@ public class Game {
             }
         }
         return null;
+    }
+
+    public void playerResigned(Player resignedPlayer){
+        this.resignedPlayer = resignedPlayer;
+    }
+
+    public boolean isResigned(){
+        return resignedPlayer != null;
     }
 
 }
