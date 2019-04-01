@@ -41,13 +41,23 @@ This section describes the features of the application.
 > maybe Epics and critical Stories._
 
 ### Definition of MVP
-> _Provide a simple description of the Minimum Viable Product._
+> The Minimum Viable Product is a WebCheckers Application that allows players to sign-in and find other players to play a match of Checkers. You are allowed to resign if you have to go mid game or you can 
+	play it to victory/defeat. You can sign out whenever you please, however your game will not be saved.
 
 ### MVP Features
-> _Provide a list of top-level Epics and/or Stories of the MVP._
-
+> Sign in:
+	- Allows you to sign in and play against other players
+	- You MUST be signed in to start a match and see other lobbies
+> Start a game:
+	- Allows you to click on another player's lobby or have another player click on your lobby and a match will begin.
+	- This match will be played until either someone resigns, signs out, or there is a victor.
+> Resign:
+	- This allows you to resign in the middle of a game, giving the other player a forefeit victory and sending both of you back to the home page.
+> End game experience:
+	- This will display a victory or defeat message depending on the circumstance of the end game and a reason (resign, all pieces taken)
 ### Roadmap of Enhancements
-> _Provide a list of top-level features in the order you plan to consider them._
+> Spectator mode
+> AI Player
 
 
 ## Application Domain
@@ -56,14 +66,18 @@ This section describes the application domain.
 
 ![The WebCheckers Domain Model](Domain-Model.png)
 
-> _Provide a high-level overview of the domain for this application. You
-> can discuss the more important domain entities and their relationship
-> to each other._
+For our domain model we deicded to have a Game be the central part of our diagram.
+Of course, a game is then played on a Board which contains 64 squares (for a standard 8x8 checkers board).
+There are then anywhere from 1 to 24 pieces on the board at a time, which can either be single pieces or king pieces.
+A player moves each piece around to play the game. There are anywhere from 1 to 2 players controlling the pieces at a time, depending on player resignation.
+If we end up doing the spectator enhancement, a spectator will be viewing the Game. Anywhere from 0 to many spectators can be watching.
 
 
 ## Architecture and Design
 
-This section describes the application architecture.
+Our application has 3 tiers of code, them being: UI, Model, and Application.
+
+
 
 ### Summary
 
