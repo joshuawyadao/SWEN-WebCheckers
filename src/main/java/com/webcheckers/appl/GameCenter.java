@@ -117,5 +117,14 @@ public class GameCenter {
 
     }
 
+    public boolean isMyTurn(String gameId, Player currentPlayer){
+        Game game = currentGames.get(gameId);
+
+        if((game.getActivePlayer()).equals(currentPlayer))
+            return true;
+        else
+            return false;
+    }
+
 
 }

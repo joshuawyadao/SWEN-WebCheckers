@@ -100,7 +100,7 @@ public class GetGameRoute implements Route {
 
         vm.put("redPlayer", currentGame.getRedPlayer());
         vm.put("whitePlayer", currentGame.getWhitePlayer());
-        vm.put("activeColor", currentGame.getPlayerColor(currentUser));
+        vm.put("activeColor", currentGame.getActivePlayer().getPlayerColor());
         vm.put("viewMode", currentGame.getViewMode());
 
         boolean isRed = currentGame.getPlayerColor(currentUser) == Player.PlayerColor.RED;
