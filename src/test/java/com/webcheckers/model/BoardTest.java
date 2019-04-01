@@ -141,6 +141,7 @@ class BoardTest {
 
     @Test
     void addAdjacentSpace(){
+        //CuT.movePiece();
 
     }
 
