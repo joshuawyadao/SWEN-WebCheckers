@@ -50,9 +50,6 @@ public class PlayerLobby {
         players.put(player, playerSession);
     }
 
-    //Get a player's session through only entering their name
-
-
     /**
      * Get a player's session through only entering their name
      * @param playerName the name of the player

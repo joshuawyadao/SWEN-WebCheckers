@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import java.awt.image.SinglePixelPackedSampleModel;
+
 public class Space {
 
     enum COLOR { LIGHT, DARK }
@@ -68,4 +70,17 @@ public class Space {
         return new Space( this.cellIdx, tempPiece, this.color );
     }
 
+    @Override
+    public boolean equals( Object other ) {
+        if (this == other)return true;
+        if (!(other instanceof Space))return false;
+        Space that = (Space)other;
+        if( this.piece == null && that.piece == null ) {
+            return true;
+        }
+        if( that.piece == null || this.piece == null ) {
+            return false;
+        }
+        return this.color == that.color && this.piece.equals(that.piece);
+    }
 }

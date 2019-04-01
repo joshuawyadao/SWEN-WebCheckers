@@ -5,7 +5,7 @@ import com.webcheckers.model.Player;
 import com.webcheckers.model.Space;
 import javafx.geometry.Pos;
 
-import java.util.Stack;
+import java.util.*;
 
 public class Board {
 
@@ -205,6 +205,58 @@ public class Board {
                 this.board[row][col] = sourceBoard[row][col].copySpace();
             }
         }
+    }
+
+    public Position differentPiece( Space[][] comparison ) {
+        for( int row = 0; row < BOARD_SIDE; row++ ) {
+            for( int col = 0; col < BOARD_SIDE; col++ ) {
+                Space currentBoardSpace = this.board[row][col];
+                Space comparisonSpace = comparison[row][col];
+                if( !currentBoardSpace.equals( comparisonSpace ) && currentBoardSpace.getPiece() != null ) {
+                    return new Position( row, col );
+                }
+            }
+        }
+        return null;
+    }
+
+
+    public boolean pieceMovedCorrectDirection( Position position ) {
+        List<Position> adjacentSpaces = adjacentSpaces( position );
+
+        for( Position pos : adjacentSpaces ) {
+            Piece piece = this.board[pos.getRow()][pos.getCell()].getPiece();
+            if( piece != null ) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public List<Position> adjacentSpaces( Position position ) {
+        List<Position> adjacentSpaces = new ArrayList<>();
+        int row = position.getRow();
+        int cell = position.getCell();
+        Piece piece = this.board[row][cell].getPiece();
+
+        if( piece.getColor() == Piece.COLOR.RED ) { // red pieces
+            if( cell < 7 ) { // left boundary
+                adjacentSpaces.add( new Position( row + 1, cell + 1 ) );
+            }
+            if( cell > 0 ) { // right boundary
+                adjacentSpaces.add(new Position(row + 1, cell - 1));
+            }
+        } else { // white pieces
+            if( cell < 7 ) { // left boundary
+                adjacentSpaces.add( new Position( row - 1, cell + 1 ) );
+            }
+            if( cell > 0 ) { // right boundary
+                adjacentSpaces.add(new Position(row - 1, cell - 1));
+            }
+        }
+
+        return adjacentSpaces;
     }
 
 }
