@@ -45,41 +45,42 @@ class GameTest {
     }
 
     @Test
-    void getRecentTurn() {
-
-    }
-
-    @Test
     void getPlayerColor() {
         assertEquals(Player.PlayerColor.NONE, CuT.getPlayerColor(redPlayer));
     }
 
     @Test
     void initializeGame() {
+        assertEquals( Player.PlayerColor.NONE, CuT.getRedPlayer().getPlayerColor());
+        assertEquals( Player.PlayerColor.NONE, CuT.getWhitePlayer().getPlayerColor());
+        CuT.initializeGame();
+        assertNotNull(CuT.getRedPlayer().getPlayerColor());
+        assertNotNull(CuT.getWhitePlayer().getPlayerColor());
     }
 
     @Test
     void makeMove() {
+        Position src = new Position(2,1);
+        Position dst = new Position(3,0);
 
-        Board board = CuT.getCheckerBoard();
-
-        Position src = new Position(0,0);
-        Position dst = new Position(1,1);
-
-        //assertTrue( CuT.makeMove(CuT.getRedPlayer(), src, dst) );
+        assertTrue( CuT.makeMove(CuT.getRedPlayer(), src, dst) );
 
     }
 
     @Test
-    void submitTurn() {
-    }
-
-    @Test
-    void backup() {
+    void validateTurn() {
+        assertTrue( CuT.validateTurn() );
     }
 
     @Test
     void completedGame() {
+        Player p1 = new Player("p1");
+        Player p2 = new Player("p2");
+        Board testBoard = new Board(false, false);
+
+        Player winner = CuT.completedGame();
+        assertNull(winner);
+
     }
 
     @Test
@@ -91,6 +92,7 @@ class GameTest {
 
     @Test
     void isResigned(){
+        assertFalse(CuT.isResigned());
         CuT.initializeGame();
         CuT.playerResigned(redPlayer);
         assertTrue(CuT.isResigned());
