@@ -102,9 +102,10 @@ public class Board {
         }
 
         if(isRed){
-            board[0][1] = new Space(0, new Piece(Piece.TYPE.SINGLE, Piece.COLOR.RED), Space.COLOR.DARK);
+            board[0][1] = new Space(1, new Piece(Piece.TYPE.SINGLE, Piece.COLOR.RED), Space.COLOR.DARK);
         } else {
-            board[7][0] = new Space(0, new Piece(Piece.TYPE.SINGLE, Piece.COLOR.WHITE), Space.COLOR.DARK);
+            board[7][2] = new Space(2, new Piece(Piece.TYPE.SINGLE, Piece.COLOR.WHITE), Space.COLOR.DARK);
+            board[6][1] = new Space(1, new Piece(Piece.TYPE.SINGLE, Piece.COLOR.RED), Space.COLOR.DARK);
         }
     }
 

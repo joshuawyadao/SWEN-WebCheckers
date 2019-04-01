@@ -96,23 +96,59 @@ class BoardTest {
     @Test
     void finishedGame() {
         assertTrue( CuTRed.finishedGame() );
-        assertTrue( CuTWhite.finishedGame() );
+        assertFalse( CuTWhite.finishedGame() );
     }
 
     @Test
     void winnerColor() {
-        assertEquals(Player.PlayerColor.WHITE, CuTWhite.winnerColor());
+        assertNotEquals(Player.PlayerColor.WHITE, CuTWhite.winnerColor());
         assertEquals(Player.PlayerColor.RED, CuTRed.winnerColor());
+        assertEquals(Player.PlayerColor.NONE, CuT.winnerColor());
     }
 
     @Test
-    void copyBoard(){
+    void movedPieceCorrectly(){
+        assertTrue(CuT.movedPieceCorrectly());
+
+        //White(7,2)
+        //Red(6,1)
+
+        Position src = new Position(7,2);
+        Position dst = new Position(6,3);
+
+        CuTWhite.movePiece(src,dst, Piece.COLOR.WHITE, Piece.TYPE.SINGLE);
+
+        //assertFalse(CuTWhite.movedPieceCorrectly());
+
 
     }
 
     @Test
-    void movePieceCorrectly(){
+    void pieceMoveCorrectDirection(){
+        Position pos = new Position(7,2);
+        assertTrue(CuT.pieceMovedCorrectDirection(pos));
+
+        //White(7,2)
+        //Red(6,1)
+
+        Position src = new Position(7,2);
+        Position dst = new Position(6,3);
+
+        CuTWhite.movePiece(src,dst, Piece.COLOR.WHITE, Piece.TYPE.SINGLE);
+
+        //assertFalse(CuTWhite.movedPieceCorrectly());
+    }
+
+    @Test
+    void addAdjacentSpace(){
 
     }
+
+    @Test
+    void equals(){
+        assertNotEquals(CuT.getBoard(), CuTRed.getBoard());
+    }
+
+
 
 }
