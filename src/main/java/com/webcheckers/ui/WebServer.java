@@ -168,7 +168,7 @@ public class WebServer {
     post(SIGNIN_URL, new PostSignInRoute(playerLobby, templateEngine));
 
     //Shows the Web Checkers game page.
-    get(GAME_URL, new GetGameRoute(playerLobby, gameCenter, templateEngine));
+    get(GAME_URL, new GetGameRoute(playerLobby, gameCenter, templateEngine, gson));
 
     //Posts the user- inputted move to the server for validation.
     post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(gameCenter, gson));
