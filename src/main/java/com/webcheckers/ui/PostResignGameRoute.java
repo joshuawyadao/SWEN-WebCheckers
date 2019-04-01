@@ -41,20 +41,22 @@ public class PostResignGameRoute implements Route {
         Player currentUser = currentSession.attribute(GetHomeRoute.CURRENT_USER_ATTR);
         String gameId = currentSession.attribute(GetGameRoute.GAME_ID_ATTR);
 
-        Player opponent;
 
-        if (currentUser.getPlayerColor() == Player.PlayerColor.RED){
-            opponent = gameCenter.getGame(gameId).getWhitePlayer();
-        } else {
-            opponent = gameCenter.getGame(gameId).getRedPlayer();
-        }
+//        Player opponent;
+//
+//        if (currentUser.getPlayerColor() == Player.PlayerColor.RED){
+//            opponent = gameCenter.getGame(gameId).getWhitePlayer();
+//        } else {
+//            opponent = gameCenter.getGame(gameId).getRedPlayer();
+//        }
 
-        Session opponentSession = playerLobby.getPlayerSession(opponent);
-        currentUser.leaveGame();
-        opponent.leaveGame();
-        gameCenter.removeGame(gameId);
-        currentSession.attribute(GetGameRoute.GAME_ID_ATTR, null);
-        opponentSession.attribute(GetGameRoute.GAME_ID_ATTR, null);
+        gameCenter.getGame(gameId).playerResigned(currentUser);
+//        Session opponentSession = playerLobby.getPlayerSession(opponent);
+//        currentUser.leaveGame();
+//        opponent.leaveGame();
+//        gameCenter.removeGame(gameId);
+//        currentSession.attribute(GetGameRoute.GAME_ID_ATTR, null);
+//        opponentSession.attribute(GetGameRoute.GAME_ID_ATTR, null);
 
         // display a user message in the Home page
         vm.put("message", GetHomeRoute.WELCOME_MSG);
