@@ -1,13 +1,16 @@
 package com.webcheckers.appl;
 
 import com.webcheckers.model.Game;
+import com.webcheckers.model.Move;
 import com.webcheckers.model.Player;
+import com.webcheckers.model.Position;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 
 @Tag("Application-tier")
@@ -44,19 +47,7 @@ class GameCenterTest {
     }
 
     @Test
-    void requestMove() {
-    }
-
-    @Test
-    void submitTurn() {
-    }
-
-    @Test
-    void backupMove() {
-    }
-
-    @Test
-    void hasGame() {
+    void redPlayerHasGame() {
         Player player1 = new Player("redPlayer");
         Player player2 = new Player("whitePlayer");
         Game.ViewMode viewMode = Game.ViewMode.PLAY;
@@ -64,8 +55,18 @@ class GameCenterTest {
         CuT.newGame(player1, player2, viewMode);
 
         assertTrue( CuT.hasGame(player1) );
-        assertTrue( CuT.hasGame(player2) );
 
+    }
+
+    @Test
+    void whitePlayerHasGame(){
+        Player player1 = new Player("redPlayer");
+        Player player2 = new Player("whitePlayer");
+        Game.ViewMode viewMode = Game.ViewMode.PLAY;
+
+        CuT.newGame(player1, player2, viewMode);
+
+        assertTrue( CuT.hasGame(player2) );
     }
 
     @Test
@@ -73,4 +74,42 @@ class GameCenterTest {
         Player player1 = new Player("redPlayer");
         assertFalse( CuT.hasGame(player1) );
     }
+
+    @Test
+    void requestMove() {
+        Player player1 = new Player("redPlayer");
+        Player player2 = new Player("whitePlayer");
+
+        Game.ViewMode viewMode = Game.ViewMode.PLAY;
+        String cutGame = CuT.newGame(player1, player2, viewMode);
+        Move move = new Move(CuT.getGame(cutGame).getCheckerBoard().getBoard());
+
+        move.validSimpleMove(new Position(0,0), new Position(1,1));
+
+        //assertTrue(CuT.requestMove(cutGame, player1, move));
+    }
+
+    @Test
+    void submitTurn() {
+        Player player1 = new Player("redPlayer");
+        Player player2 = new Player("whitePlayer");
+
+        Game.ViewMode viewMode = Game.ViewMode.PLAY;
+        String cutGame = CuT.newGame(player1, player2, viewMode);
+
+        assertTrue(CuT.submitTurn(cutGame));
+    }
+
+    @Test
+    void backupMove() {
+        Player player1 = new Player("redPlayer");
+        Player player2 = new Player("whitePlayer");
+
+        Game.ViewMode viewMode = Game.ViewMode.PLAY;
+        String cutGame = CuT.newGame(player1, player2, viewMode);
+
+        assertTrue(CuT.backupMove(cutGame));
+    }
+
+
 }
