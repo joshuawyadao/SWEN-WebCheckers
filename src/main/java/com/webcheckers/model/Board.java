@@ -89,6 +89,32 @@ public class Board {
         return board[rowNum];
     }
 
+    public boolean equals(Board other) {
+        for( int row = 0; row < BOARD_SIDE; row++ ) {
+            for( int col = 0; col < BOARD_SIDE; col ++ ) {
+                Space currentBoardSpace = this.board[row][col];
+                Space otherSpace = other.getBoard()[row][col];
+                if( !currentBoardSpace.equals(otherSpace) ) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Checks to see if the move was validated
+     * @param startPos the starting position of the move
+     * @param endingPos the ending position of the move
+     * @param typeOfMove the type of move that was made
+     *                   1: single move
+     *                   2: single jump
+     *                   -1: backwards single move
+     *                   -2: backwards single jump
+     * @param piece the piece to be validated
+     * @param viewBoard the board to be used
+     * @return if the move is valid
+     */
     public boolean validateMove(Position startPos, Position endingPos, int typeOfMove, Piece piece, Board viewBoard ) {
         Move playerMove = new Move( viewBoard.getBoard() );
         boolean validMove = false;
@@ -140,27 +166,29 @@ public class Board {
     }
 
     /**
-     * Moves a piece
-     * @param startPos the starting position of the piece
-     * @param endingPos the ending position of the piece
-     * @param pieceColor the piece's color
+     * Moves the piece on the board
+     * @param startPos the start position of the movement
+     * @param endingPos the ending position of the movement
+     * @param pieceColor the color of the piece moved
+     * @param type the type of piece moved
      */
-    public void movePiece( Position startPos, Position endingPos, Piece.COLOR pieceColor ) {
-        this.board[endingPos.getRow()][endingPos.getCell()].setPiece( new Piece( Piece.TYPE.SINGLE, pieceColor ) );
+    public void movePiece( Position startPos, Position endingPos, Piece.COLOR pieceColor, Piece.TYPE type ) {
+        this.board[endingPos.getRow()][endingPos.getCell()].setPiece( new Piece( type, pieceColor ) );
         this.board[startPos.getRow()][startPos.getCell()].setPiece( null );
     }
 
     /**
-     * Determine the amount of pieces a player has left
-     * @param color the color of the pieces to determine
-     * @return the amount of pieces of a player of a specified color
+     * Goes through all the pieces and checks to see if there is any pieces for a player left
+     * @param color the color of pieces to be looked for
+     * @return how many pieces are left for a player
      */
     private int playerPiecesLeft( Piece.COLOR color ) {
         int numOfPieces = 0;
 
         for( int row = 0; row < BOARD_SIDE; row++ ) {
             for( int col = 0; col < BOARD_SIDE; col++ ) {
-                if( this.board[row][col].getPiece().getColor() == color ) {
+                Piece piece = this.board[row][col].getPiece();
+                if( piece != null && piece.getColor() == color ) {
                     numOfPieces++;
                 }
             }
@@ -171,16 +199,16 @@ public class Board {
     }
 
     /**
-     * Determine if the game is finished
-     * @return true if either players no longer have pieces. False otherwise
+     * Checks to see if the game is finisheds\\
+     * @return if the game is finished
      */
     public boolean finishedGame() {
         return playerPiecesLeft( Piece.COLOR.RED ) == 0 || playerPiecesLeft( Piece.COLOR.WHITE ) == 0;
     }
 
     /**
-     * Determines the winner of the game
-     * @return the winner's respective color
+     * Returns the color of the player who won
+     * @return the color of the winning player
      */
     public Player.PlayerColor winnerColor() {
         if( finishedGame() ) {
@@ -195,7 +223,7 @@ public class Board {
     }
 
     /**
-     * Copies the board
+     * Copies the another board onto this board
      * @param source the board to be copied
      */
     public void copyBoard( Board source ) {
@@ -207,26 +235,38 @@ public class Board {
         }
     }
 
-    public Position differentPiece( Space[][] comparison ) {
+    /**
+     * Goes through every piece on the board to see if any piece could have be captured when it was not
+     * @return if the piece was move correctly
+     */
+    public boolean movedPieceCorrectly() {
+        Position pos;
         for( int row = 0; row < BOARD_SIDE; row++ ) {
             for( int col = 0; col < BOARD_SIDE; col++ ) {
-                Space currentBoardSpace = this.board[row][col];
-                Space comparisonSpace = comparison[row][col];
-                if( !currentBoardSpace.equals( comparisonSpace ) && currentBoardSpace.getPiece() != null ) {
-                    return new Position( row, col );
+                if( this.board[row][col].getPiece() != null ) {
+                    pos = new Position(row, col);
+                    if (!pieceMovedCorrectDirection(pos)) {
+                        return false;
+                    }
                 }
             }
         }
-        return null;
+        return true;
     }
 
-
+    /**
+     * Checks to see if a piece could have captured and did not
+     * @param position the position of the piece
+     * @return if the piece was moved correctly
+     */
     public boolean pieceMovedCorrectDirection( Position position ) {
         List<Position> adjacentSpaces = adjacentSpaces( position );
+        Piece currentPiece = this.board[position.getRow()][position.getCell()].getPiece();;
 
         for( Position pos : adjacentSpaces ) {
             Piece piece = this.board[pos.getRow()][pos.getCell()].getPiece();
-            if( piece != null ) {
+
+            if( currentPiece.getColor() != piece.getColor() ) {
                 return false;
             }
         }
@@ -234,29 +274,92 @@ public class Board {
         return true;
     }
 
+    /**
+     * Adds another Space object to a list of all spaces that could be captured,
+     *      regardless of the color of both pieces
+      * @param board the board to be looked at
+     * @param row the row to be looked at
+     * @param cell the cell to be looked at
+     * @param rowAdd the additional rows to be looked at
+     * @param cellAdd the additional cols to be looked at
+     * @param adjList the adjacency list to be added onto
+     */
+    private void addAdjacentSpace( Space[][] board, int row, int cell, int rowAdd, int cellAdd, List<Position> adjList ) {
+        if( !board[row + rowAdd][cell + cellAdd].isValid() && board[row + ( rowAdd * 2 )][cell + ( cellAdd * 2 )].isValid() ) {
+            adjList.add( new Position( row + rowAdd, cell + cellAdd ) );
+        }
+    }
+
+    /**
+     * Check surrounding valid Spaces to see if there was a piece that could have been captured,
+     *      regardless of the color of both pieces
+     * @param position the position to be looked at
+     * @return a list of possible positions to look at
+     */
     public List<Position> adjacentSpaces( Position position ) {
         List<Position> adjacentSpaces = new ArrayList<>();
         int row = position.getRow();
         int cell = position.getCell();
         Piece piece = this.board[row][cell].getPiece();
 
-        if( piece.getColor() == Piece.COLOR.RED ) { // red pieces
-            if( cell < 7 ) { // left boundary
-                adjacentSpaces.add( new Position( row + 1, cell + 1 ) );
+        if ( piece.getColor() == Piece.COLOR.RED ) { // red pieces
+            if( cell > 1 && cell < 6 && row < 6 && row > 1 ) { // left boundary
+                addAdjacentSpace(this.board, row, cell, 1, 1, adjacentSpaces );
+                addAdjacentSpace(this.board, row, cell, 1, -1, adjacentSpaces );
+                addAdjacentSpace(this.board, row, cell, -1, -1, adjacentSpaces );
+                addAdjacentSpace(this.board, row, cell, -1, 1, adjacentSpaces );
             }
-            if( cell > 0 ) { // right boundary
-                adjacentSpaces.add(new Position(row + 1, cell - 1));
+            if( cell < 2 && row < 6 && row > 1 ) {
+                addAdjacentSpace(this.board, row, cell, 1, 1, adjacentSpaces );
+                addAdjacentSpace(this.board, row, cell, -1, 1, adjacentSpaces );
             }
-        } else { // white pieces
-            if( cell < 7 ) { // left boundary
-                adjacentSpaces.add( new Position( row - 1, cell + 1 ) );
+            if( cell > 5 && row < 6 && row > 1 ) {
+                addAdjacentSpace(this.board, row, cell, 1, -1, adjacentSpaces );
+                addAdjacentSpace(this.board, row, cell, -1, -1, adjacentSpaces );
             }
-            if( cell > 0 ) { // right boundary
-                adjacentSpaces.add(new Position(row - 1, cell - 1));
+        } else if( piece.getColor() == Piece.COLOR.WHITE ){ // white pieces
+            if( cell > 1 && cell < 6 && row > 1 && row < 6 ) { // left boundary
+                addAdjacentSpace(this.board, row, cell, -1, 1, adjacentSpaces );
+                addAdjacentSpace(this.board, row, cell, -1, -1, adjacentSpaces );
+                addAdjacentSpace(this.board, row, cell, 1, -1, adjacentSpaces );
+                addAdjacentSpace(this.board, row, cell, 1, 1, adjacentSpaces );
+            }
+            if( cell < 2 && row > 1 && row < 6 ) {
+                addAdjacentSpace(this.board, row, cell, -1, 1, adjacentSpaces );
+                addAdjacentSpace(this.board, row, cell, -1, 1, adjacentSpaces );
+            }
+            if( cell > 5 && row > 1 ) {
+                addAdjacentSpace(this.board, row, cell, -1, -1, adjacentSpaces );
+                addAdjacentSpace(this.board, row, cell, -1, -1, adjacentSpaces );
             }
         }
 
         return adjacentSpaces;
+    }
+
+    /**
+     * Kings pieces that are in the opposing end zone
+     */
+    public void kingPieces() {
+        int row = 0;
+        Piece piece;
+        for( int col = 0; col < BOARD_SIDE; col++ ) {
+            piece = this.board[row][col].getPiece();
+
+            if( piece != null && piece.getColor() == Piece.COLOR.WHITE ) {
+                this.board[row][col].setPiece( new Piece( Piece.TYPE.KING, Piece.COLOR.WHITE ) );
+            }
+        }
+
+        row = 7;
+        for( int col = 0; col < BOARD_SIDE; col++ ) {
+            piece = this.board[row][col].getPiece();
+
+            if( piece != null && piece.getColor() == Piece.COLOR.RED ) {
+                this.board[row][col].setPiece( new Piece( Piece.TYPE.KING, Piece.COLOR.RED ) );
+            }
+        }
+
     }
 
 }

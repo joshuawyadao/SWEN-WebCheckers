@@ -52,6 +52,10 @@ public class GameCenter {
         return currentGames.get(gameId);
     }
 
+    public void removeGame(String gameId) {
+        currentGames.remove(gameId);
+    }
+
     /**
      * Creates a new, unique ID to identify a game with
      * @param redPlayer the redPlayer
@@ -111,6 +115,15 @@ public class GameCenter {
 
         return false;
 
+    }
+
+    public boolean isMyTurn(String gameId, Player currentPlayer){
+        Game game = currentGames.get(gameId);
+
+        if((game.getActivePlayer()).equals(currentPlayer))
+            return true;
+        else
+            return false;
     }
 
 

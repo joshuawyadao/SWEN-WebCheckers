@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,6 +28,7 @@ public class GetGameRouteTest {
     private TemplateEngine engine;
     private Response response;
     private GameCenter gameCenter;
+    private Gson gson;
 
     /**
      * Setup new mock objects for each test.
@@ -40,8 +42,9 @@ public class GetGameRouteTest {
         engine = mock(TemplateEngine.class);
         lobby = mock(PlayerLobby.class);
         gameCenter = mock(GameCenter.class);
+        gson = mock(Gson.class);
 
-        CuT = new GetGameRoute(lobby, gameCenter, engine);
+        CuT = new GetGameRoute(lobby, gameCenter, engine, gson);
     }
 
     /**

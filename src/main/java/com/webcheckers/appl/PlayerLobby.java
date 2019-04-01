@@ -1,12 +1,19 @@
 package com.webcheckers.appl;
 
 import com.webcheckers.model.Player;
+import com.webcheckers.util.Message;
 import spark.Session;
 
 import java.util.HashMap;
 import java.util.Set;
 
 public class PlayerLobby {
+    private final static Message INVALID_NAME_MSG = Message.error("ERROR: Name MUST contain at least one " +
+            "alphanumeric character, and can optionally contain spaces.");
+
+    private final static Message LOGIN_SUCCESSFUL_MSG = Message.info("Login Successful!");
+
+
     private HashMap<Player, Session> players;
 
     /**
@@ -21,33 +28,29 @@ public class PlayerLobby {
      * @param player the player to be checked
      * @return true if the player's name is valid, false otherwise
      */
-    public boolean isValidPlayer(Player player){
+    public Message signInPlayer(Player player, Session playerSession){
+        int alphanumericCount = 0;
+
         if(!players.containsKey(player)){
-            int alphanumericCount = 0;
             String playerName = player.getName();
 
             for(int i = 0; i < playerName.length(); i++){
                 if(!(Character.isLetterOrDigit(playerName.charAt(i))) && !(playerName.charAt(i) == ' '))
-                    return false;
+                    return INVALID_NAME_MSG;
 
                 if(Character.isLetterOrDigit(playerName.charAt(i)))
                     alphanumericCount++;
             }
 
-            if(alphanumericCount > 0)
-                return true;
+            if(alphanumericCount > 0){
+                players.put(player, playerSession);
+                return LOGIN_SUCCESSFUL_MSG;
+            }else{
+                return INVALID_NAME_MSG;
+            }
         }
 
-        return false;
-    }
-
-    /**
-     * Allows the player to sign-in to the PlayerLobby
-     * @param player the player to be signed in
-     * @param playerSession the session of the player
-     */
-    public void signInPlayer(Player player, Session playerSession){
-        players.put(player, playerSession);
+        return Message.error("ERROR: Sorry, '" + player.getName() + "' is already taken by another user.");
     }
 
     /**
@@ -56,20 +59,13 @@ public class PlayerLobby {
      * @return true if the player is found, false if not in lobby
      */
     public Session getPlayerSessionByName(String playerName){
-        boolean foundPlayer = false;
-        Player target = null;
-
         for(Player player: players.keySet()){
-            if((player.getName().equals(playerName)) && !foundPlayer){
-                target = player;
-                foundPlayer = true;
+            if((player.getName().equals(playerName))){
+                return players.get(player);
             }
         }
 
-        if(foundPlayer)
-            return players.get(target);
-        else
-            return null;
+        return null;
     }
 
     /**

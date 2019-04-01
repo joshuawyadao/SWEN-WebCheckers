@@ -54,10 +54,22 @@ public class Position {
 
     }
 
+    /**
+     * Returns the difference between the other row and this row
+     * @param other position to be compared with
+     * @return the distance in between
+     *      +: if other is bigger
+     *      -: if other is smaller
+     */
     public int difference( Position other ) {
         return ( this.getRow() - other.getRow() );
     }
 
+    /**
+     * Returns a new Position object that is in between this position and other position
+     * @param other position to be compared with
+     * @return a new Position object
+     */
     public Position between( Position other ) {
         int difRow = ( other.getRow() - this.row ) / 2;
         int difCell = ( other.getCell() - this.cell ) / 2;
@@ -81,5 +93,4 @@ public class Position {
 
         return this.row == that.getRow() && this.cell == that.getCell();
     }
-
 }

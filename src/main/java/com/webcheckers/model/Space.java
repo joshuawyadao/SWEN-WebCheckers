@@ -70,6 +70,11 @@ public class Space {
         return new Space( this.cellIdx, tempPiece, this.color );
     }
 
+    /**
+     * Checks to see if another object is equivalent to this space
+     * @param other object to be compared with
+     * @return if they are equivalent
+     */
     @Override
     public boolean equals( Object other ) {
         if (this == other)return true;

@@ -65,6 +65,12 @@ public class WebServer {
 
   public static final String VALIDATE_MOVE_URL = "/validateMove";
 
+  public static final String RESIGN_GAME_URL = "/resignGame";
+
+  public static final String SUBMIT_TURN_URL = "/submitTurn";
+
+  public static final String BACKUP_MOVE_URL = "/backupMove";
+
   /**
    * The URL pattern to
    */
@@ -168,18 +174,20 @@ public class WebServer {
     post(SIGNIN_URL, new PostSignInRoute(playerLobby, templateEngine));
 
     //Shows the Web Checkers game page.
-    get(GAME_URL, new GetGameRoute(playerLobby, gameCenter, templateEngine));
+    get(GAME_URL, new GetGameRoute(playerLobby, gameCenter, templateEngine, gson));
 
     //Posts the user- inputted move to the server for validation.
     post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(gameCenter, gson));
 
-    //Submits the user- inputted move to the server and, if valid, reflects the
-    //change on the board to both players
-    post("/submitTurn", new PostSubmitTurnRoute(gameCenter, gson));
+    post(RESIGN_GAME_URL, new PostResignGameRoute(gson, gameCenter, templateEngine, playerLobby));
 
     //Posts a request to the server to take back one previous turn the user
     //made, before submission
-    post("/backupMove", new PostBackupMoveRoute(gameCenter, gson));
+    post(BACKUP_MOVE_URL, new PostBackupMoveRoute(gameCenter, gson));
+
+    //Submits the user- inputted move to the server and, if valid, reflects the
+    //change on the board to both players
+    post(SUBMIT_TURN_URL, new PostSubmitTurnRoute(gameCenter, gson));
 
 
     post("/checkTurn", new PostCheckTurnRoute(gameCenter, gson, playerLobby));
