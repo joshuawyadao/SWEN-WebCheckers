@@ -83,13 +83,10 @@ public class Game {
     }
 
     public boolean validateTurn() {
-//        Board selectedBoard = this.checkerBoard;
         for( Board turn : previousMoves ) {
             if( !turn.equals( previousMoves.peek() ) && !turn.movedPieceCorrectly() ) {
                 return false;
             }
-
-//            selectedBoard = turn;
         }
 
         return true;
