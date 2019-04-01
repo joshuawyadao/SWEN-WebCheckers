@@ -152,8 +152,8 @@ public class Board {
         return validMove;
     }
 
-    public void movePiece( Position startPos, Position endingPos, Piece.COLOR pieceColor ) {
-        this.board[endingPos.getRow()][endingPos.getCell()].setPiece( new Piece( Piece.TYPE.SINGLE, pieceColor ) );
+    public void movePiece( Position startPos, Position endingPos, Piece.COLOR pieceColor, Piece.TYPE type ) {
+        this.board[endingPos.getRow()][endingPos.getCell()].setPiece( new Piece( type, pieceColor ) );
         this.board[startPos.getRow()][startPos.getCell()].setPiece( null );
     }
 

@@ -22,14 +22,20 @@ public class Player {
         this.playing = false;
     }
 
-
+    /**
+     * Returns the name of this player
+     * @return the name of this player
+     */
     public String getName() {
         return name;
     }
 
-    //methods called whenever a player joins a game,
-    //it takes the player's color in as a parameter to
-    //distinguish which player is joining the game
+    /**
+     * Methods called whenever a player joins a game,
+     *      it takes the player's color in as a parameter to
+     *      distinguish which player is joining the game
+     * @param playerColor the color of the player that is joining the game
+     */
     public void joinGame(PlayerColor playerColor){
         if( playerColor != PlayerColor.NONE ) {
             this.playerColor = playerColor;
@@ -39,6 +45,10 @@ public class Player {
 
     //method called when a game is over (either resigned
     //or ended naturally)
+
+    /**
+     *
+     */
     public void leaveGame(){
         if ( this.isPlaying() ) {
             this.playerColor = PlayerColor.NONE;

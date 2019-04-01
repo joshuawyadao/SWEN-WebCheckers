@@ -74,7 +74,7 @@ public class Game {
         Piece selectPiece = turn.getBoard()[startingPos.getRow()][startingPos.getCell()].getPiece();
 
         if( turn.validateMove( startingPos, endingPos, typeOfMove, selectPiece, getRecentTurn() ) ) {
-            turn.movePiece( startingPos, endingPos, player.playerColorToPieceColor() );
+            turn.movePiece( startingPos, endingPos, player.playerColorToPieceColor(), selectPiece.getType());
             previousMoves.push( turn );
             return true;
         }
