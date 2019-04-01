@@ -54,6 +54,10 @@ public class Space {
         this.piece = piece;
     }
 
+    /**
+     * Copies over a space
+     * @return the new space copied
+     */
     public Space copySpace() {
         Piece tempPiece;
         if( this.piece != null ) {
