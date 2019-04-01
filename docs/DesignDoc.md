@@ -21,8 +21,8 @@ geometry: margin=1in
 This is a summary of the project.
 
 ### Purpose
-> _Provide a very brief statement about the project and the most
-> important user group and user goals._
+The purpose of this project is to make a way for friends and strangers from around the world can play Chess with each other.
+
 
 ### Glossary and Acronyms
 > _Provide a table of terms and acronyms._
@@ -36,18 +36,42 @@ This is a summary of the project.
 
 This section describes the features of the application.
 
-> _In this section you do not need to be exhaustive and list every
-> story.  Focus on top-level features from the Vision document and
-> maybe Epics and critical Stories._
+The player must sign in before playing any games.
+
+The player must be able to start a game with another player and be able to play it through to completion or resign midway.
+
+The player must be able to signout at any time they please.
+
+The game must follow the standard Chess rules.
 
 ### Definition of MVP
-> _Provide a simple description of the Minimum Viable Product._
+The Minimum Viable Product is a WebCheckers Application that allows players to sign-in and find other players to play a match of Checkers. You are allowed to resign if you have to go mid game or you can play it to victory/defeat. You can sign out whenever you please, however your game will not be saved.
 
 ### MVP Features
-> _Provide a list of top-level Epics and/or Stories of the MVP._
+Sign in:
+
+	- Allows you to sign in and play against other players
+
+	- You MUST be signed in to start a match and see other lobbies
+Start a game:
+	
+	- Allows you to click on another player's lobby or have another player click on your lobby and a match will begin.
+	
+	- This match will be played until either someone resigns, signs out, or there is a victor.
+
+Resign:
+	
+	- This allows you to resign in the middle of a game, giving the other player a forefeit victory and sending both of you back to the home page.
+
+End game experience:
+	
+	- This will display a victory or defeat message depending on the circumstance of the end game and a reason (resign, all pieces taken)
+
 
 ### Roadmap of Enhancements
-> _Provide a list of top-level features in the order you plan to consider them._
+> Spectator mode
+
+> AI Player
 
 
 ## Application Domain
@@ -56,14 +80,22 @@ This section describes the application domain.
 
 ![The WebCheckers Domain Model](Domain-Model.png)
 
-> _Provide a high-level overview of the domain for this application. You
-> can discuss the more important domain entities and their relationship
-> to each other._
+For our domain model we deicded to have a Game be the central part of our diagram.
+Of course, a game is then played on a Board which contains 64 squares (for a standard 8x8 checkers board).
+There are then anywhere from 1 to 24 pieces on the board at a time, which can either be single pieces or king pieces.
+A player moves each piece around to play the game. There are anywhere from 1 to 2 players controlling the pieces at a time, depending on player resignation.
+If we end up doing the spectator enhancement, a spectator will be viewing the Game. Anywhere from 0 to many spectators can be watching.
 
 
 ## Architecture and Design
 
-This section describes the application architecture.
+Our application has 3 tiers of code, them being: UI, Model, and Application.
+
+The Application Tier controls all logic in terms of outside of playing the game itself. This includes managing the players and current games running.
+
+The Model Tier handles all logic in terms of the game itself. There are classes that deal with the board, individual pieces, how pieces move, and in general how the game works.
+
+The UI Tier deals with what the player sees and the routes. This handles getting into games, displaying the home page, signing in and out, and resigning. We also had to include some move validation in this tier because the client has to communicate with the server.
 
 ### Summary
 
@@ -89,8 +121,15 @@ with the WebCheckers application.
 
 ![The WebCheckers Web Interface Statechart](State-Chart.png)
 
-> _Provide a summary of the application's user interface.  Describe, from
-> the user's perspective, the flow of the pages in the web application._
+The user interface is very user friendly and straight forward. The player will first see the home page when they are not signed in which displays how many users are currently online and will have a sign in button.
+
+The user will then sign in and have to make a username that is not currently taken. Once they are signed in, they are back on the homepage but this time there are player lobbies that they are able to join.
+
+If they try to join an active players lobby, they will be returned to the home screen.
+
+Once they find an avaiable opponent, they are then taken to the game page. There, they can play until either one of the resigns or a player wins. They are then returned to the home screen with all the player lobbies listed.
+
+Of course, during all of this (except for the very beginning when they are not signed in), the user can sign out at any time and get returned to step 1.
 
 
 ### UI Tier
@@ -116,12 +155,34 @@ with the WebCheckers application.
 > separate section for describing significant features. Place this after
 > you describe the design of the three tiers._
 
+The main hub of our server side UI Tier is the GetHomeRoute class. This is where players are first directed to when they load up WebCheckers and this is where they are sent after sign in and game finishes.
+
+Next we have GetSignInRoute and PostSignInRoute. In order for players to actually play the game, they must sign in and this is how the server handles and displays validation of signing in.
+
+GetGameRoute is our next big class because this is the route players use to get into games. This route handles starting a new match between players, getting the board from the server to the client, and displaying the end game experience.
+
+Row is a class that represents the rows on a Checkers board. These rows contain all the spaces the game has and helps with move validation.
+
+BoardView works with Row to display the game board to the user. This class deals with who is red and who is white, and in turn deals with which side of the board you see on your side.
+
+PostValidateMoveRoute is the route that deals with the client and the server communicating in order to make sure the player is abiding by the rules of checkers. This route will tell the client if they are allowed to make the move they are trying to make.
+
+PostBackupMoveRoute is one of the two routes that go hand in hand with PostValidateMoveRoute because if the client tried to make an invalid move, they use this route to revert to the beginning of their turn to make a valid move.
+
+PostSubmitTurnRoute is the second of the two routes that works with PostValidateMoveRoute. If the move they made is valid, this is the route that is called to send the move through to the server.
+
+PostCheckTurnRoute is a simple route that checks whose turn it is.
+
+Finally, we have PostSignOutRoute, which is simply a route that handles players signing out, which means it has to check if a player is currently mid match and remove them if they are.
 
 ### Application Tier
 > _Provide a summary of the Application tier of your architecture. This
 > section will follow the same instructions that are given for the UI
 > Tier above._
 
+The Application Tier contains 2 classes. GameCenter deals with current active games and games that are being created. This class will make a new gameId and store the new game in a HashMap, with the key being the Id and the value being the game instance itself. GameCenter is also the middle man for dealing with turns because it is the class in the Application tier that contains the games themselves.
+
+The PlayerLobby class keeps track of current users online and also deals with validating usernames as players try to sign in. This class contains a HashMap with the key being usernames and the values being user sessions.
 
 ### Model Tier
 > _Provide a summary of the Application tier of your architecture. This

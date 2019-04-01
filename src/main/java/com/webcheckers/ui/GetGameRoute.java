@@ -174,6 +174,7 @@ public class GetGameRoute implements Route {
                     currentSession.attribute(GetGameRoute.GAME_ID_ATTR, null);
                 }
             }
+            gameCenter.removeGame(gameId);
         }
 
         vm.put(GetHomeRoute.CURRENT_USER_ATTR, currentUser);
