@@ -36,25 +36,39 @@ This is a summary of the project.
 
 This section describes the features of the application.
 
-> _In this section you do not need to be exhaustive and list every
-> story.  Focus on top-level features from the Vision document and
-> maybe Epics and critical Stories._
+The player must sign in before playing any games.
+
+The player must be able to start a game with another player and be able to play it through to completion or resign midway.
+
+The player must be able to signout at any time they please.
+
+The game must follow the standard Chess rules.
 
 ### Definition of MVP
 > The Minimum Viable Product is a WebCheckers Application that allows players to sign-in and find other players to play a match of Checkers. You are allowed to resign if you have to go mid game or you can 
 	play it to victory/defeat. You can sign out whenever you please, however your game will not be saved.
 
 ### MVP Features
-> Sign in:
+Sign in:
+
 	- Allows you to sign in and play against other players
+
 	- You MUST be signed in to start a match and see other lobbies
-> Start a game:
+Start a game:
+	
 	- Allows you to click on another player's lobby or have another player click on your lobby and a match will begin.
+	
 	- This match will be played until either someone resigns, signs out, or there is a victor.
-> Resign:
+
+Resign:
+	
 	- This allows you to resign in the middle of a game, giving the other player a forefeit victory and sending both of you back to the home page.
-> End game experience:
+
+End game experience:
+	
 	- This will display a victory or defeat message depending on the circumstance of the end game and a reason (resign, all pieces taken)
+
+
 ### Roadmap of Enhancements
 > Spectator mode
 > AI Player
