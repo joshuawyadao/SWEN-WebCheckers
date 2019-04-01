@@ -180,8 +180,9 @@ Finally, we have PostSignOutRoute, which is simply a route that handles players 
 > section will follow the same instructions that are given for the UI
 > Tier above._
 
+The Application Tier contains 2 classes. GameCenter deals with current active games and games that are being created. This class will make a new gameId and store the new game in a HashMap, with the key being the Id and the value being the game instance itself. GameCenter is also the middle man for dealing with turns because it is the class in the Application tier that contains the games themselves.
 
-
+The PlayerLobby class keeps track of current users online and also deals with validating usernames as players try to sign in. This class contains a HashMap with the key being usernames and the values being user sessions.
 
 ### Model Tier
 > _Provide a summary of the Application tier of your architecture. This
