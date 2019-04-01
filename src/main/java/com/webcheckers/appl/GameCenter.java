@@ -12,7 +12,16 @@ import java.util.Map;
  * GameCenter retains all available Games that are currently being played.
  */
 public class GameCenter {
+
+    //
+    // Private fields
+    //
+
     private HashMap<String, Game> currentGames;
+
+    /**
+     * GameCenter constructor
+     */
     public GameCenter( ){
         currentGames = new HashMap<>();
     }

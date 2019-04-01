@@ -81,4 +81,5 @@ public class Position {
 
         return this.row == that.getRow() && this.cell == that.getCell();
     }
+
 }

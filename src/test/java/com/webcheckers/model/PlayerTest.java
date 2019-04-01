@@ -53,54 +53,6 @@ public class PlayerTest {
     }
 
     /**
-     * Testing all aspects of a NONE player joining a game
-     * Tested:
-     *      playerColor: NONE (PlayerColor)
-     *      isPlaying: false (boolean)
-     */
-    @Test
-    public void testJoinGameNone() {
-        final Player CuT = new Player("TestPlayer");
-
-        CuT.joinGame(Player.PlayerColor.NONE);
-
-        assertEquals(Player.PlayerColor.NONE, CuT.getPlayerColor(), "TestPlayer (NONE) joined game correctly");
-        assertFalse(CuT.isPlaying(), "TestPlayer (NONE) is not playing");
-    }
-
-    /**
-     * Testing all aspects of a RED player joining a game
-     * Tested:
-     *      playerColor: RED (PlayerColor)
-     *      isPlaying: true (boolean)
-     */
-    @Test
-    public void testJoinGameRed() {
-        final Player CuT = new Player("TestPlayer");
-
-        CuT.joinGame(Player.PlayerColor.RED);
-
-        assertEquals(Player.PlayerColor.RED, CuT.getPlayerColor(), "TestPlayer (RED) joined game correctly");
-        assertTrue(CuT.isPlaying(), "TestPlayer (RED) is playing");
-    }
-
-    /**
-     * Testing all aspects of a WHITE player joining a game
-     * Tested:
-     *      playerColor: WHITE (PlayerColor)
-     *      isPlaying: true (boolean)
-     */
-    @Test
-    public void testJoinGameWhite() {
-        final Player CuT = new Player("TestPlayer");
-
-        CuT.joinGame(Player.PlayerColor.WHITE);
-
-        assertEquals(Player.PlayerColor.WHITE, CuT.getPlayerColor(), "TestPlayer (WHITE) joined game correctly");
-        assertTrue(CuT.isPlaying(), "TestPlayer (WHITE) is playing");
-    }
-
-    /**
      * Testing all aspects of a NONE player leaving a game
      * Tested:
      *      playerColor: NONE (PlayerColor)
@@ -314,48 +266,28 @@ public class PlayerTest {
         assertTrue(CuT.equals(CuT2), "TestPlayer (WHITE) is the same as TestPlayer (WHITE)");
     }
 
-    /**
-     * Testing the hashCode of a NONE player
-     * Tested:
-     *      hashCode: name.hashCode() + playerColor.hashCode() (int)
-     */
     @Test
-    public void testHashCodeNone() {
+    public void testPlayerColorToPieceColor_Red(){
         final Player CuT = new Player("TestPlayer");
-
-        assertEquals(CuT.getName().hashCode() +
-                CuT.getPlayerColor().hashCode(), CuT.hashCode(), "TestPlayer (NONE) hashCode works");
-    }
-
-    /**
-     * Testing the hashCode of a RED player
-     * Tested:
-     *      hashCode: name.hashCode() + playerColor.hashCode() (int)
-     */
-    @Test
-    public void testHashCodeRed() {
-        final Player CuT = new Player("TestPlayer");
-
         CuT.joinGame(Player.PlayerColor.RED);
 
-        assertEquals(CuT.getName().hashCode() +
-                CuT.getPlayerColor().hashCode() + 1, CuT.hashCode(), "TestPlayer (RED) hashCode works");
+        assertEquals(Piece.COLOR.RED, CuT.playerColorToPieceColor());
     }
 
-    /**
-     * Testing the hashCode of a WHITE player
-     * Tested:
-     *      hashCode: name.hashCode() + playerColor.hashCode() (int)
-     */
     @Test
-    public void testHashCodeWhite() {
+    public void testPlayerColorToPieceColor_White(){
         final Player CuT = new Player("TestPlayer");
-
         CuT.joinGame(Player.PlayerColor.WHITE);
 
-        assertEquals(CuT.getName().hashCode() +
-                CuT.getPlayerColor().hashCode() + 1, CuT.hashCode(), "TestPlayer (WHITE) hashCode works");
+        assertEquals(Piece.COLOR.WHITE, CuT.playerColorToPieceColor());
     }
 
+    @Test
+    public void testPlayerColorToPieceColor_None(){
+        final Player CuT = new Player("TestPlayer");
+        CuT.joinGame(Player.PlayerColor.NONE);
+
+        assertEquals(null, CuT.playerColorToPieceColor());
+    }
 
 }

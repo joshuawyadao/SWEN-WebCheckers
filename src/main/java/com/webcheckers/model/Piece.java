@@ -61,6 +61,4 @@ public class Piece {
         return (int)Math.pow(this.color.hashCode() , this.type.hashCode());
     }
 
-
-
 }
