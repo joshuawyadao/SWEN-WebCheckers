@@ -23,6 +23,12 @@ public class Board {
         SetUpGame();
     }
 
+    public Board(boolean setUpPieces, boolean isRed){
+        if( !setUpPieces ) {
+            setUpBoard(isRed);
+        }
+    }
+
     /**
      * Initializes the game board, specifically how the board looks
      * as well as the piece layout
@@ -70,6 +76,36 @@ public class Board {
             }
         }
 
+    }
+
+    private void setUpBoard(boolean isRed){
+        this.board = new Space[BOARD_SIDE][BOARD_SIDE];
+
+        for( int r = 0; r < BOARD_SIDE; r++ ) {
+            for( int c = 0; c < BOARD_SIDE; c++ ) {
+                if(r % 2 == 0) {
+                    if(c % 2 == 0) {
+                        board[r][c] = new Space(c, null, Space.COLOR.LIGHT);
+                    } else {
+                        board[r][c] = new Space(c, null, Space.COLOR.DARK);
+                    }
+
+                } else {
+                    if(c % 2 == 1) {
+                        board[r][c] = new Space(c, null, Space.COLOR.LIGHT);
+                    } else {
+                        board[r][c] = new Space(c, null, Space.COLOR.DARK);
+                    }
+
+                }
+            }
+        }
+
+        if(isRed){
+            board[0][0] = new Space(0, new Piece(Piece.TYPE.SINGLE, Piece.COLOR.RED), Space.COLOR.DARK);
+        } else {
+            board[7][0] = new Space(0, new Piece(Piece.TYPE.SINGLE, Piece.COLOR.WHITE), Space.COLOR.DARK);
+        }
     }
 
     /**
