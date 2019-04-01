@@ -93,4 +93,8 @@ public class PlayerLobby {
         return players.size();
     }
 
+    public void signOut(Player player){
+        players.remove(player);
+    }
+
 }
