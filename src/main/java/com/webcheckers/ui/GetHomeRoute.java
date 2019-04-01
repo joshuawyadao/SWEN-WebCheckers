@@ -23,7 +23,7 @@ public class GetHomeRoute implements Route {
 
   public static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
   public static final String CURRENT_USER_ATTR = "currentUser";
-  private static final String VIEW_NAME = "home.ftl";
+  public static final String VIEW_NAME = "home.ftl";
 
   private final PlayerLobby playerLobby;
   private final TemplateEngine templateEngine;

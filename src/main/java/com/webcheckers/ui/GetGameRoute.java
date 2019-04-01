@@ -64,12 +64,7 @@ public class GetGameRoute implements Route {
             Session opponentSession = playerLobby.getPlayerSessionByName(opponentName);
             Player opponent = opponentSession.attribute(GetHomeRoute.CURRENT_USER_ATTR);
 
-            //
-            //
             if (gameCenter.hasGame(opponent)) {
-                // FIX: Error output message
-
-                //Message message = new Message(" GOT ERROR ", Message.Type.ERROR);
 
                 Message message = Message.error("GOT ERROR");
                 message = Message.info("GOT ERROR");
@@ -89,8 +84,6 @@ public class GetGameRoute implements Route {
                 currentSession.attribute(GAME_ID_ATTR, newGameId);
                 opponentSession.attribute(GAME_ID_ATTR, newGameId);
             }
-            //
-            //
 
         }
 
