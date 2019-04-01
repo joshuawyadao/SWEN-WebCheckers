@@ -77,7 +77,11 @@ If we end up doing the spectator enhancement, a spectator will be viewing the Ga
 
 Our application has 3 tiers of code, them being: UI, Model, and Application.
 
+The Application Tier controls all logic in terms of outside of playing the game itself. This includes managing the players and current games running.
 
+The Model Tier handles all logic in terms of the game itself. There are classes that deal with the board, individual pieces, how pieces move, and in general how the game works.
+
+The UI Tier deals with what the player sees and the routes. This handles getting into games, displaying the home page, signing in and out, and resigning. We also had to include some move validation in this tier because the client has to communicate with the server.
 
 ### Summary
 
@@ -103,8 +107,15 @@ with the WebCheckers application.
 
 ![The WebCheckers Web Interface Statechart](State-Chart.png)
 
-> _Provide a summary of the application's user interface.  Describe, from
-> the user's perspective, the flow of the pages in the web application._
+The user interface is very user friendly and straight forward. The player will first see the home page when they are not signed in which displays how many users are currently online and will have a sign in button.
+
+The user will then sign in and have to make a username that is not currently taken. Once they are signed in, they are back on the homepage but this time there are player lobbies that they are able to join.
+
+If they try to join an active players lobby, they will be returned to the home screen.
+
+Once they find an avaiable opponent, they are then taken to the game page. There, they can play until either one of the resigns or a player wins. They are then returned to the home screen with all the player lobbies listed.
+
+Of course, during all of this (except for the very beginning when they are not signed in), the user can sign out at any time and get returned to step 1.
 
 
 ### UI Tier
