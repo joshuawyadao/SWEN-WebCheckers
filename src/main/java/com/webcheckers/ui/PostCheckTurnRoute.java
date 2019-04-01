@@ -6,8 +6,11 @@ import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
+import javafx.geometry.Pos;
 import spark.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
@@ -33,32 +36,45 @@ public class PostCheckTurnRoute implements Route {
     public Object handle(Request request, Response response){
         LOG.config("PostCheckTurnRoute is invoked.");
 
-        Session currentSession = request.session();
-        Player currentPlayer = currentSession.attribute("currentUser");
+        // Create vm
+        Map<String, Object> vm = new HashMap<>();
 
+        // Request player
+        Session currentSession = request.session();
+        Player currentUser = currentSession.attribute("currentUser");
+
+        // Get Game
         String gameId = currentSession.attribute(GetGameRoute.GAME_ID_ATTR);
         Game currentGame = gameCenter.getGame(gameId);
 
-        String JSONTurnString = createCorrectJSONFormat( gson.toJson(request.queryParams()) );
+        // Get gson
+        String JSONTurnString = createCorrectJSONFormat( gson.toJson(request.queryParams(gameId)) );
 
         System.out.println("\t\tCorrect JSON String: " + JSONTurnString);
 
+        final Map<String, Object> modeOptions = new HashMap<>(2);
+        modeOptions.put("isGameOver",true);
+        modeOptions.put("gameOverMessage", Message.info("GAME OVER"));
+        vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
+
         if(currentGame.getRedPlayer() == null ||
             currentGame.getWhitePlayer() == null ){
+
+            response.redirect(WebServer.GAME_URL);
+            halt();
             return gson.toJson( Message.info("Opponent resigned"));
         }
 
-
-        if(currentGame.getActivePlayer().equals(currentPlayer)){
+        if(currentGame.getActivePlayer().equals(currentUser)){
             response.redirect(WebServer.GAME_URL);
             halt();
             return gson.toJson( Message.info("true") );
-        } else if( !(currentGame.getActivePlayer().equals(currentPlayer)) ) {
+        } else if( !(currentGame.getActivePlayer().equals(currentUser)) ) {
             return gson.toJson( Message.info("false") );
         }
 
 
-        return gson.toJson(Message.info("Waiting for opponent."));
+        return gson.toJson(Message.info("false"));
     }
 
 
