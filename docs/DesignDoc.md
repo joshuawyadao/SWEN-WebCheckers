@@ -70,6 +70,7 @@ End game experience:
 
 ### Roadmap of Enhancements
 > Spectator mode
+
 > AI Player
 
 
@@ -154,11 +155,32 @@ Of course, during all of this (except for the very beginning when they are not s
 > separate section for describing significant features. Place this after
 > you describe the design of the three tiers._
 
+The main hub of our server side UI Tier is the GetHomeRoute class. This is where players are first directed to when they load up WebCheckers and this is where they are sent after sign in and game finishes.
+
+Next we have GetSignInRoute and PostSignInRoute. In order for players to actually play the game, they must sign in and this is how the server handles and displays validation of signing in.
+
+GetGameRoute is our next big class because this is the route players use to get into games. This route handles starting a new match between players, getting the board from the server to the client, and displaying the end game experience.
+
+Row is a class that represents the rows on a Checkers board. These rows contain all the spaces the game has and helps with move validation.
+
+BoardView works with Row to display the game board to the user. This class deals with who is red and who is white, and in turn deals with which side of the board you see on your side.
+
+PostValidateMoveRoute is the route that deals with the client and the server communicating in order to make sure the player is abiding by the rules of checkers. This route will tell the client if they are allowed to make the move they are trying to make.
+
+PostBackupMoveRoute is one of the two routes that go hand in hand with PostValidateMoveRoute because if the client tried to make an invalid move, they use this route to revert to the beginning of their turn to make a valid move.
+
+PostSubmitTurnRoute is the second of the two routes that works with PostValidateMoveRoute. If the move they made is valid, this is the route that is called to send the move through to the server.
+
+PostCheckTurnRoute is a simple route that checks whose turn it is.
+
+Finally, we have PostSignOutRoute, which is simply a route that handles players signing out, which means it has to check if a player is currently mid match and remove them if they are.
 
 ### Application Tier
 > _Provide a summary of the Application tier of your architecture. This
 > section will follow the same instructions that are given for the UI
 > Tier above._
+
+
 
 
 ### Model Tier
