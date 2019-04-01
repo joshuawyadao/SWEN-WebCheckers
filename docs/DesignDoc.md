@@ -21,8 +21,8 @@ geometry: margin=1in
 This is a summary of the project.
 
 ### Purpose
-> _Provide a very brief statement about the project and the most
-> important user group and user goals._
+The purpose of this project is to make a way for friends and strangers from around the world can play Chess with each other.
+
 
 ### Glossary and Acronyms
 > _Provide a table of terms and acronyms._
@@ -45,8 +45,7 @@ The player must be able to signout at any time they please.
 The game must follow the standard Chess rules.
 
 ### Definition of MVP
-> The Minimum Viable Product is a WebCheckers Application that allows players to sign-in and find other players to play a match of Checkers. You are allowed to resign if you have to go mid game or you can 
-	play it to victory/defeat. You can sign out whenever you please, however your game will not be saved.
+The Minimum Viable Product is a WebCheckers Application that allows players to sign-in and find other players to play a match of Checkers. You are allowed to resign if you have to go mid game or you can play it to victory/defeat. You can sign out whenever you please, however your game will not be saved.
 
 ### MVP Features
 Sign in:
