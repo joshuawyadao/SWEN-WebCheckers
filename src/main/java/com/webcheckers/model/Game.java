@@ -115,10 +115,17 @@ public class Game {
         turn.copyBoard( this.checkerBoard );
         Piece selectPiece = turn.getBoard()[startingPos.getRow()][startingPos.getCell()].getPiece();
 
-        if( turn.validateMove( startingPos, endingPos, typeOfMove, selectPiece, getRecentTurn() ) ) {
-            turn.movePiece( startingPos, endingPos, player.playerColorToPieceColor(), selectPiece.getType());
-            previousMoves.push( turn );
-            return true;
+        if( turn.validateMove( startingPos, endingPos, typeOfMove, selectPiece, getRecentTurn() )) {
+            if( Math.abs(typeOfMove) == 1 && validateTurn() ) {
+                turn.movePiece(startingPos, endingPos, player.playerColorToPieceColor(), selectPiece.getType());
+                previousMoves.push(turn);
+                return true;
+            } else
+                {
+                turn.movePiece(startingPos, endingPos, player.playerColorToPieceColor(), selectPiece.getType());
+                previousMoves.push(turn);
+                return true;
+            }
         }
 
         return false;
@@ -143,9 +150,7 @@ public class Game {
      * @return if the turn was a valid turn
      */
     public boolean submitTurn() {
-        if( Math.abs(this.typeOfMove) == 1 && !validateTurn() ) {
-            return false;
-        }
+
         this.checkerBoard = this.previousMoves.pop();
         this.checkerBoard.kingPieces();
         this.previousMoves = new Stack<>();
