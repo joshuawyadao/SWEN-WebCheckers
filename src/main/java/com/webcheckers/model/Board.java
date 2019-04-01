@@ -102,6 +102,19 @@ public class Board {
         return true;
     }
 
+    /**
+     * Checks to see if the move was validated
+     * @param startPos the starting position of the move
+     * @param endingPos the ending position of the move
+     * @param typeOfMove the type of move that was made
+     *                   1: single move
+     *                   2: single jump
+     *                   -1: backwards single move
+     *                   -2: backwards single jump
+     * @param piece the piece to be validated
+     * @param viewBoard the board to be used
+     * @return if the move is valid
+     */
     public boolean validateMove(Position startPos, Position endingPos, int typeOfMove, Piece piece, Board viewBoard ) {
         Move playerMove = new Move( viewBoard.getBoard() );
         boolean validMove = false;
@@ -152,11 +165,23 @@ public class Board {
         return validMove;
     }
 
+    /**
+     * Moves the piece on the board
+     * @param startPos the start position of the movement
+     * @param endingPos the ending position of the movement
+     * @param pieceColor the color of the piece moved
+     * @param type the type of piece moved
+     */
     public void movePiece( Position startPos, Position endingPos, Piece.COLOR pieceColor, Piece.TYPE type ) {
         this.board[endingPos.getRow()][endingPos.getCell()].setPiece( new Piece( type, pieceColor ) );
         this.board[startPos.getRow()][startPos.getCell()].setPiece( null );
     }
 
+    /**
+     * Goes through all the pieces and checks to see if there is any pieces for a player left
+     * @param color the color of pieces to be looked for
+     * @return how many pieces are left for a player
+     */
     private int playerPiecesLeft( Piece.COLOR color ) {
         int numOfPieces = 0;
 
@@ -173,10 +198,18 @@ public class Board {
 
     }
 
+    /**
+     * Checks to see if the game is finisheds\\
+     * @return if the game is finished
+     */
     public boolean finishedGame() {
         return playerPiecesLeft( Piece.COLOR.RED ) == 0 || playerPiecesLeft( Piece.COLOR.WHITE ) == 0;
     }
 
+    /**
+     * Returns the color of the player who won
+     * @return the color of the winning player
+     */
     public Player.PlayerColor winnerColor() {
         if( finishedGame() ) {
             if( playerPiecesLeft( Piece.COLOR.RED ) == 0 ) {
@@ -189,6 +222,10 @@ public class Board {
         }
     }
 
+    /**
+     * Copies the another board onto this board
+     * @param source the board to be copied
+     */
     public void copyBoard( Board source ) {
         Space[][] sourceBoard = source.getBoard();
         for( int row = 0; row < BOARD_SIDE; row++ ) {
@@ -198,6 +235,10 @@ public class Board {
         }
     }
 
+    /**
+     * Goes through every piece on the board to see if any piece could have be captured when it was not
+     * @return if the piece was move correctly
+     */
     public boolean movedPieceCorrectly() {
         Position pos;
         for( int row = 0; row < BOARD_SIDE; row++ ) {
@@ -213,6 +254,11 @@ public class Board {
         return true;
     }
 
+    /**
+     * Checks to see if a piece could have captured and did not
+     * @param position the position of the piece
+     * @return if the piece was moved correctly
+     */
     public boolean pieceMovedCorrectDirection( Position position ) {
         List<Position> adjacentSpaces = adjacentSpaces( position );
         Piece currentPiece = this.board[position.getRow()][position.getCell()].getPiece();;
@@ -228,12 +274,28 @@ public class Board {
         return true;
     }
 
+    /**
+     * Adds another Space object to a list of all spaces that could be captured,
+     *      regardless of the color of both pieces
+      * @param board the board to be looked at
+     * @param row the row to be looked at
+     * @param cell the cell to be looked at
+     * @param rowAdd the additional rows to be looked at
+     * @param cellAdd the additional cols to be looked at
+     * @param adjList the adjacency list to be added onto
+     */
     private void addAdjacentSpace( Space[][] board, int row, int cell, int rowAdd, int cellAdd, List<Position> adjList ) {
         if( !board[row + rowAdd][cell + cellAdd].isValid() && board[row + ( rowAdd * 2 )][cell + ( cellAdd * 2 )].isValid() ) {
             adjList.add( new Position( row + rowAdd, cell + cellAdd ) );
         }
     }
 
+    /**
+     * Check surrounding valid Spaces to see if there was a piece that could have been captured,
+     *      regardless of the color of both pieces
+     * @param position the position to be looked at
+     * @return a list of possible positions to look at
+     */
     public List<Position> adjacentSpaces( Position position ) {
         List<Position> adjacentSpaces = new ArrayList<>();
         int row = position.getRow();
@@ -275,6 +337,9 @@ public class Board {
         return adjacentSpaces;
     }
 
+    /**
+     * Kings pieces that are in the opposing end zone
+     */
     public void kingPieces() {
         int row = 0;
         Piece piece;

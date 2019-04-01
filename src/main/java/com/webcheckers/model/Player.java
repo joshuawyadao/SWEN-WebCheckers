@@ -31,9 +31,8 @@ public class Player {
     }
 
     /**
-     * Methods called whenever a player joins a game,
-     *      it takes the player's color in as a parameter to
-     *      distinguish which player is joining the game
+     * Methods called whenever a player joins a game, it takes the player's color in as a parameter to distinguish
+     * which player is joining the game
      * @param playerColor the color of the player that is joining the game
      */
     public void joinGame(PlayerColor playerColor){
@@ -43,11 +42,8 @@ public class Player {
         }
     }
 
-    //method called when a game is over (either resigned
-    //or ended naturally)
-
     /**
-     *
+     * Method is called when a game is over (either resigned or ended naturally
      */
     public void leaveGame(){
         if ( this.isPlaying() ) {
@@ -56,12 +52,24 @@ public class Player {
         }
     }
 
+    /**
+     * Returns this player's color
+     * @return the color of this player
+     */
     public PlayerColor getPlayerColor() {
         return playerColor;
     }
 
+    /**
+     * Returns if this player is playing
+     * @return if this player is playing
+     */
     public boolean isPlaying() { return this.playing; }
 
+    /**
+     * Returns the piece color that corresponds to this player
+     * @return the piece color of this player
+     */
     public Piece.COLOR playerColorToPieceColor() {
         if( this.playerColor == PlayerColor.RED ) {
             return Piece.COLOR.RED;
@@ -72,6 +80,11 @@ public class Player {
         }
     }
 
+    /**
+     * Compares another object with this player to see if they are equivalent
+     * @param obj another object to compare with
+     * @return if they are equivalent
+     */
     public boolean equals(Object obj) {
         if(obj == this) return true;
         if(!(obj instanceof Player)) return false;
@@ -81,6 +94,10 @@ public class Player {
         return this.name.equals(that.name);
     }
 
+    /**
+     * Creates and returns the hash code for this player
+     * @return this player's hashCode
+     */
     @Override
     public int hashCode() {
         return name.hashCode();

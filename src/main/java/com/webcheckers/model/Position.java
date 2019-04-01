@@ -5,6 +5,11 @@ public class Position {
     private int row;  // { 0 to 7 }
     private int cell;  // { 0 to 7 }
 
+    /**
+     * Creates a new Position object
+     * @param row the row for this position
+     * @param cell the cell for this position
+     */
     public Position( int row, int cell ) {
         this.row = row;
         this.cell = cell;

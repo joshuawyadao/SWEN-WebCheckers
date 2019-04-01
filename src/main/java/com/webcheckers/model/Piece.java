@@ -38,7 +38,11 @@ public class Piece {
         return this.color;
     }
 
-
+    /**
+     * Compares another object ot see if it is equivalent to this object
+     * @param obj the object to be compared with
+     * @return if both objects are equivalent
+     */
     @Override
     public boolean equals(Object obj){
         if (this == obj)return true;
