@@ -10,10 +10,10 @@ import spark.*;
 import java.util.logging.Logger;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
-import static spark.Spark.halt;
-
+/**
+ * The UI Controller to POST resignation
+ */
 public class PostResignGameRoute implements Route {
 
     private static final Logger LOG = Logger.getLogger(PostResignGameRoute.class.getName());
@@ -23,6 +23,14 @@ public class PostResignGameRoute implements Route {
     private final TemplateEngine templateEngine;
     private final PlayerLobby playerLobby;
 
+    /**
+     * Create the Spark Route to handle Resignation from matches
+     * @param gson gson to post to the /game page
+     * @param gameCenter class that handles all active games
+     * @param templateEngine engine that renders HTML
+     * @param playerLobby class that lists out all players, both
+     *                    in match and not
+     */
     public PostResignGameRoute(final Gson gson, final GameCenter gameCenter, final TemplateEngine templateEngine,
                                final PlayerLobby playerLobby) {
         this.gson = gson;
@@ -32,6 +40,12 @@ public class PostResignGameRoute implements Route {
         LOG.config("PostResignGameRoute is initialized.");
     }
 
+    /**
+     * Send the Post to resign from your current match
+     * @param request the HTTP request
+     * @param response the HTTP response
+     * @return Json of resignation info
+     */
     @Override
     public Object handle(Request request, Response response) {
         LOG.finer("PostResignGameRoute is invoked.");
@@ -41,27 +55,10 @@ public class PostResignGameRoute implements Route {
         Player currentUser = currentSession.attribute(GetHomeRoute.CURRENT_USER_ATTR);
         String gameId = currentSession.attribute(GetGameRoute.GAME_ID_ATTR);
 
-
-//        Player opponent;
-//
-//        if (currentUser.getPlayerColor() == Player.PlayerColor.RED){
-//            opponent = gameCenter.getGame(gameId).getWhitePlayer();
-//        } else {
-//            opponent = gameCenter.getGame(gameId).getRedPlayer();
-//        }
-
         gameCenter.getGame(gameId).playerResigned(currentUser);
-//        Session opponentSession = playerLobby.getPlayerSession(opponent);
-//        currentUser.leaveGame();
-//        opponent.leaveGame();
-//        gameCenter.removeGame(gameId);
-//        currentSession.attribute(GetGameRoute.GAME_ID_ATTR, null);
-//        opponentSession.attribute(GetGameRoute.GAME_ID_ATTR, null);
-
-        // display a user message in the Home page
         vm.put("message", GetHomeRoute.WELCOME_MSG);
         Message resignInfo = Message.info("Resigned.");
-        //response.redirect(WebServer.HOME_URL);
+
         return gson.toJson(resignInfo);
     }
 }

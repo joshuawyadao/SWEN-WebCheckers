@@ -192,6 +192,7 @@ public class WebServer {
 
     post("/checkTurn", new PostCheckTurnRoute(gameCenter, gson, playerLobby));
 
+    post("/signout", new PostSignOutRoute(playerLobby, gameCenter));
 
     //
     LOG.config("WebServer is initialized.");
