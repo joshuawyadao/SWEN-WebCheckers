@@ -6,9 +6,9 @@ public class Position {
     private int cell;  // { 0 to 7 }
 
     /**
-     * Creates a new Position object
-     * @param row the row for this position
-     * @param cell the cell for this position
+     * Constructor for position
+     * @param row the row number
+     * @param cell the cell number
      */
     public Position( int row, int cell ) {
         this.row = row;

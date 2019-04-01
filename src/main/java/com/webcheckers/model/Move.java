@@ -6,6 +6,10 @@ public class Move {
     private Position start;
     private Position end;
 
+    /**
+     * Constructor for board
+     * @param board the board
+     */
     public Move( Space[][] board ) {
         this.checkerBoard = board;
         this.start = null;
@@ -29,19 +33,19 @@ public class Move {
     }
 
     /**
-     * Checks to see if the space at a certain position is valid
-     * @param pos the position of the space
-     * @return if the space is a valid space to move
+     * checks space at a position
+     * @param pos the space of the position
+     * @return true if the space is valid, false otherwise
      */
     private boolean checkSpace( Position pos ) {
         return this.checkerBoard[pos.getRow()][pos.getCell()].isValid();
     }
 
     /**
-     * Checks the validity of a simple move and sets start and end if the move is valid
-     * @param startingPos the starting position to be considered
-     * @param endingPos the ending position to be considered
-     * @return if the simple move is valid
+     * Moves a piece from one spot to another
+     * @param startingPos the starting position of the piece
+     * @param endingPos the ending position of the piece
+     * @return true if successful, false otherwise
      */
     public boolean validSimpleMove( Position startingPos, Position endingPos ) {
         int diffRow = Math.abs( startingPos.getRow() - endingPos.getRow() );
@@ -59,10 +63,10 @@ public class Move {
     }
 
     /**
-     * Checks the validity of a simple jump move and sets start and if the move is valid
-     * @param startingPos the starting position to be considered
-     * @param endingPos the ending position to be considered
-     * @return the position if the move is valid
+     * Allows a piece to jump over another piece
+     * @param startingPos the starting position
+     * @param endingPos the ending position
+     * @return the new position
      */
     public Position validSimpleJump( Position startingPos, Position endingPos ) {
         int diffRow = Math.abs( startingPos.getRow() - endingPos.getRow() );
@@ -86,6 +90,5 @@ public class Move {
             return null;
         }
     }
-
 
 }

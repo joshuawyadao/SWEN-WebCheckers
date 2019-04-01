@@ -64,9 +64,34 @@ public class GetGameRoute implements Route {
             Session opponentSession = playerLobby.getPlayerSessionByName(opponentName);
             Player opponent = opponentSession.attribute(GetHomeRoute.CURRENT_USER_ATTR);
 
-            String newGameId = gameCenter.newGame(currentUser, opponent, Game.ViewMode.PLAY);
-            currentSession.attribute(GAME_ID_ATTR, newGameId);
-            opponentSession.attribute(GAME_ID_ATTR, newGameId);
+            //
+            //
+            if (gameCenter.hasGame(opponent)) {
+                // FIX: Error output message
+
+                //Message message = new Message(" GOT ERROR ", Message.Type.ERROR);
+
+                Message message = Message.error("GOT ERROR");
+                message = Message.info("GOT ERROR");
+                vm.put("message", message);
+
+                // Home.ftl requirements
+                vm.put(GetHomeRoute.CURRENT_USER_ATTR, currentUser);
+                vm.put("title", "Welcome!");
+                vm.put("players", playerLobby.getPlayers());
+
+                response.redirect(WebServer.HOME_URL);
+                halt();
+                return null;
+
+            } else {
+                String newGameId = gameCenter.newGame(currentUser, opponent, Game.ViewMode.PLAY);
+                currentSession.attribute(GAME_ID_ATTR, newGameId);
+                opponentSession.attribute(GAME_ID_ATTR, newGameId);
+            }
+            //
+            //
+
         }
 
         String gameId = currentSession.attribute(GAME_ID_ATTR);

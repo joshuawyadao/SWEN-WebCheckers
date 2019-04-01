@@ -189,6 +189,10 @@ public class WebServer {
     //change on the board to both players
     post(SUBMIT_TURN_URL, new PostSubmitTurnRoute(gameCenter, gson));
 
+
+    post("/checkTurn", new PostCheckTurnRoute(gameCenter, gson, playerLobby));
+
+
     //
     LOG.config("WebServer is initialized.");
   }

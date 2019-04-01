@@ -18,7 +18,7 @@ public class PostSignInRoute implements Route {
     private final static String NAME_PARAM = "myUsername";
 
     private final static Message INVALID_NAME = Message.error("INVALID NAME: Name MUST contain at least one " +
-                                                "alphanumeric character, and can optionally contain spaces.");
+            "alphanumeric character, and can optionally contain spaces.");
 
     //private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
 

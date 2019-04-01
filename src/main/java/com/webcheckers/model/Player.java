@@ -23,17 +23,16 @@ public class Player {
     }
 
     /**
-     * Returns the name of this player
-     * @return the name of this player
+     * Gets the name of the player
+     * @return the name of the player
      */
     public String getName() {
         return name;
     }
 
     /**
-     * Methods called whenever a player joins a game, it takes the player's color in as a parameter to distinguish
-     * which player is joining the game
-     * @param playerColor the color of the player that is joining the game
+     * Distinguishes which player is joining a game by their color
+     * @param playerColor the color's player to join the game
      */
     public void joinGame(PlayerColor playerColor){
         if( playerColor != PlayerColor.NONE ) {
@@ -43,7 +42,7 @@ public class Player {
     }
 
     /**
-     * Method is called when a game is over (either resigned or ended naturally
+     * Allows the player to leave the game
      */
     public void leaveGame(){
         if ( this.isPlaying() ) {
@@ -53,22 +52,22 @@ public class Player {
     }
 
     /**
-     * Returns this player's color
-     * @return the color of this player
+     * Gets the player's color
+     * @return the player's color
      */
     public PlayerColor getPlayerColor() {
         return playerColor;
     }
 
     /**
-     * Returns if this player is playing
-     * @return if this player is playing
+     * Determine if the player is playing
+     * @return true if is playing, false otherwise
      */
     public boolean isPlaying() { return this.playing; }
 
     /**
-     * Returns the piece color that corresponds to this player
-     * @return the piece color of this player
+     * Returns a player's piece color
+     * @return the player's piece color
      */
     public Piece.COLOR playerColorToPieceColor() {
         if( this.playerColor == PlayerColor.RED ) {
@@ -81,9 +80,9 @@ public class Player {
     }
 
     /**
-     * Compares another object with this player to see if they are equivalent
-     * @param obj another object to compare with
-     * @return if they are equivalent
+     * Player equal's method
+     * @param obj the ideal player object
+     * @return true if they are the same, false otherwise
      */
     public boolean equals(Object obj) {
         if(obj == this) return true;
@@ -95,8 +94,8 @@ public class Player {
     }
 
     /**
-     * Creates and returns the hash code for this player
-     * @return this player's hashCode
+     * Create a unique hashcode
+     * @return the unique hashcode
      */
     @Override
     public int hashCode() {

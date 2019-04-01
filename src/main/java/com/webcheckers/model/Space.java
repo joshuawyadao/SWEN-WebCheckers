@@ -57,8 +57,8 @@ public class Space {
     }
 
     /**
-     * Returns an instance of this space
-     * @return a copy of this space
+     * Copies over a space
+     * @return the new space copied
      */
     public Space copySpace() {
         Piece tempPiece;
