@@ -89,6 +89,19 @@ public class Board {
         return board[rowNum];
     }
 
+    public boolean equals(Board other) {
+        for( int row = 0; row < BOARD_SIDE; row++ ) {
+            for( int col = 0; col < BOARD_SIDE; col ++ ) {
+                Space currentBoardSpace = this.board[row][col];
+                Space otherSpace = other.getBoard()[row][col];
+                if( !currentBoardSpace.equals(otherSpace) ) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     public boolean validateMove(Position startPos, Position endingPos, int typeOfMove, Piece piece, Board viewBoard ) {
         Move playerMove = new Move( viewBoard.getBoard() );
         boolean validMove = false;
@@ -185,26 +198,15 @@ public class Board {
         }
     }
 
-//    public Position differentPiece( Space[][] comparison ) {
-//        for( int row = 0; row < BOARD_SIDE; row++ ) {
-//            for( int col = 0; col < BOARD_SIDE; col++ ) {
-//                Space currentBoardSpace = this.board[row][col];
-//                Space comparisonSpace = comparison[row][col];
-//                if( !currentBoardSpace.equals( comparisonSpace ) && currentBoardSpace.getPiece() != null ) {
-//                    return new Position( row, col );
-//                }
-//            }
-//        }
-//        return null;
-//    }
-
     public boolean movedPieceCorrectly() {
         Position pos;
         for( int row = 0; row < BOARD_SIDE; row++ ) {
             for( int col = 0; col < BOARD_SIDE; col++ ) {
-                pos = new Position( row, col );
-                if( !pieceMovedCorrectDirection( pos ) ) {
-                    return false;
+                if( this.board[row][col].getPiece() != null ) {
+                    pos = new Position(row, col);
+                    if (!pieceMovedCorrectDirection(pos)) {
+                        return false;
+                    }
                 }
             }
         }
@@ -213,12 +215,20 @@ public class Board {
 
     public boolean pieceMovedCorrectDirection( Position position ) {
         List<Position> adjacentSpaces = adjacentSpaces( position );
+        Piece currentPiece = this.board[position.getRow()][position.getCell()].getPiece();
+
+        System.out.println("CurrentPiece: ");
+        System.out.println("\tRow: " + position.getRow());
+        System.out.println("\tCol: " + position.getCell());
 
         for( Position pos : adjacentSpaces ) {
             Piece piece = this.board[pos.getRow()][pos.getCell()].getPiece();
-            Space currentSpace = this.board[position.getRow()][position.getCell()];
-            Space posSpace = this.board[pos.getRow()][pos.getCell()];
-            if( piece != null &&  !currentSpace.equals(posSpace) ) {
+
+            System.out.println("Piece: ");
+            System.out.println("\tRow: " + pos.getRow());
+            System.out.println("\tCol: " + pos.getCell());
+
+            if( currentPiece.getColor() != piece.getColor() ) {
                 return false;
             }
         }
@@ -232,44 +242,53 @@ public class Board {
         int cell = position.getCell();
         Piece piece = this.board[row][cell].getPiece();
 
-        if (piece.getColor() == Piece.COLOR.RED) { // red pieces
-            if( cell > 2 && cell < 6 ) { // left boundary
+        if ( piece.getColor() == Piece.COLOR.RED ) { // red pieces
+            if( cell > 1 && cell < 6 && row < 6) { // left boundary
                 if( !this.board[row + 1][cell + 1].isValid() && this.board[row + 2][cell + 2].isValid() ) {
                     adjacentSpaces.add(new Position(row + 1, cell + 1));
+                    System.out.println("Added LEFT!!!");
                 }
                 if( !this.board[row + 1][cell - 1].isValid() && this.board[row + 2][cell - 2].isValid() ) {
                     adjacentSpaces.add(new Position(row + 1, cell - 1));
+                    System.out.println("Added RIGHT!!!");
                 }
             }
-            if( cell == 1 && row == 1) {
+            if( cell < 2 && row < 6) {
                 if( !this.board[row + 1][cell + 1].isValid() && this.board[row + 2][cell + 2].isValid() ) {
-                    adjacentSpaces.add(new Position( row + 1, cell + 1 ) );
+                    adjacentSpaces.add(new Position(row + 1, cell + 1));
+                    System.out.println("Added LEFT!!!");
                 }
             }
-            if( cell == 7 && row == 1) {
+            if( cell > 5 && row < 6 ) {
                 if( !this.board[row + 1][cell - 1].isValid() && this.board[row + 2][cell - 2].isValid() ) {
-                    adjacentSpaces.add(new Position( row + 1, cell - 1 ) );
+                    adjacentSpaces.add(new Position(row + 1, cell - 1));
+                    System.out.println("Added RIGHT!!!");
                 }
             }
-        } else { // white pieces
-            if(cell > 2 && cell < 6 ) { // left boundary
+        } else if( piece.getColor() == Piece.COLOR.WHITE ){ // white pieces
+            if(cell > 1 && cell < 6 && row > 1) { // left boundary
                 if( !this.board[row - 1][cell + 1].isValid() && this.board[row - 2][cell + 2].isValid() ) {
                     adjacentSpaces.add(new Position(row - 1, cell + 1));
+                    System.out.println("Added RIGHT!!!");
                 }
                 if( !this.board[row - 1][cell - 1].isValid() && this.board[row - 2][cell - 2].isValid() ) {
                     adjacentSpaces.add(new Position(row - 1, cell - 1));
+                    System.out.println("Added LEFT!!!");
                 }
             }
-            if( cell == 1 && row == 6) {
+            if( cell < 2 && row > 1) {
                 if( !this.board[row - 1][cell + 1].isValid() && this.board[row - 2][cell + 2].isValid() ) {
-                    adjacentSpaces.add(new Position( row - 1, cell + 1 ) );
+                    adjacentSpaces.add(new Position(row - 1, cell + 1));
+                    System.out.println("Added RIGHT!!!");
                 }
             }
-            if( cell == 7 && row == 6) {
+            if( cell > 5 && row > 1 ) {
                 if( !this.board[row - 1][cell - 1].isValid() && this.board[row - 2][cell - 2].isValid() ) {
-                    adjacentSpaces.add(new Position( row - 1, cell - 1 ) );
+                    adjacentSpaces.add(new Position(row - 1, cell - 1));
+                    System.out.println("Added LEFT!!!");
                 }
             }
+
         }
 
         return adjacentSpaces;

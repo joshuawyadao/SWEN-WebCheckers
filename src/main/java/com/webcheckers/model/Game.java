@@ -19,6 +19,7 @@ public class Game {
     private Map<String, Object> modeOptionsAsJSON;
     private Stack<Board> previousMoves;
     private Player resignedPlayer;
+    private int typeOfMove;
 
     public Game(Player redPlayer, Player whitePlayer, ViewMode viewMode){
         this.redPlayer = redPlayer;
@@ -29,6 +30,7 @@ public class Game {
         this.previousMoves = new Stack<>();
         previousMoves.push(checkerBoard);
         this.resignedPlayer = null;
+        this.typeOfMove = 0;
     }
 
     //Accessors
@@ -64,7 +66,7 @@ public class Game {
     }
 
     public boolean makeMove( Player player, Position startingPos, Position endingPos ) {
-        int typeOfMove = startingPos.difference( endingPos );
+        this.typeOfMove = startingPos.difference( endingPos );
         Board turn = new Board();
         //CHANGED: 'getRecentedTurn()' to 'this.checkerboard' so that multiple single moves
         //are not longer allowed
@@ -83,7 +85,7 @@ public class Game {
     public boolean validateTurn() {
 //        Board selectedBoard = this.checkerBoard;
         for( Board turn : previousMoves ) {
-            if( !turn.movedPieceCorrectly() ) {
+            if( !turn.equals( previousMoves.peek() ) && !turn.movedPieceCorrectly() ) {
                 return false;
             }
 
@@ -94,7 +96,7 @@ public class Game {
     }
 
     public boolean submitTurn() {
-        if( !validateTurn() ) {
+        if( Math.abs(this.typeOfMove) == 1 && !validateTurn() ) {
             return false;
         }
         this.checkerBoard = this.previousMoves.pop();

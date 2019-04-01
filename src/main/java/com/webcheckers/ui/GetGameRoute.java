@@ -72,7 +72,7 @@ public class GetGameRoute implements Route {
         boolean testBool = true;
         //line below is conditional to use instead of testBool
         //currentGame.getCheckerBoard().finishedGame()
-        if (testBool){
+        if (currentGame.getCheckerBoard().finishedGame()) { //testBool){
             //Player winner = currentGame.completedGame();
 
             Player winner = currentGame.getWhitePlayer();
