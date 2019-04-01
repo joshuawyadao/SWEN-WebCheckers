@@ -12,18 +12,33 @@ import java.util.logging.Logger;
 
 import static spark.Spark.halt;
 
+/**
+ * The UI Controller to POST the SignOut request
+ */
 public class PostSignOutRoute implements Route {
     private static final Logger LOG = Logger.getLogger(PostSignOutRoute.class.getName());
 
     private final PlayerLobby playerLobby;
     private final GameCenter gameCenter;
 
+    /**
+     * Constructor for the Route
+     * @param playerLobby Lobby where all current players, both in
+     *                    and out of game are listed
+     * @param gameCenter Center that keeps track of all running games
+     */
     public PostSignOutRoute(final PlayerLobby playerLobby, final GameCenter gameCenter){
         this.playerLobby = playerLobby;
         this.gameCenter = gameCenter;
         LOG.config("PostSignOutRoute is initialized");
     }
 
+    /**
+     * Post the SignOut and handle signing out
+     * @param request the HTTP request
+     * @param response the HTTP response
+     * @return
+     */
     @Override
     public Object handle(Request request, Response response) {
         Session currentSession = request.session();
