@@ -135,4 +135,8 @@ public class Game {
         return resignedPlayer != null;
     }
 
+    public Player getResignedPlayer(){
+        return resignedPlayer;
+    }
+
 }
