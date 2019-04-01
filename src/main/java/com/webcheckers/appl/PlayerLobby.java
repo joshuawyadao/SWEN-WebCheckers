@@ -93,4 +93,12 @@ public class PlayerLobby {
         return players.size();
     }
 
+    /**
+     * Removes the player from the players HashMap
+     * @param player the player wanting to sign out
+     */
+    public void signOut(Player player){
+        players.remove(player);
+    }
+
 }
