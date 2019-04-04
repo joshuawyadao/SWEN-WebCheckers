@@ -185,9 +185,32 @@ The Application Tier contains 2 classes. GameCenter deals with current active ga
 The PlayerLobby class keeps track of current users online and also deals with validating usernames as players try to sign in. This class contains a HashMap with the key being usernames and the values being user sessions.
 
 ### Model Tier
-> _Provide a summary of the Application tier of your architecture. This
-> section will follow the same instructions that are given for the UI
-> Tier above._
+
+The model tier contains many classes, largely dealing with the functional dynamics of the board and player.
+
+Board: The overall structure simulating an 8x8 matrix of alternating black
+and white spaces. Here can be found a majority of movement validation, as well
+as the movement of pieces itself. The general rule of thumb is, if it has
+an association with the board, the board class will deal with it.
+
+Game: The simulation of two (2) players coming together and playing a 'game'.
+This class largely focused on the dynamics of players,
+as in a player's basic capabilities (i.e. request to move a piece)
+or other general player information (i.e. grab a player's color).
+
+Move: This class dealt with the movement of pieces across our
+board. Also dealing with any jump movement. It is worth noting that any movement
+validation is not involved within this class. It is simply the movement of piecs.
+Piece: This class controlled the status of a piece, or many pieces, on the
+board.
+
+Player: This is the class that simulates a person actively playing a game
+of checkers (or a person simply within the lobby). Information such
+as the player's color or username can be found here.
+Position: This class is used in conjunction of movement concept and the board.
+It is used to simulate any and all validation.
+
+Space: This class basically places the black and white tiles on the board.
 
 ### Design Improvements
 > _Discuss design improvements that you would make if the project were
@@ -200,8 +223,16 @@ The PlayerLobby class keeps track of current users online and also deals with va
 > suggested design improvements to address those hot spots._
 
 ## Testing
-> _This section will provide information about the testing performed
-> and the results of the testing._
+
+We created test classes for all of the model and application tiers.
+While the testing for the application tier saw a great, if not 100%, code coverage,
+it was not the same for the other tiers. The model tier posed a completely
+different situation in terms of testing because of the coupling of classes
+and the overall design of our project. With enough tests though, we were able
+to at least meet a somewhat satisfactory standard of code coverage.
+Testing for the UI tier was not fully completed. The process of
+building the tests seemed much more abstract than the model
+tier and application tier. This lead to easy mishaps and many null pointers.
 
 ### Acceptance Testing
 > _Report on the number of user stories that have passed all their
@@ -210,9 +241,18 @@ The PlayerLobby class keeps track of current users online and also deals with va
 > have not had any testing yet. Highlight the issues found during
 > acceptance testing and if there are any concerns._
 
+
+
 ### Unit Testing and Code Coverage
-> _Discuss your unit testing strategy. Report on the code coverage
-> achieved from unit testing of the code base. Discuss the team's
-> coverage targets, why you selected those values, and how well your
-> code coverage met your targets. If there are any anomalies, discuss
-> those._
+
+The overall code coverage focus was on the model-tier.
+Mainly because the majority of functionality can be found within the model.
+This includes algorithms such as movement validation, and the passing of
+movement information itself. The testing of such tier was very challenging,
+and full, 100% testing has yet to be fulfilled due to the shear amount
+of conditions required and specifics required. The problem with our current
+design, in order to test the code to its fullest, we would have to start
+with the board and its already placed pieces. At that point, we would basically
+recreate the entire process of gameplay, but by code. Movement of pieces,
+jumping pieces, etc. Testing anything further may require a difference in
+design in order to relieve stress with the tests.
