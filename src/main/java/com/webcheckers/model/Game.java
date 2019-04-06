@@ -116,7 +116,7 @@ public class Game {
         Piece selectPiece = turn.getBoard()[startingPos.getRow()][startingPos.getCell()].getPiece();
 
         if( turn.validateMove( startingPos, endingPos, typeOfMove, selectPiece, getRecentTurn() )) {
-            if( Math.abs(typeOfMove) == 1 && validateTurn() ) {
+            if( Math.abs(typeOfMove) == 1 ) {
                 turn.movePiece(startingPos, endingPos, player.playerColorToPieceColor(), selectPiece.getType());
                 previousMoves.push(turn);
                 return true;
@@ -143,7 +143,7 @@ public class Game {
             }
         }
 
-        return true;
+        return false;
     }
 
     /**
@@ -151,6 +151,9 @@ public class Game {
      * @return if the turn was a valid turn
      */
     public boolean submitTurn() {
+//        if( !validateTurn() ) {
+//            return false;
+//        }
 
         this.checkerBoard = this.previousMoves.pop();
         this.checkerBoard.kingPieces();
@@ -171,7 +174,13 @@ public class Game {
      * @return if the turn was successfully backed-up
      */
     public boolean backup(){
-        Board previousTurn = this.previousMoves.pop();
+       Board previousTurn = null;
+       previousTurn = this.previousMoves.pop();
+
+//        if(previousMoves.size() > 1) {
+//        previousTurn = this.previousMoves.pop();
+//        }
+
         return previousTurn != null;
     }
 
