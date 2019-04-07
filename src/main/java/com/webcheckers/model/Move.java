@@ -17,11 +17,21 @@ public class Move {
     private Position start;
     private Position end;
 
+    /**
+     * Move constructor
+     * @param start declares the starting position
+     * @param end declares the end position
+     */
     public Move( Position start, Position end ) {
         this.start = start;
         this.end = end;
     }
 
+    /**
+     *
+     * @param piece
+     * @return
+     */
     public TYPE_OF_MOVE typeOfMove( Piece piece ) {
         int difference = this.end.getRow() - this.start.getRow();
         TYPE_OF_MOVE moveType;
@@ -67,6 +77,7 @@ public class Move {
 
         return moveType;
     }
+
     /**
      * The starting position of the move
      * @return the position
@@ -83,18 +94,34 @@ public class Move {
         return this.end;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getStartRow() {
         return this.start.getRow();
     }
 
+    /**
+     *
+     * @return
+     */
     public int getStartCell() {
         return this.start.getCell();
     }
 
+    /**
+     *
+     * @return
+     */
     public int getEndRow() {
         return this.end.getRow();
     }
 
+    /**
+     *
+     * @return
+     */
     public int getEndCell() {
         return this.end.getCell();
     }
@@ -107,11 +134,8 @@ public class Move {
     public boolean validSimpleMove( Board board ) {
         Space[][] checkerBoard = board.getBoard();
 
-        if ( !checkerBoard[getStartRow()][getStartCell()].isValid() && checkerBoard[getEndRow()][getEndCell()].isValid() ) {
-            return true;
-        } else {
-            return false;
-        }
+        return ( !checkerBoard[getStartRow()][getStartCell()].isValid()
+                && checkerBoard[getEndRow()][getEndCell()].isValid() );
     }
 
     /**
