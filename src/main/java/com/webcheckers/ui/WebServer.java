@@ -71,6 +71,24 @@ public class WebServer {
 
   public static final String BACKUP_MOVE_URL = "/backupMove";
 
+  public static final String SIGN_OUT_URL = "/signout";
+
+  public static final String CHECK_TURN_URL = "/checkTurn";
+
+  public static final String SPECTATOR_GAME_URL = "/spectator/game";
+
+  public static final String SPECTATOR_STOP_WATCHING_URL = "/spectator/stopWatching";
+
+  public static final String SPECTATOR_CHECK_TURN_URL = "/spectator/checkTurn";
+
+  public static final String REPLAY_GAME_URL = "/replay/game";
+
+  public static final String REPLAY_STOP_WATCHING_URL = "/replay/stopWatching";
+
+  public static final String REPLAY_NEXT_TURN_URL = "/replay/nextTurn";
+
+  public static final String REPLAY_PREVIOUS_TURN_URL = "/replay/previousTurn";
+
   /**
    * The URL pattern to
    */
@@ -189,10 +207,23 @@ public class WebServer {
     //change on the board to both players
     post(SUBMIT_TURN_URL, new PostSubmitTurnRoute(gameCenter, gson));
 
+    post(CHECK_TURN_URL, new PostCheckTurnRoute(gameCenter, gson, playerLobby));
 
-    post("/checkTurn", new PostCheckTurnRoute(gameCenter, gson, playerLobby));
+    post(SIGN_OUT_URL, new PostSignOutRoute(playerLobby, gameCenter));
 
-    post("/signout", new PostSignOutRoute(playerLobby, gameCenter));
+    get(SPECTATOR_GAME_URL, new GetSpectatorGameRoute());
+
+    get(SPECTATOR_STOP_WATCHING_URL, new GetSpectatorStopWatchingRoute());
+
+    post(SPECTATOR_CHECK_TURN_URL, new PostSpectatorCheckTurnRoute());
+
+    get(REPLAY_GAME_URL, new GetReplayGameRoute());
+
+    get(REPLAY_STOP_WATCHING_URL, new GetReplayStopWatchingRoute());
+
+    post(REPLAY_NEXT_TURN_URL, new PostReplayNextTurnRoute());
+
+    post(REPLAY_PREVIOUS_TURN_URL, new PostReplayPreviousTurnRoute());
 
     //
     LOG.config("WebServer is initialized.");
