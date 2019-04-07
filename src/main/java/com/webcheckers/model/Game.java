@@ -110,7 +110,7 @@ public class Game {
         Board turn = new Board();
         //CHANGED: 'getRecentedTurn()' to 'this.checkerboard' so that multiple single moves
         //are not longer allowed
-        turn.copyBoard( this.checkerBoard );
+        turn.copyBoard( this.previousMoves.peek() );
         Piece selectPiece = turn.getBoard()[move.getStartRow()][move.getStartCell()].getPiece();
         Move.TYPE_OF_MOVE moveType = move.typeOfMove(selectPiece);
 
@@ -120,8 +120,9 @@ public class Game {
 
         switch ( moveType ) {
             case SIMPLE:
-                if( move.validSimpleMove( turn ) ) {
+                if( move.validSimpleMove( turn ) && ( this.previousMoves.size() == 1 ) ) {
                     movePiece( move, turn, selectPiece );
+                    this.previousMoves.push(turn);
                     return true;
                 }
                 break;
@@ -130,6 +131,7 @@ public class Game {
                 if( between != null ) {
                     movePiece( move, turn, selectPiece );
                     turn.getBoard()[between.getRow()][between.getCell()].setPiece( null );
+                    this.previousMoves.push(turn);
                     return true;
                 }
                 break;
@@ -140,68 +142,6 @@ public class Game {
 
     }
 
-//    /**
-//     * Checks to see if the move was validated
-//     * @param startPos the starting position of the move
-//     * @param endingPos the ending position of the move
-//     * @param typeOfMove the type of move that was made
-//     *                   1: single move
-//     *                   2: single jump
-//     *                   -1: backwards single move
-//     *                   -2: backwards single jump
-//     * @param piece the piece to be validated
-//     * @param viewBoard the board to be used
-//     * @return if the move is valid
-//     */
-//    public boolean validateMove(Position startPos, Position endingPos, int typeOfMove, Piece piece, Board viewBoard ) {
-//        Move playerMove = new Move( viewBoard.getBoard() );
-//        boolean validMove = false;
-//
-//        //CHANGED: add this if statement to prevent null pointer exeception when
-//        //moving a piece that this not currently in game's 'this.checkerboard'
-//        //this allows a simple to only occur oncein one turn
-//        if(piece == null)
-//            return false;
-//
-//        if( piece.getType() == Piece.TYPE.SINGLE && piece.getColor() == Piece.COLOR.RED ) { // Red single move
-//            if (typeOfMove == -1) {
-//                if (playerMove.validSimpleMove(startPos, endingPos)) {
-//                    validMove = true;
-//                }
-//            } else if (typeOfMove == -2) {
-//                Position captured = playerMove.validSimpleJump(startPos, endingPos);
-//                if (captured != null) {
-//                    this.board[captured.getRow()][captured.getCell()].setPiece(null);
-//                    validMove = true;
-//                }
-//            }
-//        } else if( piece.getType() == Piece.TYPE.SINGLE && piece.getColor() == Piece.COLOR.WHITE ){ // White single move
-//            if (typeOfMove == 1) {
-//                if (playerMove.validSimpleMove(startPos, endingPos)) {
-//                    validMove = true;
-//                }
-//            } else if (typeOfMove == 2) {
-//                Position captured = playerMove.validSimpleJump(startPos, endingPos);
-//                if (captured != null) {
-//                    this.board[captured.getRow()][captured.getCell()].setPiece(null);
-//                    validMove = true;
-//                }
-//            }
-//        } else { // King movement
-//            if (Math.abs( typeOfMove ) == 1) {
-//                if (playerMove.validSimpleMove(startPos, endingPos)) {
-//                    validMove = true;
-//                }
-//            } else if (Math.abs(typeOfMove) == 2) {
-//                Position captured = playerMove.validSimpleJump(startPos, endingPos);
-//                if (captured != null) {
-//                    this.board[captured.getRow()][captured.getCell()].setPiece(null);
-//                    validMove = true;
-//                }
-//            }
-//        }
-//        return validMove;
-//    }
 
     /**
      *
@@ -215,19 +155,6 @@ public class Game {
     }
 
 
-    /**
-     * Checks to see if a turn was valid
-     * @return if the turn is valid
-     */
-    public boolean validateTurn() {
-        for( Board turn : previousMoves ) {
-            if( !turn.equals( previousMoves.peek() ) && !turn.movedPieceCorrectly() ) {
-                return false;
-            }
-        }
-
-        return false;
-    }
 
     /**
      * Submits a turn to be checked and resets the previous moves stack
