@@ -36,9 +36,6 @@ public class PostCheckTurnRoute implements Route {
     public Object handle(Request request, Response response) {
         LOG.config("PostCheckTurnRoute is invoked.");
 
-        // Create vm
-        Map<String, Object> vm = new HashMap<>();
-
         // Request player
         Session currentSession = request.session();
         Player currentUser = currentSession.attribute("currentUser");

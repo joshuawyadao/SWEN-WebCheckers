@@ -14,10 +14,24 @@ class PositionTest {
     }
 
     @Test
+    public void testGetRowZero() {
+        final Position CuT = new Position(0, 2);
+
+        assertEquals(0, CuT.getRow(), "Row is set correctly");
+    }
+
+    @Test
     public void testGetRow() {
         final Position CuT = new Position(1, 2);
 
         assertEquals(1, CuT.getRow(), "Row is set correctly");
+    }
+
+    @Test
+    public void testGetCellZero() {
+        final Position CuT = new Position(1, 0 );
+
+        assertEquals(0, CuT.getCell(), "Cell is set correctly");
     }
 
     @Test
@@ -33,6 +47,14 @@ class PositionTest {
         final Position more = new Position( 2, 2 );
 
         assertEquals(1, CuT.compare(more), "CuT is less than more");
+    }
+
+    @Test
+    public void testCompareSame() {
+        final Position CuT = new Position(1,2 );
+        final Position more = new Position( 1, 2 );
+
+        assertEquals(0, CuT.compare(more), "CuT is less than more");
     }
 
     @Test
@@ -98,5 +120,21 @@ class PositionTest {
         final Position same = new Position(1, 1 );
 
         assertTrue( CuT.equals(same), "CuT is equivalent as same");
+    }
+
+    @Test
+    public void testEqualsDifferentRow() {
+        final Position CuT = new Position( 1, 2);
+        final Position dif = new Position( 2, 2);
+
+        assertFalse( CuT.equals(dif), "CuT is not equivalent to dif");
+    }
+
+    @Test
+    public void testEqualsDifferentCell() {
+        final Position CuT = new Position( 1, 2);
+        final Position dif = new Position( 1, 1);
+
+        assertFalse( CuT.equals(dif), "CuT is not equivalent to dif");
     }
 }

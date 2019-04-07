@@ -136,4 +136,74 @@ public class PlayerLobbyTest {
         assertNull(CuT.getPlayerSessionByName(player2Name));
     }
 
+    @Test
+    public void testOnePlayerSignOut() {
+        final Player player1 = new Player("playerOne");
+
+        assertEquals(TEST_LOGIN_SUCCESSFUL.toString(), CuT.signInPlayer(player1, testPlayerSession).toString());
+
+        assertEquals(ONE_PLAYER_SIZE, CuT.getNumOfPlayers());
+        assertTrue(CuT.getPlayers().contains(player1));
+
+        CuT.signOut(player1);
+
+        assertEquals(0, CuT.getNumOfPlayers());
+        assertFalse(CuT.getPlayers().contains(player1));
+    }
+
+    @Test
+    public void testTWOPlayerSignOut1() {
+        final Player player1 = new Player("playerOne");
+        final Player player2 = new Player("PlayerTwo");
+
+        assertEquals(TEST_LOGIN_SUCCESSFUL.toString(), CuT.signInPlayer(player1, testPlayerSession).toString());
+        assertEquals(TEST_LOGIN_SUCCESSFUL.toString(), CuT.signInPlayer(player2, testPlayerSession).toString());
+
+        assertEquals(TWO_PLAYER_SIZE, CuT.getNumOfPlayers());
+        assertTrue(CuT.getPlayers().contains(player1));
+        assertTrue(CuT.getPlayers().contains(player2));
+
+        CuT.signOut(player1);
+        assertEquals(ONE_PLAYER_SIZE, CuT.getNumOfPlayers());
+        assertFalse(CuT.getPlayers().contains(player1));
+        assertTrue(CuT.getPlayers().contains(player2));
+    }
+
+    @Test
+    public void testTWOPlayerSignOut2() {
+        final Player player1 = new Player("playerOne");
+        final Player player2 = new Player("PlayerTwo");
+
+        assertEquals(TEST_LOGIN_SUCCESSFUL.toString(), CuT.signInPlayer(player1, testPlayerSession).toString());
+        assertEquals(TEST_LOGIN_SUCCESSFUL.toString(), CuT.signInPlayer(player2, testPlayerSession).toString());
+
+        assertEquals(TWO_PLAYER_SIZE, CuT.getNumOfPlayers());
+        assertTrue(CuT.getPlayers().contains(player1));
+        assertTrue(CuT.getPlayers().contains(player2));
+
+        CuT.signOut(player2);
+        assertEquals(ONE_PLAYER_SIZE, CuT.getNumOfPlayers());
+        assertTrue(CuT.getPlayers().contains(player1));
+        assertFalse(CuT.getPlayers().contains(player2));
+    }
+
+    @Test
+    public void testTWOPlayerTWOSignOut() {
+        final Player player1 = new Player("playerOne");
+        final Player player2 = new Player("PlayerTwo");
+
+        assertEquals(TEST_LOGIN_SUCCESSFUL.toString(), CuT.signInPlayer(player1, testPlayerSession).toString());
+        assertEquals(TEST_LOGIN_SUCCESSFUL.toString(), CuT.signInPlayer(player2, testPlayerSession).toString());
+
+        assertEquals(TWO_PLAYER_SIZE, CuT.getNumOfPlayers());
+        assertTrue(CuT.getPlayers().contains(player1));
+        assertTrue(CuT.getPlayers().contains(player2));
+
+        CuT.signOut(player1);
+        CuT.signOut(player2);
+        assertEquals(0, CuT.getNumOfPlayers());
+        assertFalse(CuT.getPlayers().contains(player1));
+        assertFalse(CuT.getPlayers().contains(player2));
+    }
+
 }

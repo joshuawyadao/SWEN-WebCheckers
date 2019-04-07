@@ -2,20 +2,71 @@ package com.webcheckers.model;
 
 public class Move {
 
-    private Space[][] checkerBoard;
+    public enum TYPE_OF_MOVE {
+        SIMPLE,
+        JUMP,
+        ERROR
+    }
+
+   private enum MOVE_COLOR {
+        RED,
+        WHITE,
+        EMPTY
+    }
+
     private Position start;
     private Position end;
 
-    /**
-     * Constructor for board
-     * @param board the board
-     */
-    public Move( Space[][] board ) {
-        this.checkerBoard = board;
-        this.start = null;
-        this.end = null;
+    public Move( Position start, Position end ) {
+        this.start = start;
+        this.end = end;
     }
 
+    public TYPE_OF_MOVE typeOfMove( Piece piece ) {
+        int difference = this.end.getRow() - this.start.getRow();
+        TYPE_OF_MOVE moveType;
+        MOVE_COLOR moveColor;
+
+        switch (difference) {
+            case 1:
+                moveType = TYPE_OF_MOVE.SIMPLE;
+                moveColor = MOVE_COLOR.RED;
+                break;
+            case 2:
+                moveType = TYPE_OF_MOVE.JUMP;
+                moveColor = MOVE_COLOR.RED;
+                break;
+            case -1:
+                moveType = TYPE_OF_MOVE.SIMPLE;
+                moveColor = MOVE_COLOR.WHITE;
+                break;
+            case -2:
+                moveType = TYPE_OF_MOVE.JUMP;
+                moveColor = MOVE_COLOR.WHITE;
+                break;
+            default:
+                moveType = TYPE_OF_MOVE.ERROR;
+                moveColor = MOVE_COLOR.EMPTY;
+        }
+
+        if( piece.getType() == Piece.TYPE.SINGLE ) { // if a single piece is moving the correct direction
+            Piece.COLOR pieceColor = piece.getColor();
+            if( pieceColor == Piece.COLOR.RED && moveColor != MOVE_COLOR.RED ) {
+                return TYPE_OF_MOVE.ERROR;
+            }
+            if( pieceColor == Piece.COLOR.WHITE && moveColor != MOVE_COLOR.WHITE ) {
+                return TYPE_OF_MOVE.ERROR;
+            }
+        }
+
+        /*
+         * assume either:
+         *      Piece is single and moving correct direction
+         *      Piece is king and can move any direction
+         */
+
+        return moveType;
+    }
     /**
      * The starting position of the move
      * @return the position
@@ -32,30 +83,31 @@ public class Move {
         return this.end;
     }
 
-    /**
-     * checks space at a position
-     * @param pos the space of the position
-     * @return true if the space is valid, false otherwise
-     */
-    private boolean checkSpace( Position pos ) {
-        return this.checkerBoard[pos.getRow()][pos.getCell()].isValid();
+    public int getStartRow() {
+        return this.start.getRow();
+    }
+
+    public int getStartCell() {
+        return this.start.getCell();
+    }
+
+    public int getEndRow() {
+        return this.end.getRow();
+    }
+
+    public int getEndCell() {
+        return this.end.getCell();
     }
 
     /**
-     * Moves a piece from one spot to another
-     * @param startingPos the starting position of the piece
-     * @param endingPos the ending position of the piece
-     * @return true if successful, false otherwise
+     *
+     * @param board
+     * @return
      */
-    public boolean validSimpleMove( Position startingPos, Position endingPos ) {
-        int diffRow = Math.abs( startingPos.getRow() - endingPos.getRow() );
-        int diffCell = Math.abs( startingPos.getCell() - endingPos.getCell() );
+    public boolean validSimpleMove( Board board ) {
+        Space[][] checkerBoard = board.getBoard();
 
-        if ( ( diffRow == 1 && diffCell == 1 ) && !startingPos.equals( endingPos ) &&
-                !checkSpace( startingPos ) && checkSpace( endingPos ) ) {
-            this.start = startingPos;
-            this.end = endingPos;
-
+        if ( !checkerBoard[getStartRow()][getStartCell()].isValid() && checkerBoard[getEndRow()][getEndCell()].isValid() ) {
             return true;
         } else {
             return false;
@@ -63,32 +115,26 @@ public class Move {
     }
 
     /**
-     * Allows a piece to jump over another piece
-     * @param startingPos the starting position
-     * @param endingPos the ending position
-     * @return the new position
+     *
+     * @param board
+     * @return
      */
-    public Position validSimpleJump( Position startingPos, Position endingPos ) {
-        int diffRow = Math.abs( startingPos.getRow() - endingPos.getRow() );
-        int diffCell = Math.abs( startingPos.getCell() - endingPos.getCell() );
-        Position between = startingPos.between( endingPos );
+    public Position validSimpleJump( Board board ) {
+        Position between = this.start.between( this.end );
+        Space[][] checkerBoard = board.getBoard();
 
-        if ( ( diffRow == 2 && diffCell == 2 ) && !startingPos.equals( endingPos ) &&
-                !checkSpace( startingPos ) && !checkSpace( between ) && checkSpace( endingPos ) ) {
-            Piece betweenPiece = this.checkerBoard[between.getRow()][between.getCell()].getPiece();
-            Piece startingPiece = this.checkerBoard[startingPos.getRow()][startingPos.getCell()].getPiece();
-            if( betweenPiece.getColor() != startingPiece.getColor() ) {
-                this.start = startingPos;
-                this.end = endingPos;
+        if ( !checkerBoard[getStartRow()][getStartCell()].isValid() && // checks if piece at start
+             !checkerBoard[between.getRow()][between.getCell()].isValid() && // checks if piece in between
+              checkerBoard[getEndRow()][getEndCell()].isValid() ) { // checks if no piece at end
 
+            Piece betweenPiece = checkerBoard[between.getRow()][between.getCell()].getPiece();
+            Piece startingPiece = checkerBoard[getStartRow()][getStartCell()].getPiece();
 
+            if (betweenPiece.getColor() != startingPiece.getColor()) { // checks if pieces are different color
                 return between;
-            } else {
-                return null;
             }
-        } else {
-            return null;
         }
+        return null;
     }
 
 }
