@@ -81,6 +81,14 @@ public class WebServer {
 
   public static final String SPECTATOR_CHECK_TURN_URL = "/spectator/checkTurn";
 
+  public static final String REPLAY_GAME_URL = "/replay/game";
+
+  public static final String REPLAY_STOP_WATCHING_URL = "/replay/stopWatching";
+
+  public static final String REPLAY_NEXT_TURN_URL = "/replay/nextTurn";
+
+  public static final String REPLAY_PREVIOUS_TURN_URL = "/replay/previousTurn";
+
   /**
    * The URL pattern to
    */
@@ -208,6 +216,14 @@ public class WebServer {
     get(SPECTATOR_STOP_WATCHING_URL, new GetSpectatorStopWatchingRoute());
 
     post(SPECTATOR_CHECK_TURN_URL, new PostSpectatorCheckTurnRoute());
+
+    get(REPLAY_GAME_URL, new GetReplayGameRoute());
+
+    get(REPLAY_STOP_WATCHING_URL, new GetReplayStopWatchingRoute());
+
+    post(REPLAY_NEXT_TURN_URL, new PostReplayNextTurnRoute());
+
+    post(REPLAY_PREVIOUS_TURN_URL, new PostReplayPreviousTurnRoute());
 
     //
     LOG.config("WebServer is initialized.");
