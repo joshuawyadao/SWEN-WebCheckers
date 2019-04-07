@@ -32,13 +32,12 @@ public class PostSubmitTurnRoute implements Route {
         Session currentSession = request.session();
         String gameId = currentSession.attribute(GetGameRoute.GAME_ID_ATTR);
         boolean isValid = gameCenter.submitTurn(gameId);
-
-        Message moveInfo = Message.error("ERROR: Crashed Server");
+        Message moveInfo;
 
         if(isValid){
             moveInfo = Message.info("Submitted a Turn");
         }else{
-            moveInfo = Message.error("Invalid turn!");
+            moveInfo = Message.error("You could have made a jump, but did not.");
         }
 
         return gson.toJson(moveInfo);

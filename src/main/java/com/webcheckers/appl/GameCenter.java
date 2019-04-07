@@ -75,7 +75,7 @@ public class GameCenter {
      */
     public boolean requestMove(String gameId, Player currentPlayer, Move move){
         Game game = currentGames.get(gameId);
-        return game.makeMove(currentPlayer, move.getStart(), move.getEnd());
+        return game.makeMove(currentPlayer, move);
     }
 
     /**

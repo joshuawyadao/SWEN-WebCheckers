@@ -60,7 +60,7 @@ public class GetGameRoute implements Route {
         Player currentUser = currentSession.attribute(GetHomeRoute.CURRENT_USER_ATTR);
 
         if(currentSession.attribute(GAME_ID_ATTR) == null){
-            String opponentName  = request.queryParams(OPPONENT_NAME);
+            String opponentName = request.queryParams(OPPONENT_NAME);
             Session opponentSession = playerLobby.getPlayerSessionByName(opponentName);
             Player opponent = opponentSession.attribute(GetHomeRoute.CURRENT_USER_ATTR);
 
