@@ -55,7 +55,7 @@ public class PostResignGameRoute implements Route {
         Player currentUser = currentSession.attribute(GetHomeRoute.CURRENT_USER_ATTR);
         String gameId = currentSession.attribute(GetGameRoute.GAME_ID_ATTR);
 
-        gameCenter.getGame(gameId).playerResigned(currentUser);
+        gameCenter.resignGame(currentUser, gameId);
         vm.put("message", GetHomeRoute.WELCOME_MSG);
         Message resignInfo = Message.info("Resigned.");
 

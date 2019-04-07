@@ -126,5 +126,8 @@ public class GameCenter {
             return false;
     }
 
+    public void resignGame(Player player, String gameId){
+        getGame(gameId).playerResigned(player);
+    }
 
 }
