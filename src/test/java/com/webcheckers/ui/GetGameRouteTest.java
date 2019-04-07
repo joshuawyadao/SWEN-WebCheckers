@@ -60,7 +60,7 @@ public class GetGameRouteTest {
      */
     @Test
     public void testLoadingGamePage(){
-        final TemplateEngineTest testHelper = new TemplateEngineTest();
+        final TemplateEngineTester testHelper = new TemplateEngineTester();
         when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
 
         when(session.attribute(GetHomeRoute.CURRENT_USER_ATTR)).thenReturn(new Player("currentUser"));

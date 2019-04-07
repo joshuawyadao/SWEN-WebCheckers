@@ -8,7 +8,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import spark.*;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -41,7 +40,7 @@ class GetHomeRouteTest {
     @Test
     void testHomePage(){
 
-        final TemplateEngineTest testHelper = new TemplateEngineTest();
+        final TemplateEngineTester testHelper = new TemplateEngineTester();
         when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
 
         when(session.attribute(GetHomeRoute.CURRENT_USER_ATTR)).thenReturn( new Player("currentUser"));

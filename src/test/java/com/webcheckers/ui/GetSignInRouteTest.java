@@ -38,7 +38,7 @@ public class GetSignInRouteTest {
 
     @Test
     public void testLoadingSigninPage(){
-        final TemplateEngineTest testHelper = new TemplateEngineTest();
+        final TemplateEngineTester testHelper = new TemplateEngineTester();
         when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
 
         // Invoke the test
