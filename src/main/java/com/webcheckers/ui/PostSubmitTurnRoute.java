@@ -35,7 +35,7 @@ public class PostSubmitTurnRoute implements Route {
 
         Message moveInfo = Message.error("ERROR: Crashed Server");
 
-        if(!isValid){
+        if(isValid){
             moveInfo = Message.info("Submitted a Turn");
         }else{
             moveInfo = Message.error("Invalid turn!");

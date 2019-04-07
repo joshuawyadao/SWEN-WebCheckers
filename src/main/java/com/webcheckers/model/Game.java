@@ -101,34 +101,117 @@ public class Game {
     }
 
     /**
-     * Makes a move within a game
-     * @param player the player to make a move
-     * @param startingPos the starting position of the move
-     * @param endingPos the ending position of the move
-     * @return if the move was valid
+     *
+     * @param player
+     * @param move
+     * @return
      */
-    public boolean makeMove( Player player, Position startingPos, Position endingPos ) {
-        this.typeOfMove = startingPos.difference( endingPos );
+    public boolean makeMove( Player player, Move move ) {
         Board turn = new Board();
         //CHANGED: 'getRecentedTurn()' to 'this.checkerboard' so that multiple single moves
         //are not longer allowed
         turn.copyBoard( this.checkerBoard );
-        Piece selectPiece = turn.getBoard()[startingPos.getRow()][startingPos.getCell()].getPiece();
+        Piece selectPiece = turn.getBoard()[move.getStartRow()][move.getStartCell()].getPiece();
+        Move.TYPE_OF_MOVE moveType = move.typeOfMove(selectPiece);
 
-        if( turn.validateMove( startingPos, endingPos, typeOfMove, selectPiece, getRecentTurn() )) {
-            if( Math.abs(typeOfMove) == 1 ) {
-                turn.movePiece(startingPos, endingPos, player.playerColorToPieceColor(), selectPiece.getType());
-                previousMoves.push(turn);
-                return true;
-            } else
-                {
-                turn.movePiece(startingPos, endingPos, player.playerColorToPieceColor(), selectPiece.getType());
-                previousMoves.push(turn);
-                return true;
-            }
+        if( moveType == Move.TYPE_OF_MOVE.ERROR ) {
+            return false;
         }
 
+        switch ( moveType ) {
+            case SIMPLE:
+                if( move.validSimpleMove( turn ) ) {
+                    movePiece( move, turn, selectPiece );
+                    return true;
+                }
+                break;
+            case JUMP:
+                Position between = move.validSimpleJump( turn );
+                if( between != null ) {
+                    movePiece( move, turn, selectPiece );
+                    turn.getBoard()[between.getRow()][between.getCell()].setPiece( null );
+                    return true;
+                }
+                break;
+            default:
+                return false;
+        }
         return false;
+
+    }
+
+//    /**
+//     * Checks to see if the move was validated
+//     * @param startPos the starting position of the move
+//     * @param endingPos the ending position of the move
+//     * @param typeOfMove the type of move that was made
+//     *                   1: single move
+//     *                   2: single jump
+//     *                   -1: backwards single move
+//     *                   -2: backwards single jump
+//     * @param piece the piece to be validated
+//     * @param viewBoard the board to be used
+//     * @return if the move is valid
+//     */
+//    public boolean validateMove(Position startPos, Position endingPos, int typeOfMove, Piece piece, Board viewBoard ) {
+//        Move playerMove = new Move( viewBoard.getBoard() );
+//        boolean validMove = false;
+//
+//        //CHANGED: add this if statement to prevent null pointer exeception when
+//        //moving a piece that this not currently in game's 'this.checkerboard'
+//        //this allows a simple to only occur oncein one turn
+//        if(piece == null)
+//            return false;
+//
+//        if( piece.getType() == Piece.TYPE.SINGLE && piece.getColor() == Piece.COLOR.RED ) { // Red single move
+//            if (typeOfMove == -1) {
+//                if (playerMove.validSimpleMove(startPos, endingPos)) {
+//                    validMove = true;
+//                }
+//            } else if (typeOfMove == -2) {
+//                Position captured = playerMove.validSimpleJump(startPos, endingPos);
+//                if (captured != null) {
+//                    this.board[captured.getRow()][captured.getCell()].setPiece(null);
+//                    validMove = true;
+//                }
+//            }
+//        } else if( piece.getType() == Piece.TYPE.SINGLE && piece.getColor() == Piece.COLOR.WHITE ){ // White single move
+//            if (typeOfMove == 1) {
+//                if (playerMove.validSimpleMove(startPos, endingPos)) {
+//                    validMove = true;
+//                }
+//            } else if (typeOfMove == 2) {
+//                Position captured = playerMove.validSimpleJump(startPos, endingPos);
+//                if (captured != null) {
+//                    this.board[captured.getRow()][captured.getCell()].setPiece(null);
+//                    validMove = true;
+//                }
+//            }
+//        } else { // King movement
+//            if (Math.abs( typeOfMove ) == 1) {
+//                if (playerMove.validSimpleMove(startPos, endingPos)) {
+//                    validMove = true;
+//                }
+//            } else if (Math.abs(typeOfMove) == 2) {
+//                Position captured = playerMove.validSimpleJump(startPos, endingPos);
+//                if (captured != null) {
+//                    this.board[captured.getRow()][captured.getCell()].setPiece(null);
+//                    validMove = true;
+//                }
+//            }
+//        }
+//        return validMove;
+//    }
+
+    /**
+     *
+     * @param move
+     * @param turn
+     * @param piece
+     */
+    public void movePiece( Move move, Board turn, Piece piece ) {
+        turn.getBoard()[move.getEndRow()][move.getEndCell()].setPiece( new Piece( piece.getType(), piece.getColor() ) );
+        turn.getBoard()[move.getStartRow()][move.getStartCell()].setPiece( null );
     }
 
 
