@@ -16,22 +16,31 @@ public class Board {
     private Space[][] board;
 
     /**
-     * BoardModel Constructor
+     * Board Constructor
      * Initializes the players for the game and sets up the board itself
      */
     public Board(){
         SetUpGame();
-    }
-
-    public Board(boolean setUpPieces, boolean isRed){
-        if( !setUpPieces ) {
-            setUpBoard(isRed);
-        }
+        setUpPieces();
     }
 
     /**
-     * Initializes the game board, specifically how the board looks
-     * as well as the piece layout
+     * Secondary Board Constructor
+     * Used primarily for testing
+     * @param setUpPieces true if you want the pieces initialized, false otherwise
+     */
+    public Board(boolean setUpPieces){
+       if(!setUpPieces){
+           SetUpGame();
+       } else {
+           SetUpGame();
+           setUpPieces();
+       }
+    }
+
+    /**
+     * Initializes the game board, specifically how the board looks.
+     * Note that the pieces are not set-up from this method
      */
     private void SetUpGame(){
 
@@ -59,8 +68,12 @@ public class Board {
             }
         }
 
-        // Set up the pieces
+    }
 
+    /**
+     * Sets up the pieces for both players
+     */
+    private void setUpPieces(){
         for( int r = 0; r < BOARD_SIDE; r++ ){
             for( int c = 0; c < BOARD_SIDE; c++ ){
                 if( r < RED_SIDE ) {
@@ -74,38 +87,6 @@ public class Board {
                     }
                 }
             }
-        }
-
-    }
-
-    private void setUpBoard(boolean isRed){
-        this.board = new Space[BOARD_SIDE][BOARD_SIDE];
-
-        for( int r = 0; r < BOARD_SIDE; r++ ) {
-            for( int c = 0; c < BOARD_SIDE; c++ ) {
-                if(r % 2 == 0) {
-                    if(c % 2 == 0) {
-                        board[r][c] = new Space(c, null, Space.COLOR.LIGHT);
-                    } else {
-                        board[r][c] = new Space(c, null, Space.COLOR.DARK);
-                    }
-
-                } else {
-                    if(c % 2 == 1) {
-                        board[r][c] = new Space(c, null, Space.COLOR.LIGHT);
-                    } else {
-                        board[r][c] = new Space(c, null, Space.COLOR.DARK);
-                    }
-
-                }
-            }
-        }
-
-        if(isRed){
-            board[0][1] = new Space(1, new Piece(Piece.TYPE.SINGLE, Piece.COLOR.RED), Space.COLOR.DARK);
-        } else {
-            board[7][2] = new Space(2, new Piece(Piece.TYPE.SINGLE, Piece.COLOR.WHITE), Space.COLOR.DARK);
-            board[6][1] = new Space(1, new Piece(Piece.TYPE.SINGLE, Piece.COLOR.RED), Space.COLOR.DARK);
         }
     }
 
