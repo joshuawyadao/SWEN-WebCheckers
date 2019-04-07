@@ -11,14 +11,11 @@ public class Game {
         SPECTATE
     }
 
-    private Player redPlayer;
-    private Player whitePlayer;
-    private Player activePlayer;
+    private Player redPlayer, whitePlayer, activePlayer, resignedPlayer;
     private ViewMode viewMode;
     private Board checkerBoard;
     private Map<String, Object> modeOptionsAsJSON;
     private Stack<Board> previousMoves;
-    private Player resignedPlayer;
     private boolean validTurn;
 
     /**
@@ -207,7 +204,7 @@ public class Game {
                     Position[] neighbors = getNeighbors(selectedPiece, row, col);
                     Position startPos = new Position( row, col );
 
-                    if( canJump(startPos, checkerBoard, neighbors)){
+                    if( canJump( startPos, checkerBoard, neighbors ) ){
                         return false;
                     }
                 }
@@ -227,6 +224,7 @@ public class Game {
             this.checkerBoard.kingPieces();
             this.previousMoves = new Stack<>();
             this.previousMoves.push(checkerBoard);
+            this.validTurn = false;
 
             if (this.activePlayer.equals(this.redPlayer)) {
                 this.activePlayer = this.whitePlayer;
@@ -245,14 +243,7 @@ public class Game {
      * @return if the turn was successfully backed-up
      */
     public boolean backup(){
-       Board previousTurn = null;
-       previousTurn = this.previousMoves.pop();
-
-//        if(previousMoves.size() > 1) {
-//        previousTurn = this.previousMoves.pop();
-//        }
-
-        return previousTurn != null;
+        return this.previousMoves.pop() != null;
     }
 
     /**
