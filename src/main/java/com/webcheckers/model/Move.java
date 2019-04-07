@@ -17,6 +17,10 @@ public class Move {
     private Position start;
     private Position end;
 
+    public Move( Position start, Position end ) {
+        this.start = start;
+        this.end = end;
+    }
 
     public TYPE_OF_MOVE typeOfMove( Piece piece ) {
         int difference = this.end.getRow() - this.start.getRow();
@@ -131,7 +135,6 @@ public class Move {
             }
         }
         return null;
-
     }
 
 }

@@ -19,7 +19,7 @@ public class Game {
     private Map<String, Object> modeOptionsAsJSON;
     private Stack<Board> previousMoves;
     private Player resignedPlayer;
-    private int typeOfMove;
+    private boolean validTurn;
 
     /**
      * Creates a new game instance
@@ -36,7 +36,7 @@ public class Game {
         this.previousMoves = new Stack<>();
         previousMoves.push(checkerBoard);
         this.resignedPlayer = null;
-        this.typeOfMove = 0;
+        this.validTurn = false;
     }
 
     //Accessors
@@ -123,6 +123,7 @@ public class Game {
                 if( move.validSimpleMove( turn ) && ( this.previousMoves.size() == 1 ) ) {
                     movePiece( move, turn, selectPiece );
                     this.previousMoves.push(turn);
+                    this.validTurn = validateTurn();
                     return true;
                 }
                 break;
@@ -132,6 +133,9 @@ public class Game {
                     movePiece( move, turn, selectPiece );
                     turn.getBoard()[between.getRow()][between.getCell()].setPiece( null );
                     this.previousMoves.push(turn);
+
+                    Piece endPiece = previousMoves.peek().getBoard()[move.getEndRow()][move.getEndCell()].getPiece();
+                    this.validTurn = !(canJump(move.getEnd(), previousMoves.peek(), getNeighbors(endPiece, move.getEndRow(), move.getEndCell())));
                     return true;
                 }
                 break;
@@ -154,29 +158,86 @@ public class Game {
         turn.getBoard()[move.getStartRow()][move.getStartCell()].setPiece( null );
     }
 
+    public boolean canJump( Position startPos, Board turn, Position[] neighbors ) {
+        for( Position position : neighbors ) {
+            if( position.inBounds() ) {
+                Move move = new Move( startPos, position );
+                Position between = move.validSimpleJump( turn );
+                if( between != null ) {
+                    return true;
+                }
+            }
+        }
 
+        return false;
+    }
+
+    public Position[] getNeighbors(Piece piece, int row, int col){
+        Piece.TYPE pieceType = piece.getType();
+        Piece.COLOR pieceColor = piece.getColor();
+
+        if (pieceType == Piece.TYPE.SINGLE ) {
+            if (pieceColor == Piece.COLOR.RED) {
+                return new Position[]{new Position(row + 2, col - 2),
+                        new Position(row + 2, col + 2)};
+            }
+            if (pieceColor == Piece.COLOR.WHITE) {
+                return new Position[]{new Position(row - 2, col - 2),
+                        new Position(row - 2, col + 2)};
+            }
+        }else if( pieceType == Piece.TYPE.KING ) {
+            return new Position[]{new Position(row + 2, col - 2),
+                    new Position(row + 2, col + 2),
+                    new Position(row - 2, col - 2),
+                    new Position(row - 2, col + 2)};
+        }
+
+        return null;
+    }
+
+    public boolean validateTurn() {
+        Space[][] board = this.checkerBoard.getBoard();
+        for( int row = 0; row < 8; row++ ) {
+            for( int col = 0; col < 8; col++ ) {
+                Space selectedSpace = board[row][col];
+
+                if( selectedSpace.validSpaceWithPiece( this.activePlayer ) ) {
+
+                    Piece selectedPiece = selectedSpace.getPiece();
+                    Position[] neighbors = getNeighbors(selectedPiece, row, col);
+                    Position startPos = new Position( row, col );
+
+                    if( canJump(startPos, checkerBoard, neighbors)){
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
 
     /**
      * Submits a turn to be checked and resets the previous moves stack
      * @return if the turn was a valid turn
      */
     public boolean submitTurn() {
-//        if( !validateTurn() ) {
-//            return false;
-//        }
+        if(this.validTurn) {
+            this.checkerBoard = this.previousMoves.pop();
+            this.checkerBoard.kingPieces();
+            this.previousMoves = new Stack<>();
+            this.previousMoves.push(checkerBoard);
 
-        this.checkerBoard = this.previousMoves.pop();
-        this.checkerBoard.kingPieces();
-        this.previousMoves = new Stack<>();
-        this.previousMoves.push(checkerBoard);
+            if (this.activePlayer.equals(this.redPlayer)) {
+                this.activePlayer = this.whitePlayer;
+            } else {
+                this.activePlayer = this.redPlayer;
+            }
 
-        if( this.activePlayer.equals(this.redPlayer) ) {
-            this.activePlayer = this.whitePlayer;
-        } else {
-            this.activePlayer = this.redPlayer;
+            return true;
+        }else{
+            return false;
         }
-
-        return true;
     }
 
     /**

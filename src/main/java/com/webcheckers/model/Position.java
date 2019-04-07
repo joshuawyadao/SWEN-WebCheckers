@@ -78,6 +78,10 @@ public class Position {
         return new Position( this.row + difRow, this.cell + difCell );
     }
 
+    public boolean inBounds() {
+        return this.row <= 7 && this.row >= 0 && this.cell <= 7 && this.cell >= 0;
+    }
+
     /**
      * Compares another object with this one
      * @param pos object to be compared with

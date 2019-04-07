@@ -49,6 +49,14 @@ public class Space {
     }
 
     /**
+     * The color of this space
+     * @return the color
+     */
+    public COLOR getColor(){
+        return this.color;
+    }
+
+    /**
      * Sets a piece on a space.
      * @param piece the piece to be placed
      */
@@ -68,6 +76,13 @@ public class Space {
             tempPiece = null;
         }
         return new Space( this.cellIdx, tempPiece, this.color );
+    }
+
+    public boolean validSpaceWithPiece( Player player ) {
+        return ( getColor() == COLOR.DARK ) &&
+                ( getPiece() != null ) &&
+                ( player.playerColorToPieceColor() == getPiece().getColor() );
+
     }
 
     /**
