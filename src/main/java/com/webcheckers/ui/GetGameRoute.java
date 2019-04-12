@@ -144,6 +144,7 @@ public class GetGameRoute implements Route {
                     vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
                     currentGame.getWhitePlayer().leaveGame();
                     currentSession.attribute(GetGameRoute.GAME_ID_ATTR, null);
+                    gameCenter.removeGame(gameId);
                 }
             } else{
                 if (currentGame.getRedPlayer().equals(currentUser)){
@@ -152,6 +153,7 @@ public class GetGameRoute implements Route {
                     vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
                     currentGame.getRedPlayer().leaveGame();
                     currentSession.attribute(GetGameRoute.GAME_ID_ATTR, null);
+                    gameCenter.removeGame(gameId);
                 } else{
                     modeOptions.put("gameOverMessage", "You have captured all of "
                             + currentGame.getRedPlayer().getName()
@@ -161,7 +163,7 @@ public class GetGameRoute implements Route {
                     currentSession.attribute(GetGameRoute.GAME_ID_ATTR, null);
                 }
             }
-            gameCenter.removeGame(gameId);
+
         }
 
         vm.put(GetHomeRoute.CURRENT_USER_ATTR, currentUser);
