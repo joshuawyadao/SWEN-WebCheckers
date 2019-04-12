@@ -13,12 +13,12 @@ import java.util.logging.Logger;
 import static spark.Spark.halt;
 
 public class PostSignInRoute implements Route {
-    private static final Logger LOG = Logger.getLogger(GetSignInRoute.class.getName());
+    private static final Logger LOG = Logger.getLogger(PostSignInRoute.class.getName());
 
     private final static String NAME_PARAM = "myUsername";
 
     private final static Message INVALID_NAME = Message.error("INVALID NAME: Name MUST contain at least one " +
-                                                "alphanumeric character, and can optionally contain spaces.");
+            "alphanumeric character, and can optionally contain spaces.");
 
     //private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
 
@@ -57,22 +57,21 @@ public class PostSignInRoute implements Route {
 
         Map<String, Object> vm = new HashMap<>();
 
-        Player attemptedPlayerLogin = new Player(usernameAttempt);
+        Player attemptedPlayerSignin = new Player(usernameAttempt);
+        Session currentSession = request.session();
+        Message signinResult = playerLobby.signInPlayer(attemptedPlayerSignin, currentSession);
 
-        if(playerLobby.isValidPlayer(attemptedPlayerLogin)){
-            Session session = request.session();
+        if(signinResult.getType() != Message.Type.ERROR){
+            currentSession.attribute(GetHomeRoute.CURRENT_USER_ATTR, attemptedPlayerSignin);
 
-            playerLobby.signInPlayer(attemptedPlayerLogin, request.session());
-            session.attribute("currentUser", attemptedPlayerLogin);
-
-            //add currentUser to VM
-            Player currentUser = session.attribute("currentUser");
-            vm.put("currentUser", currentUser);
+            //add currentUser as Session attribute
+            Player currentUser = currentSession.attribute(GetHomeRoute.CURRENT_USER_ATTR);
+            vm.put(GetHomeRoute.CURRENT_USER_ATTR, currentUser);
 
             vm.put("title", "Welcome!");
 
             // display a user message in the Home page
-            vm.put("message", GetHomeRoute.WELCOME_MSG);
+            vm.put("message", signinResult);
 
             response.redirect(WebServer.HOME_URL);
             halt();
@@ -80,7 +79,7 @@ public class PostSignInRoute implements Route {
         }else{
             vm.put("signin_title", "Please Sign In");
 
-            vm.put("message", INVALID_NAME);
+            vm.put("message", signinResult);
 
             return templateEngine.render(new ModelAndView(vm , GetSignInRoute.VIEW_NAME));
         }

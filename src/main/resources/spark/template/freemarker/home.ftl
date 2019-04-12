@@ -26,7 +26,7 @@
             <#if !currentUser.equals(player)>
                 <h3>
                     <form method="GET">
-                          <a href = "./game?opponent=${player}"> ${player}'s Game </a>
+                          <a href = "./game?opponent=${player.name}"> ${player.name}'s Game </a>
                     </form>
                 </h3>
             </#if>

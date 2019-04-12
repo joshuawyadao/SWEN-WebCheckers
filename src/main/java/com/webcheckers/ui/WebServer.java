@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 
+import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
 import spark.TemplateEngine;
 
@@ -62,6 +63,14 @@ public class WebServer {
 
   public static final String GAME_URL = "/game";
 
+  public static final String VALIDATE_MOVE_URL = "/validateMove";
+
+  public static final String RESIGN_GAME_URL = "/resignGame";
+
+  public static final String SUBMIT_TURN_URL = "/submitTurn";
+
+  public static final String BACKUP_MOVE_URL = "/backupMove";
+
   /**
    * The URL pattern to
    */
@@ -71,6 +80,7 @@ public class WebServer {
   //
 
   private final PlayerLobby playerLobby;
+  private final GameCenter gameCenter;
   private final TemplateEngine templateEngine;
   private final Gson gson;
 
@@ -89,14 +99,16 @@ public class WebServer {
    * @throws NullPointerException
    *    If any of the parameters are {@code null}.
    */
-  public WebServer(final PlayerLobby playerLobby, final TemplateEngine templateEngine, final Gson gson) {
+  public WebServer(final PlayerLobby playerLobby, final GameCenter gameCenter, final TemplateEngine templateEngine, final Gson gson) {
     // validation
     Objects.requireNonNull(playerLobby, "playerLobby must not be null");
+    Objects.requireNonNull(gameCenter, "gameCenter must not be null");
     Objects.requireNonNull(templateEngine, "templateEngine must not be null");
     Objects.requireNonNull(gson, "gson must not be null");
     //
 
     this.playerLobby = playerLobby;
+    this.gameCenter = gameCenter;
     this.templateEngine = templateEngine;
     this.gson = gson;
   }
@@ -155,14 +167,32 @@ public class WebServer {
     // Shows the Checkers game Home page.
     get(HOME_URL, new GetHomeRoute(playerLobby, templateEngine));
 
-    //Shows the Checkers game Sign-In page
+    //Shows the Checkers game Sign-In page.
     get(SIGNIN_URL, new GetSignInRoute(templateEngine));
 
-    //Posts the user-inputted username to the server for validation
+    //Posts the user-inputted username to the server for validation.
     post(SIGNIN_URL, new PostSignInRoute(playerLobby, templateEngine));
 
+    //Shows the Web Checkers game page.
+    get(GAME_URL, new GetGameRoute(playerLobby, gameCenter, templateEngine, gson));
 
-    get(GAME_URL, new GetGameRoute(playerLobby, templateEngine));
+    //Posts the user- inputted move to the server for validation.
+    post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(gameCenter, gson));
+
+    post(RESIGN_GAME_URL, new PostResignGameRoute(gson, gameCenter, templateEngine, playerLobby));
+
+    //Posts a request to the server to take back one previous turn the user
+    //made, before submission
+    post(BACKUP_MOVE_URL, new PostBackupMoveRoute(gameCenter, gson));
+
+    //Submits the user- inputted move to the server and, if valid, reflects the
+    //change on the board to both players
+    post(SUBMIT_TURN_URL, new PostSubmitTurnRoute(gameCenter, gson));
+
+
+    post("/checkTurn", new PostCheckTurnRoute(gameCenter, gson, playerLobby));
+
+    post("/signout", new PostSignOutRoute(playerLobby, gameCenter));
 
     //
     LOG.config("WebServer is initialized.");
