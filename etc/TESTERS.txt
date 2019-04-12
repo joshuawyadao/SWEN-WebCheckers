@@ -1,0 +1,3 @@
+command to run: mvn clean compile exec:java
+
+to run, open up a browser and type in "localhost:4567"
