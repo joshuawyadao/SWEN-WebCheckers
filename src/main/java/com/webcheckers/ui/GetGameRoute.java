@@ -60,25 +60,14 @@ public class GetGameRoute implements Route {
         Player currentUser = currentSession.attribute(GetHomeRoute.CURRENT_USER_ATTR);
 
         if(currentSession.attribute(GAME_ID_ATTR) == null){
-            String opponentName  = request.queryParams(OPPONENT_NAME);
+            String opponentName = request.queryParams(OPPONENT_NAME);
             Session opponentSession = playerLobby.getPlayerSessionByName(opponentName);
             Player opponent = opponentSession.attribute(GetHomeRoute.CURRENT_USER_ATTR);
 
-            //
-            //
+            // Does the opponent in question already in a game?
             if (gameCenter.hasGame(opponent)) {
-                // FIX: Error output message
 
-                //Message message = new Message(" GOT ERROR ", Message.Type.ERROR);
-
-                Message message = Message.error("GOT ERROR");
-                message = Message.info("GOT ERROR");
-                vm.put("message", message);
-
-                // Home.ftl requirements
-                vm.put(GetHomeRoute.CURRENT_USER_ATTR, currentUser);
-                vm.put("title", "Welcome!");
-                vm.put("players", playerLobby.getPlayers());
+                currentSession.attribute(GetHomeRoute.ERROR_MSG, Message.error( opponent.getName() + " is already in a game!"));
 
                 response.redirect(WebServer.HOME_URL);
                 halt();
@@ -88,9 +77,8 @@ public class GetGameRoute implements Route {
                 String newGameId = gameCenter.newGame(currentUser, opponent, Game.ViewMode.PLAY);
                 currentSession.attribute(GAME_ID_ATTR, newGameId);
                 opponentSession.attribute(GAME_ID_ATTR, newGameId);
+
             }
-            //
-            //
 
         }
 
@@ -157,6 +145,7 @@ public class GetGameRoute implements Route {
                     vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
                     currentGame.getWhitePlayer().leaveGame();
                     currentSession.attribute(GetGameRoute.GAME_ID_ATTR, null);
+                    gameCenter.removeGame(gameId);
                 }
             } else{
                 if (currentGame.getRedPlayer().equals(currentUser)){
@@ -165,6 +154,7 @@ public class GetGameRoute implements Route {
                     vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
                     currentGame.getRedPlayer().leaveGame();
                     currentSession.attribute(GetGameRoute.GAME_ID_ATTR, null);
+                    gameCenter.removeGame(gameId);
                 } else{
                     modeOptions.put("gameOverMessage", "You have captured all of "
                             + currentGame.getRedPlayer().getName()
@@ -174,7 +164,7 @@ public class GetGameRoute implements Route {
                     currentSession.attribute(GetGameRoute.GAME_ID_ATTR, null);
                 }
             }
-            gameCenter.removeGame(gameId);
+
         }
 
         vm.put(GetHomeRoute.CURRENT_USER_ATTR, currentUser);
