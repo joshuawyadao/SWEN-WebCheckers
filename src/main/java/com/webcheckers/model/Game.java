@@ -74,6 +74,10 @@ public class Game {
         return activePlayer;
     }
 
+    public boolean isInGame(Player player) {
+        return this.whitePlayer == player || this.redPlayer == player;
+    }
+
     /**
      * Return the move recent turn
      * @return the board object of the most recent turn

@@ -65,7 +65,7 @@ public class GetGameRoute implements Route {
             Player opponent = opponentSession.attribute(GetHomeRoute.CURRENT_USER_ATTR);
 
             // Does the opponent in question already in a game?
-            if (gameCenter.hasGame(opponent)) {
+            if (gameCenter.hasGame(opponent, currentUser)) {
 
                 currentSession.attribute(GetHomeRoute.ERROR_MSG, Message.error( opponent.getName() + " is already in a game!"));
 
