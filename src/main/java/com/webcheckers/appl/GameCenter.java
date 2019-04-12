@@ -100,21 +100,26 @@ public class GameCenter {
 
 
     /**
-     * Searches through the list of current games to determine
-     * if a given player is within one.
-     * @param player The player to be searched for
-     * @return true if the player is within a current game. False otherwise
+     *
+     * @param player1
+     * @param player2
+     * @return
      */
-    public boolean hasGame(Player player) {
-        for (Map.Entry<String, Game> game : currentGames.entrySet()) {
-            if (game.getValue().getWhitePlayer().equals(player)
-                    || (game.getValue().getRedPlayer().equals(player))) {
+    public boolean hasGame(Player player1, Player player2) {
+        String key1 = player1.getName() + "Vs" + player2.getName();
+        String key2 = player2.getName() + "Vs" + player1.getName();
+
+        return currentGames.get(key1) != null || currentGames.get(key2) != null;
+
+    }
+
+    public boolean isInAnyGame(Player player) {
+        for( Game game : currentGames.values() ) {
+            if( game.isInGame(player)) {
                 return true;
             }
         }
-
         return false;
-
     }
 
     public boolean isMyTurn(String gameId, Player currentPlayer){
