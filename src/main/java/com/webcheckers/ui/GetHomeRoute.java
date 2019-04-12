@@ -24,6 +24,7 @@ public class GetHomeRoute implements Route {
   public static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
   public static final String CURRENT_USER_ATTR = "currentUser";
   public static final String VIEW_NAME = "home.ftl";
+    public static final String ERROR_MSG = "homeErrorMessage";
 
   private final PlayerLobby playerLobby;
   private final TemplateEngine templateEngine;
@@ -64,9 +65,11 @@ public class GetHomeRoute implements Route {
 
 
     // Displays an error message to the user, if any.
-    if(httpSession.attribute("homeErrorMessage") != null && httpSession.attribute("homeErrorMessage") instanceof Message) {
-        vm.put("message", (Message) httpSession.attribute("homeErrorMessage"));
-        httpSession.removeAttribute("homeErrorMessage");
+    if(httpSession.attribute(ERROR_MSG) != null && httpSession.attribute(ERROR_MSG) instanceof Message) {
+        // Show the error message
+        vm.put("message", (Message) httpSession.attribute(ERROR_MSG));
+        // Remove the error message
+        httpSession.removeAttribute(ERROR_MSG);
     }else {
         vm.put("message", WELCOME_MSG);
     }

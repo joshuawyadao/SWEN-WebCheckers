@@ -82,9 +82,8 @@ class GameCenterTest {
 
         Game.ViewMode viewMode = Game.ViewMode.PLAY;
         String cutGame = CuT.newGame(player1, player2, viewMode);
-        Move move = new Move(CuT.getGame(cutGame).getCheckerBoard().getBoard());
 
-        move.validSimpleMove(new Position(2,1), new Position(3,2));
+        Move move = new Move( new Position(2,1), new Position(3,2) );
 
         assertTrue(CuT.requestMove(cutGame, player1, move));
     }

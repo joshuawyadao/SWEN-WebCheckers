@@ -66,7 +66,7 @@ public class GetGameRoute implements Route {
 
             if (gameCenter.hasGame(opponent)) {
 
-                currentSession.attribute("homeErrorMessage", Message.error( opponent.getName() + " is already in a game!"));
+                currentSession.attribute(GetHomeRoute.ERROR_MSG, Message.error( opponent.getName() + " is already in a game!"));
 
                 response.redirect(WebServer.HOME_URL);
                 halt();
