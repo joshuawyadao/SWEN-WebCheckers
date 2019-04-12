@@ -62,8 +62,14 @@ public class GetHomeRoute implements Route {
 
     vm.put("title", "Welcome!");
 
-    // display a user message in the Home page
-    vm.put("message", WELCOME_MSG);
+
+    // Displays an error message to the user, if any.
+    if(httpSession.attribute("homeErrorMessage") != null && httpSession.attribute("homeErrorMessage") instanceof Message) {
+        vm.put("message", (Message) httpSession.attribute("homeErrorMessage"));
+        httpSession.removeAttribute("homeErrorMessage");
+    }else {
+        vm.put("message", WELCOME_MSG);
+    }
 
     if(httpSession.attribute(CURRENT_USER_ATTR) != null) {
         Player currentUser = httpSession.attribute(CURRENT_USER_ATTR);

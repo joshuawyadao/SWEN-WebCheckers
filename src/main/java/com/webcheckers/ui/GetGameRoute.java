@@ -66,14 +66,7 @@ public class GetGameRoute implements Route {
 
             if (gameCenter.hasGame(opponent)) {
 
-                Message message = Message.error("GOT ERROR");
-                message = Message.info("GOT ERROR");
-                vm.put("message", message);
-
-                // Home.ftl requirements
-                vm.put(GetHomeRoute.CURRENT_USER_ATTR, currentUser);
-                vm.put("title", "Welcome!");
-                vm.put("players", playerLobby.getPlayers());
+                currentSession.attribute("homeErrorMessage", Message.error( opponent.getName() + " is already in a game!"));
 
                 response.redirect(WebServer.HOME_URL);
                 halt();
@@ -83,6 +76,7 @@ public class GetGameRoute implements Route {
                 String newGameId = gameCenter.newGame(currentUser, opponent, Game.ViewMode.PLAY);
                 currentSession.attribute(GAME_ID_ATTR, newGameId);
                 opponentSession.attribute(GAME_ID_ATTR, newGameId);
+
             }
 
         }
