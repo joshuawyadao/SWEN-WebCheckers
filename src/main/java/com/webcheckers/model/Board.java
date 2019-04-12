@@ -142,8 +142,8 @@ public class Board {
     }
 
     /**
-     * Checks to see if the game is finisheds\\
-     * @return if the game is finished
+     * Checks to see if the game is finished
+     * @return true if any player has no pieces, false if both plays have at least 1 piece
      */
     public boolean finishedGame() {
         return playerPiecesLeft( Piece.COLOR.RED ) == 0 || playerPiecesLeft( Piece.COLOR.WHITE ) == 0;
