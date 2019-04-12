@@ -70,7 +70,7 @@ public class GetHomeRoute implements Route {
         vm.put("message", (Message) httpSession.attribute(ERROR_MSG));
         // Remove the error message
         httpSession.removeAttribute(ERROR_MSG);
-    }else {
+    } else {
         vm.put("message", WELCOME_MSG);
     }
 
