@@ -21,7 +21,7 @@ public class GetReplayGameRoute implements Route {
 
     public static final Message WELCOME_MSG = Message.info("Welcome to the game of Online Checkers.");
     private static final String VIEW_NAME = "game.ftl";
-    private static final String GAME_ID_ATTR = "gameId";
+    public static final String GAME_ID_ATTR = "gameId";
     private static final String OPPONENT_NAME = "opponent";
 
     private final PlayerLobby playerLobby;
