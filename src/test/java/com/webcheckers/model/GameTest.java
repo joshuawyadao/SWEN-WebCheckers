@@ -63,7 +63,9 @@ class GameTest {
         Position src = new Position(2,1);
         Position dst = new Position(3,0);
 
-        assertTrue( CuT.makeMove(CuT.getRedPlayer(), src, dst) );
+        Move move = new Move(src, dst);
+
+        assertTrue( CuT.makeMove(redPlayer, move) );
 
     }
 
@@ -76,7 +78,7 @@ class GameTest {
     void completedGame() {
         Player p1 = new Player("p1");
         Player p2 = new Player("p2");
-        Board testBoard = new Board(false, false);
+        Board testBoard = new Board(false);
 
         Player winner = CuT.completedGame();
         assertNull(winner);

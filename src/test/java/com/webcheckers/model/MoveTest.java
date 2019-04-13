@@ -11,8 +11,10 @@ class MoveTest {
 
     @Test
     public void testMoveNullity() {
-        final Space[][] board = new Space[8][8];
-        final Move CuT = new Move( board );
+        final Position src = new Position(2, 1);
+        final Position dst = new Position(3,2);
+
+        final Move CuT = new Move( src, dst );
 
         assertNotNull( CuT, "Move is not null");
     }
@@ -23,9 +25,9 @@ class MoveTest {
         final Position startPos = new Position(2, 1);
         final Position endPos = new Position(3,2);
 
-        final Move CuT = new Move(board.getBoard());
+        final Move CuT = new Move( startPos, endPos );
 
-        assertTrue(CuT.validSimpleMove(startPos, endPos), "Simple Move is true");
+        assertTrue(CuT.validSimpleMove(board), "Simple Move is true");
     }
 
     @Test
@@ -34,9 +36,9 @@ class MoveTest {
         final Position startPos = new Position(2, 1);
         final Position endPos = new Position(4,2);
 
-        final Move CuT = new Move(board.getBoard());
+        final Move CuT = new Move( startPos, endPos );
 
-        assertFalse(CuT.validSimpleMove(startPos, endPos), "Simple Move is false");
+        assertFalse(CuT.validSimpleMove( board ), "Simple Move is false");
     }
 
     @Test
@@ -45,9 +47,9 @@ class MoveTest {
         final Position startPos = new Position(2, 2);
         final Position endPos = new Position(2,3);
 
-        final Move CuT = new Move(board.getBoard());
+        final Move CuT = new Move( startPos, endPos );
 
-        assertFalse(CuT.validSimpleMove(startPos, endPos), "Simple Move is false");
+        assertFalse(CuT.validSimpleMove( board ), "Simple Move is false");
     }
 
     @Test
@@ -57,10 +59,10 @@ class MoveTest {
         final Position endPos = new Position(4,3);
         board.getBoard()[3][2].setPiece(new Piece(Piece.TYPE.SINGLE, Piece.COLOR.WHITE));
 
-        final Move CuT = new Move(board.getBoard());
+        final Move CuT = new Move( startPos, endPos );
         final Position between = new Position(3, 2);
 
-        assertEquals(between, CuT.validSimpleJump(startPos, endPos), "Simple Jump equals between");
+        assertEquals(between, CuT.validSimpleJump( board ), "Simple Jump equals between");
     }
 
 
@@ -71,9 +73,9 @@ class MoveTest {
         final Position endPos = new Position(5,4);
         board.getBoard()[3][2].setPiece(new Piece(Piece.TYPE.SINGLE, Piece.COLOR.WHITE));
 
-        final Move CuT = new Move(board.getBoard());
+        final Move CuT = new Move(startPos, endPos);
 
-        assertNull(CuT.validSimpleJump(startPos, endPos), "Simple Jump too large");
+        assertNull(CuT.validSimpleJump(board), "Simple Jump too large");
     }
 
 
@@ -84,9 +86,9 @@ class MoveTest {
         final Position endPos = new Position(4,3);
         board.getBoard()[3][2].setPiece(new Piece(Piece.TYPE.SINGLE, Piece.COLOR.RED));
 
-        final Move CuT = new Move(board.getBoard());
+        final Move CuT = new Move(startPos, endPos);
 
-        assertNull(CuT.validSimpleJump(startPos, endPos), "Simple Jump equals between");
+        assertNull(CuT.validSimpleJump(board), "Simple Jump equals between");
     }
 
     @Test
@@ -95,9 +97,9 @@ class MoveTest {
         final Position startPos = new Position(2, 5);
         final Position endPos = new Position(3,4);
 
-        final Move CuT = new Move(board.getBoard());
+        final Move CuT = new Move(startPos, endPos);
 
-        assertTrue(CuT.validSimpleMove(startPos, endPos), "Simple Move is true");
+        assertTrue(CuT.validSimpleMove(board), "Simple Move is true");
     }
 
     @Test
@@ -106,9 +108,9 @@ class MoveTest {
         final Position startPos = new Position(2, 5);
         final Position endPos = new Position(4,3);
 
-        final Move CuT = new Move(board.getBoard());
+        final Move CuT = new Move(startPos, endPos);
 
-        assertFalse(CuT.validSimpleMove(startPos, endPos), "Simple Move is false");
+        assertFalse(CuT.validSimpleMove(board), "Simple Move is false");
     }
 
     @Test
@@ -117,9 +119,9 @@ class MoveTest {
         final Position startPos = new Position(2, 4);
         final Position endPos = new Position(3,3);
 
-        final Move CuT = new Move(board.getBoard());
+        final Move CuT = new Move(startPos, endPos);
 
-        assertFalse(CuT.validSimpleMove(startPos, endPos), "Simple Move is false");
+        assertFalse(CuT.validSimpleMove(board), "Simple Move is false");
     }
 
     @Test
@@ -129,10 +131,10 @@ class MoveTest {
         final Position endPos = new Position(4,3);
         board.getBoard()[3][4].setPiece(new Piece(Piece.TYPE.SINGLE, Piece.COLOR.WHITE));
 
-        final Move CuT = new Move(board.getBoard());
+        final Move CuT = new Move(startPos, endPos);
         final Position between = new Position(3, 4);
 
-        assertEquals(between, CuT.validSimpleJump(startPos, endPos), "Simple Jump equals between");
+        assertEquals(between, CuT.validSimpleJump(board), "Simple Jump equals between");
     }
 
 
@@ -143,9 +145,9 @@ class MoveTest {
         final Position endPos = new Position(5,2);
         board.getBoard()[3][4].setPiece(new Piece(Piece.TYPE.SINGLE, Piece.COLOR.WHITE));
 
-        final Move CuT = new Move(board.getBoard());
+        final Move CuT = new Move(startPos, endPos);
 
-        assertNull(CuT.validSimpleJump(startPos, endPos), "Simple Jump too large");
+        assertNull(CuT.validSimpleJump(board), "Simple Jump too large");
     }
 
 
@@ -156,9 +158,9 @@ class MoveTest {
         final Position endPos = new Position(4,3);
         board.getBoard()[3][4].setPiece(new Piece(Piece.TYPE.SINGLE, Piece.COLOR.RED));
 
-        final Move CuT = new Move(board.getBoard());
+        final Move CuT = new Move(startPos, endPos);
 
-        assertNull(CuT.validSimpleJump(startPos, endPos), "Simple Jump equals between");
+        assertNull(CuT.validSimpleJump(board), "Simple Jump equals between");
     }
 
     @Test
@@ -167,9 +169,9 @@ class MoveTest {
         final Position startPos = new Position(5, 2);
         final Position endPos = new Position(4,3);
 
-        final Move CuT = new Move(board.getBoard());
+        final Move CuT = new Move(startPos, endPos);
 
-        assertTrue(CuT.validSimpleMove(startPos, endPos), "Simple Move is true");
+        assertTrue(CuT.validSimpleMove(board), "Simple Move is true");
     }
 
     @Test
@@ -178,9 +180,9 @@ class MoveTest {
         final Position startPos = new Position(5, 2);
         final Position endPos = new Position(3,4);
 
-        final Move CuT = new Move(board.getBoard());
+        final Move CuT = new Move(startPos, endPos);
 
-        assertFalse(CuT.validSimpleMove(startPos, endPos), "Simple Move is false");
+        assertFalse(CuT.validSimpleMove(board), "Simple Move is false");
     }
 
     @Test
@@ -189,9 +191,9 @@ class MoveTest {
         final Position startPos = new Position(5, 3);
         final Position endPos = new Position(4,4);
 
-        final Move CuT = new Move(board.getBoard());
+        final Move CuT = new Move(startPos, endPos);
 
-        assertFalse(CuT.validSimpleMove(startPos, endPos), "Simple Move is false");
+        assertFalse(CuT.validSimpleMove(board), "Simple Move is false");
     }
 
     @Test
@@ -201,10 +203,10 @@ class MoveTest {
         final Position endPos = new Position(3,4);
         board.getBoard()[4][3].setPiece(new Piece(Piece.TYPE.SINGLE, Piece.COLOR.RED));
 
-        final Move CuT = new Move(board.getBoard());
+        final Move CuT = new Move(startPos, endPos);
         final Position between = new Position(4, 3);
 
-        assertEquals(between, CuT.validSimpleJump(startPos, endPos), "Simple Jump equals between");
+        assertEquals(between, CuT.validSimpleJump(board), "Simple Jump equals between");
     }
 
 
@@ -215,9 +217,9 @@ class MoveTest {
         final Position endPos = new Position(2,5);
         board.getBoard()[4][3].setPiece(new Piece(Piece.TYPE.SINGLE, Piece.COLOR.RED));
 
-        final Move CuT = new Move(board.getBoard());
+        final Move CuT = new Move(startPos, endPos);
 
-        assertNull(CuT.validSimpleJump(startPos, endPos), "Simple Jump too large");
+        assertNull(CuT.validSimpleJump(board), "Simple Jump too large");
     }
 
 
@@ -228,9 +230,9 @@ class MoveTest {
         final Position endPos = new Position(3,4);
         board.getBoard()[4][3].setPiece(new Piece(Piece.TYPE.SINGLE, Piece.COLOR.WHITE));
 
-        final Move CuT = new Move(board.getBoard());
+        final Move CuT = new Move(startPos, endPos);
 
-        assertNull(CuT.validSimpleJump(startPos, endPos), "Simple Jump equals between");
+        assertNull(CuT.validSimpleJump(board), "Simple Jump equals between");
     }
 
     @Test
@@ -239,9 +241,9 @@ class MoveTest {
         final Position startPos = new Position(5, 6);
         final Position endPos = new Position(4,5);
 
-        final Move CuT = new Move(board.getBoard());
+        final Move CuT = new Move(startPos, endPos);
 
-        assertTrue(CuT.validSimpleMove(startPos, endPos), "Simple Move is true");
+        assertTrue(CuT.validSimpleMove(board), "Simple Move is true");
     }
 
     @Test
@@ -250,9 +252,9 @@ class MoveTest {
         final Position startPos = new Position(5, 6);
         final Position endPos = new Position(3,4);
 
-        final Move CuT = new Move(board.getBoard());
+        final Move CuT = new Move(startPos, endPos);
 
-        assertFalse(CuT.validSimpleMove(startPos, endPos), "Simple Move is false");
+        assertFalse(CuT.validSimpleMove(board), "Simple Move is false");
     }
 
     @Test
@@ -261,9 +263,9 @@ class MoveTest {
         final Position startPos = new Position(5, 5);
         final Position endPos = new Position(4,4);
 
-        final Move CuT = new Move(board.getBoard());
+        final Move CuT = new Move(startPos, endPos);
 
-        assertFalse(CuT.validSimpleMove(startPos, endPos), "Simple Move is false");
+        assertFalse(CuT.validSimpleMove(board), "Simple Move is false");
     }
 
     @Test
@@ -273,10 +275,10 @@ class MoveTest {
         final Position endPos = new Position(3,4);
         board.getBoard()[4][5].setPiece(new Piece(Piece.TYPE.SINGLE, Piece.COLOR.RED));
 
-        final Move CuT = new Move(board.getBoard());
+        final Move CuT = new Move(startPos, endPos);
         final Position between = new Position(4, 5);
 
-        assertEquals(between, CuT.validSimpleJump(startPos, endPos), "Simple Jump equals between");
+        assertEquals(between, CuT.validSimpleJump(board), "Simple Jump equals between");
     }
 
 
@@ -287,9 +289,9 @@ class MoveTest {
         final Position endPos = new Position(2,3);
         board.getBoard()[4][5].setPiece(new Piece(Piece.TYPE.SINGLE, Piece.COLOR.RED));
 
-        final Move CuT = new Move(board.getBoard());
+        final Move CuT = new Move(startPos, endPos);
 
-        assertNull(CuT.validSimpleJump(startPos, endPos), "Simple Jump too large");
+        assertNull(CuT.validSimpleJump(board), "Simple Jump too large");
     }
 
 
@@ -300,17 +302,17 @@ class MoveTest {
         final Position endPos = new Position(3,4);
         board.getBoard()[4][3].setPiece(new Piece(Piece.TYPE.SINGLE, Piece.COLOR.WHITE));
 
-        final Move CuT = new Move(board.getBoard());
+        final Move CuT = new Move(startPos, endPos);
 
-        assertNull(CuT.validSimpleJump(startPos, endPos), "Simple Jump equals between");
+        assertNull(CuT.validSimpleJump(board), "Simple Jump equals between");
     }
 
     @Test
     public void testGetStartNull() {
         final Space[][] board = new Space[8][8];
-        final Move CuT = new Move( board );
+        //final Move CuT = new Move( board );
 
-        assertNull( CuT.getStart(), "Start is null");
+        //assertNull( CuT.getStart(), "Start is null");
     }
 
     @Test
@@ -319,9 +321,9 @@ class MoveTest {
         final Position startPos = new Position(2, 1);
         final Position endPos = new Position(3,2);
 
-        final Move CuT = new Move(board.getBoard());
+        final Move CuT = new Move(startPos, endPos);
 
-        CuT.validSimpleMove(startPos, endPos);
+        CuT.validSimpleMove(board);
 
         assertEquals(startPos, CuT.getStart(), "Start is saved correctly");
     }
@@ -332,9 +334,9 @@ class MoveTest {
         final Position startPos = new Position(2, 1);
         final Position endPos = new Position(3,2);
 
-        final Move CuT = new Move(board.getBoard());
+        final Move CuT = new Move(startPos, endPos);
 
-        CuT.validSimpleMove(startPos, endPos);
+        CuT.validSimpleMove(board);
 
         assertEquals( startPos, CuT.getStart(), "Start is saved correctly");
     }
@@ -345,9 +347,9 @@ class MoveTest {
         final Position startPos = new Position(5, 6);
         final Position endPos = new Position(4,5);
 
-        final Move CuT = new Move(board.getBoard());
+        final Move CuT = new Move(startPos, endPos);
 
-        CuT.validSimpleMove(startPos, endPos);
+        CuT.validSimpleMove(board);
 
         assertEquals(startPos, CuT.getStart(), "Start is saved correctly");
     }
@@ -358,9 +360,9 @@ class MoveTest {
         final Position startPos = new Position(5, 2);
         final Position endPos = new Position(4,3);
 
-        final Move CuT = new Move(board.getBoard());
+        final Move CuT = new Move(startPos, endPos);
 
-        CuT.validSimpleMove(startPos, endPos);
+        CuT.validSimpleMove(board);
 
         assertEquals( startPos, CuT.getStart(), "Start is saved correctly");
     }
@@ -368,9 +370,9 @@ class MoveTest {
     @Test
     public void testGetEndNull() {
         final Space[][] board = new Space[8][8];
-        final Move CuT = new Move( board );
+        //final Move CuT = new Move( board );
 
-        assertNull(CuT.getStart(), "End is null");
+        //assertNull(CuT.getStart(), "End is null");
     }
 
     @Test
@@ -379,9 +381,9 @@ class MoveTest {
         final Position startPos = new Position(2, 1);
         final Position endPos = new Position(3,2);
 
-        final Move CuT = new Move(board.getBoard());
+        final Move CuT = new Move(startPos, endPos);
 
-        CuT.validSimpleMove(startPos, endPos);
+        CuT.validSimpleMove(board);
 
         assertEquals(endPos, CuT.getEnd(), "Start is saved correctly");
     }
@@ -392,9 +394,9 @@ class MoveTest {
         final Position startPos = new Position(2, 1);
         final Position endPos = new Position(3,2);
 
-        final Move CuT = new Move(board.getBoard());
+        final Move CuT = new Move(startPos, endPos);
 
-        CuT.validSimpleMove(startPos, endPos);
+        CuT.validSimpleMove(board);
 
         assertEquals( endPos, CuT.getEnd(), "Start is saved correctly");
     }
@@ -405,9 +407,9 @@ class MoveTest {
         final Position startPos = new Position(5, 6);
         final Position endPos = new Position(4,5);
 
-        final Move CuT = new Move(board.getBoard());
+        final Move CuT = new Move(startPos, endPos);
 
-        CuT.validSimpleMove(startPos, endPos);
+        CuT.validSimpleMove(board);
 
         assertEquals(endPos, CuT.getEnd(), "Start is saved correctly");
     }
@@ -418,9 +420,9 @@ class MoveTest {
         final Position startPos = new Position(5, 2);
         final Position endPos = new Position(4,3);
 
-        final Move CuT = new Move(board.getBoard());
+        final Move CuT = new Move(startPos, endPos);
 
-        CuT.validSimpleMove(startPos, endPos);
+        CuT.validSimpleMove(board);
 
         assertEquals( endPos, CuT.getEnd(), "Start is saved correctly");
     }
