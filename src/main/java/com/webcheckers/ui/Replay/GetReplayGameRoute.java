@@ -5,6 +5,7 @@ import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
+import com.webcheckers.model.ReplayGame;
 import com.webcheckers.ui.BoardView;
 import com.webcheckers.ui.Home.GetHomeRoute;
 import com.webcheckers.util.Message;
@@ -44,23 +45,29 @@ public class GetReplayGameRoute implements Route {
         Session currentSession = request.session();
         Player currentUser = currentSession.attribute(GetHomeRoute.CURRENT_USER_ATTR);
 
-        // modeOptions = new map<String,Boolean>
-        // assuming we have an array of moves to go through
-        // iterate through the array and set the values in
-        // modeOptions respectively
-
         String gameId = currentSession.attribute(GAME_ID_ATTR);
         Game currentGame = gameCenter.getGame(gameId);
+        ReplayGame replayGame = gameCenter.getReplayGame(gameId);
 
-        
+        if(replayGame.hasNext()){
+            modeOptions.put("hasNext", true);
+            vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
+        } else {
+            modeOptions.put("hasNext", false);
+            vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
+        }
+
+        if(replayGame.hasPrevious()){
+            modeOptions.put("hasPrevious", true);
+            vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
+        } else {
+            modeOptions.put("hasPrevious", false);
+            vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
+        }
 
         //game.ftl requirements for Replay:
         vm.put("currentUser", currentUser);
         vm.put("viewMode", GameCenter.ViewMode.REPLAY);// MUST BE REPLAY
-
-        vm.put("modeOptionsAsJSON", null);
-
-        // vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
 
         vm.put("redPlayer", currentGame.getRedPlayer());
         vm.put("whitePlayer", currentGame.getWhitePlayer());
@@ -77,12 +84,4 @@ public class GetReplayGameRoute implements Route {
         return templateEngine.render(new ModelAndView(vm , VIEW_NAME));
     }
 
-
-    private Map<String, Object> populateModeOptions(Map<String, Object> modeOptions){
-
-
-
-
-        return null;
-    }
 }
