@@ -1,12 +1,14 @@
-package com.webcheckers.ui;
+package com.webcheckers.ui.PlayGame;
 
 import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
+import com.webcheckers.ui.BoardView;
+import com.webcheckers.ui.Home.GetHomeRoute;
+import com.webcheckers.ui.WebServer;
 import com.webcheckers.util.Message;
-import javafx.print.PageLayout;
 import spark.*;
 
 import java.util.*;
