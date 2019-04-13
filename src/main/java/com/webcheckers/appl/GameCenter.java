@@ -63,6 +63,8 @@ public class GameCenter {
         return currentGames.get(gameId);
     }
 
+    public ReplayGame getReplayGame(String gameId) { return previousGames.get(gameId); }
+
     public void removeGame(String gameId) {
         currentGames.remove(gameId);
     }
