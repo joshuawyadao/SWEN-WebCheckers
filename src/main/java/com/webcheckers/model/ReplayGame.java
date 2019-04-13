@@ -26,6 +26,10 @@ public class ReplayGame {
         return gameEndTime;
     }
 
+    public Player getActivePlayer() {
+        return activePlayer;
+    }
+
     public Player getRedPlayer() {
         return redPlayer;
     }

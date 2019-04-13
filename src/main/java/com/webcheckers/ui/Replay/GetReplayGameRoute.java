@@ -45,7 +45,9 @@ public class GetReplayGameRoute implements Route {
         Session currentSession = request.session();
         Player currentUser = currentSession.attribute(GetHomeRoute.CURRENT_USER_ATTR);
 
-        String gameId = currentSession.attribute(GAME_ID_ATTR);
+//        String gameId = currentSession.attribute(GAME_ID_ATTR);
+        String gameId = request.queryParams("gameId");
+        currentSession.attribute("gameId", gameId);
         //Game currentGame = gameCenter.getGame(gameId);
         ReplayGame replayGame = gameCenter.getReplayGame(gameId);
 
@@ -80,10 +82,10 @@ public class GetReplayGameRoute implements Route {
         vm.put("whitePlayer", replayGame.getWhitePlayer());
         vm.put("activeColor", replayGame.getActivePlayer().getPlayerColor());
 
-        //boolean isRed = currentGame.getPlayerColor(currentUser) == Player.PlayerColor.RED;
-        //BoardView boardView = new BoardView(currentGame.getCheckerBoard(), isRed);
+//        boolean isRed = currentGame.getPlayerColor(currentUser) == Player.PlayerColor.RED;
+//        BoardView boardView = new BoardView(currentGame.getCheckerBoard(), isRed);
 
-        vm.put("board", replayGame.getCurrentTurn());
+        vm.put("board", new BoardView(replayGame.getCurrentTurn(), true));
         vm.put(GetHomeRoute.CURRENT_USER_ATTR, currentUser);
         vm.put("title", "Enjoy the replay!");
 

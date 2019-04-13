@@ -26,7 +26,7 @@
         <#if hasPreviousGames>
             <#list previousGames as game>
                 <form action="./replay/game" method="GET">
-                    <h3> Game: ${game.getRedPlayer()} Vs. ${game.getWhitePlayer()} </br>
+                    <h3> Game: ${game.getRedPlayer().name} Vs. ${game.getWhitePlayer().name} </br>
                          Time Ended: ${game.getGameEndTime()} </br>
 
                     <input type="hidden" name="gameId" value="${game.getGameId()}">
