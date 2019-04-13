@@ -49,6 +49,15 @@ public class GetReplayGameRoute implements Route {
         Game currentGame = gameCenter.getGame(gameId);
         ReplayGame replayGame = gameCenter.getReplayGame(gameId);
 
+        // Upon entering the replayed game in question,
+        // this route will go through the following routes
+        // and update the modeOptions map.
+        // This will allow respective Next and Previous buttons.
+        //
+        // Upon hitting the Next or Previous button (which is handled
+        // separately than this route), it will encounter a refresh
+        // to the replay game page. This enables a second run through
+        // of the following if-statements, and cycle again.
         if(replayGame.hasNext()){
             modeOptions.put("hasNext", true);
             vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
@@ -75,7 +84,8 @@ public class GetReplayGameRoute implements Route {
 
         boolean isRed = currentGame.getPlayerColor(currentUser) == Player.PlayerColor.RED;
         BoardView boardView = new BoardView(currentGame.getCheckerBoard(), isRed);
-        vm.put("board", boardView);
+
+        vm.put("board", replayGame.getCurrentTurn());
 
         vm.put(GetHomeRoute.CURRENT_USER_ATTR, currentUser);
         vm.put("title", "Enjoy the replay!");
