@@ -5,9 +5,9 @@ import com.webcheckers.model.Move;
 import com.webcheckers.model.Player;
 import com.webcheckers.model.ReplayGame;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * GameCenter Class
@@ -146,10 +146,15 @@ public class GameCenter {
     }
 
     public boolean addToPreviousGames(Game game, String gameId){
-        ReplayGame previousGame = new ReplayGame(game.getRedPlayer(), game.getWhitePlayer(), game.getPreviousTurns());
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        Date date = new Date();
+        String gameEndTime = dateFormat.format(date);
+
         gamesCompleted++;
 
         String previousGameId = createFinishedGameId();
+        ReplayGame previousGame = new ReplayGame(game.getRedPlayer(), game.getWhitePlayer(),
+                                                 game.getPreviousTurns(), gameEndTime, previousGameId);
         previousGames.put(previousGameId, previousGame);
 
         if(currentGames.containsKey(gameId))
@@ -168,5 +173,9 @@ public class GameCenter {
         }
 
         return sortedPreviousGames;
+    }
+
+    public boolean hasPreviousGames(){
+        return previousGames.size() > 0;
     }
 }
