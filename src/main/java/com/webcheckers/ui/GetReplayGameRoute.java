@@ -52,7 +52,7 @@ public class GetReplayGameRoute implements Route {
 
         //game.ftl requirements for Replay:
         vm.put("currentUser", currentUser);
-        vm.put("viewMode", currentGame.getViewMode()); // MUST BE REPLAY
+        vm.put("viewMode", Game.ViewMode.REPLAY); // MUST BE REPLAY
 
         vm.put("modeOptionsAsJSON", null);
 

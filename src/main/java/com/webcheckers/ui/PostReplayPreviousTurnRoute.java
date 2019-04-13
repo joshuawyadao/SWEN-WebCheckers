@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
+import com.webcheckers.util.Message;
 import spark.*;
 
 import java.util.HashMap;
@@ -38,6 +39,17 @@ public class PostReplayPreviousTurnRoute implements Route {
         String gameId = currentSession.attribute(GetGameRoute.GAME_ID_ATTR);
 
 
-        return null;
+        //   MOVE THE GAME TO THE PREVIOUS STATE
+
+
+        Message successInfo;
+
+        if( 1 > 0 ){
+            successInfo = Message.info("true");
+        }else{
+            successInfo = Message.info("false");
+        }
+
+        return gson.toJson(successInfo);
     }
 }

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
+import com.webcheckers.util.Message;
 import spark.*;
 
 import java.util.HashMap;
@@ -36,9 +37,20 @@ public class PostReplayNextTurnRoute implements Route {
         Player currentUser = currentSession.attribute(GetHomeRoute.CURRENT_USER_ATTR);
         String gameId = currentSession.attribute(GetGameRoute.GAME_ID_ATTR);
 
+        // MOVE THE GAME TO THE NEXT STATE
+        //
 
+        // If clicking next button was succesful
+        Message successInfo;
 
-        return null;
+        if( 1 > 0 ){
+            successInfo = Message.info("true");
+        }else{
+            successInfo = Message.info("false");
+        }
+
+        return gson.toJson(successInfo);
+
     }
 
 
