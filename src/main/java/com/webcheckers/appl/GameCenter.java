@@ -13,10 +13,16 @@ import java.util.Map;
  */
 public class GameCenter {
 
+    //Enumeration for the View Mode
+    public enum ViewMode{
+        PLAY,
+        SPECTATE,
+        REPLAY
+    }
+
     //
     // Private fields
     //
-
     private HashMap<String, Game> currentGames;
 
     /**
@@ -30,12 +36,11 @@ public class GameCenter {
      * newGame creates a new checkers game that players can interact with
      * @param redPlayer the player to be red
      * @param whitePlayer the player to be white
-     * @param viewMode the mode to situate the game with
      * @return a gameID, that is, a unique string to identify the newly made game
      */
-    public String newGame(Player redPlayer, Player whitePlayer, Game.ViewMode viewMode){
+    public String newGame(Player redPlayer, Player whitePlayer){
         String gameId = createGameId(redPlayer, whitePlayer);
-        Game newGame = new Game(redPlayer, whitePlayer, viewMode);
+        Game newGame = new Game(redPlayer, whitePlayer);
         newGame.initializeGame();
 
         currentGames.put(gameId, newGame);

@@ -219,11 +219,11 @@ public class WebServer {
 
     get(REPLAY_GAME_URL, new GetReplayGameRoute(playerLobby, gameCenter, templateEngine));
 
-    get(REPLAY_STOP_WATCHING_URL, new GetReplayStopWatchingRoute());
-
-    post(REPLAY_NEXT_TURN_URL, new PostReplayNextTurnRoute());
-
-    post(REPLAY_PREVIOUS_TURN_URL, new PostReplayPreviousTurnRoute());
+//    get(REPLAY_STOP_WATCHING_URL, new GetReplayStopWatchingRoute());
+//
+//    post(REPLAY_NEXT_TURN_URL, new PostReplayNextTurnRoute());
+//
+//    post(REPLAY_PREVIOUS_TURN_URL, new PostReplayPreviousTurnRoute());
 
     //
     LOG.config("WebServer is initialized.");

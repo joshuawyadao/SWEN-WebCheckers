@@ -6,6 +6,7 @@ import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
+import javafx.print.PageLayout;
 import spark.*;
 
 import java.util.*;
@@ -74,7 +75,7 @@ public class GetGameRoute implements Route {
                 return null;
 
             } else {
-                String newGameId = gameCenter.newGame(currentUser, opponent, Game.ViewMode.PLAY);
+                String newGameId = gameCenter.newGame(currentUser, opponent);
                 currentSession.attribute(GAME_ID_ATTR, newGameId);
                 opponentSession.attribute(GAME_ID_ATTR, newGameId);
 
@@ -89,7 +90,7 @@ public class GetGameRoute implements Route {
         vm.put("redPlayer", currentGame.getRedPlayer());
         vm.put("whitePlayer", currentGame.getWhitePlayer());
         vm.put("activeColor", currentGame.getActivePlayer().getPlayerColor());
-        vm.put("viewMode", currentGame.getViewMode());
+        vm.put("viewMode", GameCenter.ViewMode.PLAY);
 
         boolean isRed = currentGame.getPlayerColor(currentUser) == Player.PlayerColor.RED;
         BoardView boardView = new BoardView(currentGame.getCheckerBoard(), isRed);

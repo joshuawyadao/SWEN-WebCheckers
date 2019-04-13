@@ -1,18 +1,12 @@
 package com.webcheckers.model;
 
+import com.webcheckers.appl.GameCenter;
+
 import java.util.Map;
 import java.util.Stack;
 
 public class Game {
-
-    //Enumeration for the View Mode
-    public enum ViewMode{
-        PLAY,
-        SPECTATE
-    }
-
     private Player redPlayer, whitePlayer, activePlayer, resignedPlayer;
-    private ViewMode viewMode;
     private Board checkerBoard;
     private Map<String, Object> modeOptionsAsJSON;
     private Stack<Board> previousMoves;
@@ -22,13 +16,11 @@ public class Game {
      * Creates a new game instance
      * @param redPlayer the red player
      * @param whitePlayer the white player
-     * @param viewMode the view mode of this game
      */
-    public Game(Player redPlayer, Player whitePlayer, ViewMode viewMode){
+    public Game(Player redPlayer, Player whitePlayer){
         this.redPlayer = redPlayer;
         this.activePlayer = redPlayer;
         this.whitePlayer = whitePlayer;
-        this.viewMode = viewMode;
         this.checkerBoard = new Board();
         this.previousMoves = new Stack<>();
         previousMoves.push(checkerBoard);
@@ -52,14 +44,6 @@ public class Game {
      */
     public Player getWhitePlayer() {
         return this.whitePlayer;
-    }
-
-    /**
-     * Returns the view mode of this game
-     * @return the view mode of this game
-     */
-    public ViewMode getViewMode() {
-        return this.viewMode;
     }
 
     /**
