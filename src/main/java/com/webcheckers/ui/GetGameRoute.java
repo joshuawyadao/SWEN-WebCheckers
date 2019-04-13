@@ -80,12 +80,10 @@ public class GetGameRoute implements Route {
                 opponentSession.attribute(GAME_ID_ATTR, newGameId);
 
             }
-
         }
 
         String gameId = currentSession.attribute(GAME_ID_ATTR);
         Game currentGame = gameCenter.getGame(gameId);
-
 
         vm.put("redPlayer", currentGame.getRedPlayer());
         vm.put("whitePlayer", currentGame.getWhitePlayer());
@@ -122,6 +120,8 @@ public class GetGameRoute implements Route {
                     gameCenter.removeGame(gameId);
                 }
             }
+
+            gameCenter.addToPreviousGames(currentGame, gameId);
         }
 
         //boolean testBool = true;
@@ -166,6 +166,7 @@ public class GetGameRoute implements Route {
                 }
             }
 
+            gameCenter.addToPreviousGames(currentGame, gameId);
         }
 
         vm.put(GetHomeRoute.CURRENT_USER_ATTR, currentUser);

@@ -2,6 +2,7 @@ package com.webcheckers.model;
 
 import com.webcheckers.appl.GameCenter;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Stack;
 
@@ -11,6 +12,7 @@ public class Game {
     private Map<String, Object> modeOptionsAsJSON;
     private Stack<Board> previousMoves;
     private boolean validTurn;
+    private ArrayList<Board> previousTurns;
 
     /**
      * Creates a new game instance
@@ -26,6 +28,8 @@ public class Game {
         previousMoves.push(checkerBoard);
         this.resignedPlayer = null;
         this.validTurn = false;
+        this.previousTurns = new ArrayList<>();
+        previousTurns.add(checkerBoard);
     }
 
     //Accessors
@@ -75,6 +79,10 @@ public class Game {
      */
     public Player.PlayerColor getPlayerColor( Player currentPlayer ){
         return currentPlayer.getPlayerColor();
+    }
+
+    public ArrayList<Board> getPreviousTurns() {
+        return this.previousTurns;
     }
 
     /**
@@ -210,6 +218,7 @@ public class Game {
         if(this.validTurn) {
             this.checkerBoard = this.previousMoves.pop();
             this.checkerBoard.kingPieces();
+            this.previousTurns.add(checkerBoard);
             this.previousMoves = new Stack<>();
             this.previousMoves.push(checkerBoard);
             this.validTurn = false;

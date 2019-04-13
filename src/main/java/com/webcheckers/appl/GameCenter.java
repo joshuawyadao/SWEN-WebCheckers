@@ -3,7 +3,9 @@ package com.webcheckers.appl;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Move;
 import com.webcheckers.model.Player;
+import com.webcheckers.model.ReplayGame;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,12 +26,16 @@ public class GameCenter {
     // Private fields
     //
     private HashMap<String, Game> currentGames;
+    private int gamesCompleted;
+    private HashMap<String, ReplayGame> previousGames;
 
     /**
      * GameCenter constructor
      */
     public GameCenter( ){
-        currentGames = new HashMap<>();
+        this.currentGames = new HashMap<>();
+        this.gamesCompleted = 0;
+        this.previousGames = new HashMap<>();
     }
 
     /**
@@ -67,8 +73,12 @@ public class GameCenter {
      * @param whitePlayer the whitePlayer
      * @return a new ID, that is, a string
      */
-    private static String createGameId(Player redPlayer, Player whitePlayer){
+    private String createGameId(Player redPlayer, Player whitePlayer){
         return redPlayer.getName() + "Vs" + whitePlayer.getName();
+    }
+
+    private String createFinishedGameId(){
+        return "Game #" + gamesCompleted;
     }
 
     /**
@@ -115,7 +125,6 @@ public class GameCenter {
         String key2 = player2.getName() + "Vs" + player1.getName();
 
         return currentGames.get(key1) != null || currentGames.get(key2) != null;
-
     }
 
     public boolean isInAnyGame(Player player) {
@@ -136,5 +145,28 @@ public class GameCenter {
             return false;
     }
 
+    public boolean addToPreviousGames(Game game, String gameId){
+        ReplayGame previousGame = new ReplayGame(game.getRedPlayer(), game.getWhitePlayer(), game.getPreviousTurns());
+        gamesCompleted++;
 
+        String previousGameId = createFinishedGameId();
+        previousGames.put(previousGameId, previousGame);
+
+        if(currentGames.containsKey(gameId))
+            currentGames.remove(gameId);
+
+        return true;
+    }
+
+    public ArrayList<ReplayGame> sortPreviousGames(){
+        ArrayList<ReplayGame> sortedPreviousGames = new ArrayList<>();
+        ReplayGame tempGame;
+
+        for(int i = 1; i < previousGames.size() + 1; i++){
+            tempGame = previousGames.get("Game #" + i);
+            sortedPreviousGames.add(tempGame);
+        }
+
+        return sortedPreviousGames;
+    }
 }
