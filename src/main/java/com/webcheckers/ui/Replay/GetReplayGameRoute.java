@@ -46,7 +46,7 @@ public class GetReplayGameRoute implements Route {
         Player currentUser = currentSession.attribute(GetHomeRoute.CURRENT_USER_ATTR);
 
         String gameId = currentSession.attribute(GAME_ID_ATTR);
-        Game currentGame = gameCenter.getGame(gameId);
+        //Game currentGame = gameCenter.getGame(gameId);
         ReplayGame replayGame = gameCenter.getReplayGame(gameId);
 
         // Upon entering the replayed game in question,
@@ -75,18 +75,15 @@ public class GetReplayGameRoute implements Route {
         }
 
         //game.ftl requirements for Replay:
-        vm.put("currentUser", currentUser);
         vm.put("viewMode", GameCenter.ViewMode.REPLAY);// MUST BE REPLAY
+        vm.put("redPlayer", replayGame.getRedPlayer());
+        vm.put("whitePlayer", replayGame.getWhitePlayer());
+        vm.put("activeColor", replayGame.getActivePlayer().getPlayerColor());
 
-        vm.put("redPlayer", currentGame.getRedPlayer());
-        vm.put("whitePlayer", currentGame.getWhitePlayer());
-        vm.put("activeColor", currentGame.getActivePlayer().getPlayerColor());
-
-        boolean isRed = currentGame.getPlayerColor(currentUser) == Player.PlayerColor.RED;
-        BoardView boardView = new BoardView(currentGame.getCheckerBoard(), isRed);
+        //boolean isRed = currentGame.getPlayerColor(currentUser) == Player.PlayerColor.RED;
+        //BoardView boardView = new BoardView(currentGame.getCheckerBoard(), isRed);
 
         vm.put("board", replayGame.getCurrentTurn());
-
         vm.put(GetHomeRoute.CURRENT_USER_ATTR, currentUser);
         vm.put("title", "Enjoy the replay!");
 
