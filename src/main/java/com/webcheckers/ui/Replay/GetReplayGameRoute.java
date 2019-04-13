@@ -40,7 +40,7 @@ public class GetReplayGameRoute implements Route {
     public Object handle(Request request, Response response) {
         LOG.finer("GetReplayGameRoute is invoked.");
         final Map<String, Object> vm = new HashMap<>();
-        final Map<String, Object> modeOptions = new HashMap<>();
+        Map<String, Object> modeOptions = new HashMap<>();
         Session currentSession = request.session();
         Player currentUser = currentSession.attribute(GetHomeRoute.CURRENT_USER_ATTR);
 
@@ -51,6 +51,8 @@ public class GetReplayGameRoute implements Route {
 
         String gameId = currentSession.attribute(GAME_ID_ATTR);
         Game currentGame = gameCenter.getGame(gameId);
+
+        
 
         //game.ftl requirements for Replay:
         vm.put("currentUser", currentUser);
@@ -73,5 +75,14 @@ public class GetReplayGameRoute implements Route {
 
         // render the View
         return templateEngine.render(new ModelAndView(vm , VIEW_NAME));
+    }
+
+
+    private Map<String, Object> populateModeOptions(Map<String, Object> modeOptions){
+
+
+
+
+        return null;
     }
 }
