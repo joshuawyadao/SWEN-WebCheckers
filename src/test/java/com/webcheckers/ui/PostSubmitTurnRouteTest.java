@@ -41,16 +41,7 @@ class PostSubmitTurnRouteTest {
 
     @Test
     void testSubmitTurn(){
-        final TemplateEngineTest testHelper = new TemplateEngineTest();
-        when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
 
-        when(session.attribute("currentUser")).thenReturn(new Player("currentUser"));
-        when(session.attribute(GetGameRoute.GAME_ID_ATTR)).thenReturn("gameId");
-
-        CuT.handle(request, response);
-
-        testHelper.assertViewModelExists();
-        testHelper.assertViewModelIsaMap();
 
     }
 

@@ -63,7 +63,6 @@ public class GetHomeRoute implements Route {
 
     vm.put("title", "Welcome!");
 
-
     // Displays an error message to the user, if any.
     if(httpSession.attribute(ERROR_MSG) != null && httpSession.attribute(ERROR_MSG) instanceof Message) {
         // Show the error message
