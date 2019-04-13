@@ -217,6 +217,8 @@ public class WebServer {
 
     post(SPECTATOR_CHECK_TURN_URL, new PostSpectatorCheckTurnRoute());
 
+    get(REPLAY_URL, new GetReplayRoute(playerLobby, gameCenter, templateEngine));
+
     get(REPLAY_GAME_URL, new GetReplayGameRoute(playerLobby, gameCenter, templateEngine, gson));
 
     get(REPLAY_STOP_WATCHING_URL, new GetReplayStopWatchingRoute());

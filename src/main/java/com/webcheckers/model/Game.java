@@ -1,40 +1,35 @@
 package com.webcheckers.model;
 
+import com.webcheckers.appl.GameCenter;
+
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Stack;
 
 public class Game {
-
-    //Enumeration for the View Mode
-    public enum ViewMode{
-        PLAY,
-        SPECTATE,
-        REPLAY
-    }
-
     private Player redPlayer, whitePlayer, activePlayer, resignedPlayer;
-    private ViewMode viewMode;
     private Board checkerBoard;
     private Map<String, Object> modeOptionsAsJSON;
     private Stack<Board> previousMoves;
     private boolean validTurn;
+    private ArrayList<Board> previousTurns;
 
     /**
      * Creates a new game instance
      * @param redPlayer the red player
      * @param whitePlayer the white player
-     * @param viewMode the view mode of this game
      */
-    public Game(Player redPlayer, Player whitePlayer, ViewMode viewMode){
+    public Game(Player redPlayer, Player whitePlayer){
         this.redPlayer = redPlayer;
         this.activePlayer = redPlayer;
         this.whitePlayer = whitePlayer;
-        this.viewMode = viewMode;
         this.checkerBoard = new Board();
         this.previousMoves = new Stack<>();
         previousMoves.push(checkerBoard);
         this.resignedPlayer = null;
         this.validTurn = false;
+        this.previousTurns = new ArrayList<>();
+        previousTurns.add(checkerBoard);
     }
 
     //Accessors
@@ -56,14 +51,6 @@ public class Game {
     }
 
     /**
-     * Returns the view mode of this game
-     * @return the view mode of this game
-     */
-    public ViewMode getViewMode() {
-        return this.viewMode;
-    }
-
-    /**
      * Gets the initial layout of the board before any player moves on their turn
      * @return the initial layout of the board
      */
@@ -73,6 +60,10 @@ public class Game {
 
     public Player getActivePlayer() {
         return activePlayer;
+    }
+
+    public boolean isInGame(Player player) {
+        return this.whitePlayer == player || this.redPlayer == player;
     }
 
     /**
@@ -88,6 +79,10 @@ public class Game {
      */
     public Player.PlayerColor getPlayerColor( Player currentPlayer ){
         return currentPlayer.getPlayerColor();
+    }
+
+    public ArrayList<Board> getPreviousTurns() {
+        return this.previousTurns;
     }
 
     /**
@@ -223,6 +218,7 @@ public class Game {
         if(this.validTurn) {
             this.checkerBoard = this.previousMoves.pop();
             this.checkerBoard.kingPieces();
+            this.previousTurns.add(checkerBoard);
             this.previousMoves = new Stack<>();
             this.previousMoves.push(checkerBoard);
             this.validTurn = false;

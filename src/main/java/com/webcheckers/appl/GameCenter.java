@@ -3,7 +3,9 @@ package com.webcheckers.appl;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Move;
 import com.webcheckers.model.Player;
+import com.webcheckers.model.ReplayGame;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,29 +15,38 @@ import java.util.Map;
  */
 public class GameCenter {
 
+    //Enumeration for the View Mode
+    public enum ViewMode{
+        PLAY,
+        SPECTATE,
+        REPLAY
+    }
+
     //
     // Private fields
     //
-
     private HashMap<String, Game> currentGames;
+    private int gamesCompleted;
+    private HashMap<String, ReplayGame> previousGames;
 
     /**
      * GameCenter constructor
      */
     public GameCenter( ){
-        currentGames = new HashMap<>();
+        this.currentGames = new HashMap<>();
+        this.gamesCompleted = 0;
+        this.previousGames = new HashMap<>();
     }
 
     /**
      * newGame creates a new checkers game that players can interact with
      * @param redPlayer the player to be red
      * @param whitePlayer the player to be white
-     * @param viewMode the mode to situate the game with
      * @return a gameID, that is, a unique string to identify the newly made game
      */
-    public String newGame(Player redPlayer, Player whitePlayer, Game.ViewMode viewMode){
+    public String newGame(Player redPlayer, Player whitePlayer){
         String gameId = createGameId(redPlayer, whitePlayer);
-        Game newGame = new Game(redPlayer, whitePlayer, viewMode);
+        Game newGame = new Game(redPlayer, whitePlayer);
         newGame.initializeGame();
 
         currentGames.put(gameId, newGame);
@@ -62,8 +73,12 @@ public class GameCenter {
      * @param whitePlayer the whitePlayer
      * @return a new ID, that is, a string
      */
-    private static String createGameId(Player redPlayer, Player whitePlayer){
+    private String createGameId(Player redPlayer, Player whitePlayer){
         return redPlayer.getName() + "Vs" + whitePlayer.getName();
+    }
+
+    private String createFinishedGameId(){
+        return "Game #" + gamesCompleted;
     }
 
     /**
@@ -100,21 +115,25 @@ public class GameCenter {
 
 
     /**
-     * Searches through the list of current games to determine
-     * if a given player is within one.
-     * @param player The player to be searched for
-     * @return true if the player is within a current game. False otherwise
+     *
+     * @param player1
+     * @param player2
+     * @return
      */
-    public boolean hasGame(Player player) {
-        for (Map.Entry<String, Game> game : currentGames.entrySet()) {
-            if (game.getValue().getWhitePlayer().equals(player)
-                    || (game.getValue().getRedPlayer().equals(player))) {
+    public boolean hasGame(Player player1, Player player2) {
+        String key1 = player1.getName() + "Vs" + player2.getName();
+        String key2 = player2.getName() + "Vs" + player1.getName();
+
+        return currentGames.get(key1) != null || currentGames.get(key2) != null;
+    }
+
+    public boolean isInAnyGame(Player player) {
+        for( Game game : currentGames.values() ) {
+            if( game.isInGame(player)) {
                 return true;
             }
         }
-
         return false;
-
     }
 
     public boolean isMyTurn(String gameId, Player currentPlayer){
@@ -126,5 +145,28 @@ public class GameCenter {
             return false;
     }
 
+    public boolean addToPreviousGames(Game game, String gameId){
+        ReplayGame previousGame = new ReplayGame(game.getRedPlayer(), game.getWhitePlayer(), game.getPreviousTurns());
+        gamesCompleted++;
 
+        String previousGameId = createFinishedGameId();
+        previousGames.put(previousGameId, previousGame);
+
+        if(currentGames.containsKey(gameId))
+            currentGames.remove(gameId);
+
+        return true;
+    }
+
+    public ArrayList<ReplayGame> sortPreviousGames(){
+        ArrayList<ReplayGame> sortedPreviousGames = new ArrayList<>();
+        ReplayGame tempGame;
+
+        for(int i = 1; i < previousGames.size() + 1; i++){
+            tempGame = previousGames.get("Game #" + i);
+            sortedPreviousGames.add(tempGame);
+        }
+
+        return sortedPreviousGames;
+    }
 }
