@@ -5,6 +5,8 @@ import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
+import com.webcheckers.ui.BoardView;
+import com.webcheckers.ui.Home.GetHomeRoute;
 import com.webcheckers.util.Message;
 import spark.*;
 
@@ -52,7 +54,7 @@ public class GetReplayGameRoute implements Route {
 
         //game.ftl requirements for Replay:
         vm.put("currentUser", currentUser);
-        vm.put("viewMode", Game.ViewMode.REPLAY); // MUST BE REPLAY
+        vm.put("viewMode", GameCenter.ViewMode.REPLAY);// MUST BE REPLAY
 
         vm.put("modeOptionsAsJSON", null);
 

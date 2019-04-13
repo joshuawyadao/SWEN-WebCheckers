@@ -9,6 +9,15 @@ import com.google.gson.Gson;
 
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.ui.Home.GetHomeRoute;
+import com.webcheckers.ui.Home.GetSignInRoute;
+import com.webcheckers.ui.Home.PostSignInRoute;
+import com.webcheckers.ui.Home.PostSignOutRoute;
+import com.webcheckers.ui.PlayGame.*;
+import com.webcheckers.ui.Replay.*;
+import com.webcheckers.ui.Spectate.GetSpectatorGameRoute;
+import com.webcheckers.ui.Spectate.GetSpectatorStopWatchingRoute;
+import com.webcheckers.ui.Spectate.PostSpectatorCheckTurnRoute;
 import spark.TemplateEngine;
 
 
@@ -88,6 +97,8 @@ public class WebServer {
   public static final String REPLAY_NEXT_TURN_URL = "/replay/nextTurn";
 
   public static final String REPLAY_PREVIOUS_TURN_URL = "/replay/previousTurn";
+
+  public static final String REPLAY_URL = "/replay";
 
   /**
    * The URL pattern to
@@ -221,7 +232,7 @@ public class WebServer {
 
     get(REPLAY_GAME_URL, new GetReplayGameRoute(playerLobby, gameCenter, templateEngine, gson));
 
-    get(REPLAY_STOP_WATCHING_URL, new GetReplayStopWatchingRoute());
+    get(REPLAY_STOP_WATCHING_URL, new GetReplayStopWatchingRoute(playerLobby, gameCenter, templateEngine, gson));
 
     post(REPLAY_NEXT_TURN_URL, new PostReplayNextTurnRoute(playerLobby,gameCenter,templateEngine,gson));
 
