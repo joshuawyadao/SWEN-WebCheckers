@@ -18,6 +18,18 @@ public class ReplayGame {
         this.previousTurns = Objects.requireNonNull(previousTurns, "previousTurns is required");
     }
 
+    public Player getRedPlayer() {
+        return redPlayer;
+    }
+
+    public Player getWhitePlayer() {
+        return whitePlayer;
+    }
+
+    public Player getActivePlayer() {
+        return activePlayer;
+    }
+
     public Board getPreviousTurn(){
         currentTurn--;
 
