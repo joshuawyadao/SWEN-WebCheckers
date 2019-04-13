@@ -8,7 +8,8 @@ public class Game {
     //Enumeration for the View Mode
     public enum ViewMode{
         PLAY,
-        SPECTATE
+        SPECTATE,
+        REPLAY
     }
 
     private Player redPlayer, whitePlayer, activePlayer, resignedPlayer;
