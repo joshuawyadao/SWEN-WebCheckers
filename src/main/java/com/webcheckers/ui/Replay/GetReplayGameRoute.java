@@ -1,4 +1,4 @@
-package com.webcheckers.ui;
+package com.webcheckers.ui.Replay;
 
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
@@ -9,13 +9,13 @@ import spark.TemplateEngine;
 
 import java.util.Objects;
 
-public class PostReplayNextTurnRoute implements Route {
+public class GetReplayGameRoute implements Route {
 
     private final PlayerLobby playerLobby;
     private final GameCenter gameCenter;
     private final TemplateEngine templateEngine;
 
-    public PostReplayNextTurnRoute(final PlayerLobby playerLobby, final GameCenter gameCenter, final TemplateEngine templateEngine) {
+    public GetReplayGameRoute(final PlayerLobby playerLobby, final GameCenter gameCenter, final TemplateEngine templateEngine) {
         this.gameCenter = Objects.requireNonNull(gameCenter, "gameCenter is required");
         this.playerLobby = Objects.requireNonNull(playerLobby, "playerLobby is required");
         this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");

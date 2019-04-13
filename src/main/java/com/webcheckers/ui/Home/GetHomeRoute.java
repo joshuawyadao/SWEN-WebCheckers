@@ -1,4 +1,4 @@
-package com.webcheckers.ui;
+package com.webcheckers.ui.Home;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -7,6 +7,8 @@ import java.util.logging.Logger;
 
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
+import com.webcheckers.ui.PlayGame.GetGameRoute;
+import com.webcheckers.ui.WebServer;
 import spark.*;
 
 import com.webcheckers.util.Message;
