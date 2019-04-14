@@ -36,7 +36,7 @@ public class PostValidateMoveRoute implements Route {
         //See createCorrectJSONFormat method for more information
         String correctJSONMoveString = createCorrectJSONFormat(moveAsJSONString);
         Move move = gson.fromJson(correctJSONMoveString, Move.class);
-        boolean isValid = gameCenter.requestMove(gameId, currentUser, move);
+        boolean isValid = gameCenter.requestMove(gameId, move);
 
 //        Game currentGame = gameCenter.getGame(gameId);
 //        vm.put("redPlayer", currentGame.getRedPlayer());

@@ -21,24 +21,28 @@
     <#include "message.ftl">
 
     <#if currentUser??>
-        <h2> WebChecker Players: </h2>
-        <#list players as player>
-            <#if !currentUser.equals(player)>
-                <form action="./game" method="GET">
-                    <h3> ${player.name}'s Game </t>
-
-                    <#if !player.isPlaying()>
-                        <input type="hidden" name="opponent" value="${player.name}">
-                        <button type="submit">Play Game</button>
-                    <#else>
-                        <input type="hidden" name="opponent" value="${player.name}">
-                        <button type="submit">Spectate Game</button>
-                    </#if>
-
+        <h2> Waiting to Play </h2>
+            <#list players as player>
+                <#if !currentUser.equals(player)>
+                    <form action="./game" method="GET">
+                        <#if !player.isPlaying()>
+                            <h3>  ${player.name}'s Game </t>
+                            <input type="hidden" name="opponent" value="${player.name}">
+                            <button type="submit">Play Game</button>
+                            </h3>
+                        <#/if>
+                    </form>
+                </#if>
+            </#list>
+        <h2> Currently Playing </h2>
+            <#list currentGames as game>
+                <form action="./spectator/game" method="GET">
+                    <h3> Game: ${game.getRedPlayer().name} Vs. ${game.getWhitePlayer().name} </t>
+                    <input type="hidden" name="gameID" value="${game.getGameId()}">
+                    <button type="submit">Spectate Game</button>
                     </h3>
                 </form>
-            </#if>
-        </#list>
+            </#list>
     <#else>
         <h3> ${numOfPlayersMsg} </h3>
     </#if>
