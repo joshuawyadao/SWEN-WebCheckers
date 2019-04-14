@@ -1,9 +1,6 @@
 package com.webcheckers.appl;
 
-import com.webcheckers.model.Game;
-import com.webcheckers.model.Move;
-import com.webcheckers.model.Player;
-import com.webcheckers.model.ReplayGame;
+import com.webcheckers.model.*;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -174,10 +171,24 @@ public class GameCenter {
     }
 
     public boolean hasPreviousGames(){
-        return previousGames.size() > 0;
+        return !previousGames.isEmpty();
     }
 
     public Collection<Game> getCurrentGames(){
         return currentGames.values();
+    }
+
+    public boolean hasCurrentGames() {return !currentGames.isEmpty();}
+
+    public boolean isSpectatorUpdated(String gameId, Player spectator){
+        Game game = currentGames.get(gameId);
+
+        return game.isSpectatorUpdated(spectator);
+    }
+
+    public boolean removedSpectator(String gameId, Player spectator){
+        Game game = currentGames.get(gameId);
+
+        return game.removeSpectator(spectator);
     }
 }

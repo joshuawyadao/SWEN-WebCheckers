@@ -47,6 +47,8 @@ public class GetSpectatorGameRoute implements Route {
 
         Game gameToSpec = gameCenter.getGame(gameID);
 
+        gameToSpec.updateSpectator(currentUser);
+
         vm.put(GetHomeRoute.CURRENT_USER_ATTR, currentUser);
         vm.put("viewMode", GameCenter.ViewMode.SPECTATOR);
         vm.put("redPlayer", gameToSpec.getRedPlayer());
@@ -55,7 +57,7 @@ public class GetSpectatorGameRoute implements Route {
         boolean isRed;
         if (gameToSpec.getActivePlayer().equals(gameToSpec.getRedPlayer())) isRed = true;
         else isRed = false;
-        vm.put("board", new BoardView(gameToSpec.getCheckerBoard(),
+        vm.put("board", new BoardView(gameToSpec.getSpectatorBoard(currentUser),
                 isRed));
 
         vm.put("title", "Enjoy watching your game!");
