@@ -51,9 +51,12 @@ public class GetSpectatorGameRoute implements Route {
         vm.put("viewMode", GameCenter.ViewMode.SPECTATOR);
         vm.put("redPlayer", gameToSpec.getRedPlayer());
         vm.put("whitePlayer", gameToSpec.getWhitePlayer());
-        vm.put("activeColor", gameToSpec.getActivePlayer());
+        vm.put("activeColor", gameToSpec.getActivePlayer().getPlayerColor());
+        boolean isRed;
+        if (gameToSpec.getActivePlayer().equals(gameToSpec.getRedPlayer())) isRed = true;
+        else isRed = false;
         vm.put("board", new BoardView(gameToSpec.getCheckerBoard(),
-                gameToSpec.getActivePlayer() == gameToSpec.getRedPlayer()));
+                isRed));
 
         vm.put("title", "Enjoy watching your game!");
         return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
