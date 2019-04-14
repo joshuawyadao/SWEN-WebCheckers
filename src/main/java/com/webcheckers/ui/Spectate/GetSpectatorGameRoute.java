@@ -39,15 +39,15 @@ public class GetSpectatorGameRoute implements Route {
     public Object handle(Request request, Response response) {
         LOG.finer("GetSpectatorGameRoute is invoked.");
         final Map<String, Object> vm = new HashMap<>();
-        //Map<String, Object> modeOptions = new HashMap<>();
+        Map<String, Object> modeOptions = new HashMap<>();
         Session currentSession = request.session();
         Player currentUser = currentSession.attribute(GetHomeRoute.CURRENT_USER_ATTR);
 
         String gameID = request.queryParams("gameID");
 
         Game gameToSpec = gameCenter.getGame(gameID);
-
-        vm.put("viewMode", GameCenter.ViewMode.SPECTATE);
+        vm.put("currentUser", currentUser);
+        vm.put("viewMode", GameCenter.ViewMode.SPECTATOR);
         vm.put("redPlayer", gameToSpec.getRedPlayer());
         vm.put("whitePlayer", gameToSpec.getWhitePlayer());
         vm.put("activeColor", gameToSpec.getActivePlayer());

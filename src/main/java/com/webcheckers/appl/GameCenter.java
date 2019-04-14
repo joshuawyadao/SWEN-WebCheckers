@@ -18,7 +18,7 @@ public class GameCenter {
     //Enumeration for the View Mode
     public enum ViewMode{
         PLAY,
-        SPECTATE,
+        SPECTATOR,
         REPLAY
     }
 
