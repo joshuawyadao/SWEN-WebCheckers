@@ -9,6 +9,15 @@ import com.google.gson.Gson;
 
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.ui.Home.GetHomeRoute;
+import com.webcheckers.ui.Home.GetSignInRoute;
+import com.webcheckers.ui.Home.PostSignInRoute;
+import com.webcheckers.ui.Home.PostSignOutRoute;
+import com.webcheckers.ui.PlayGame.*;
+import com.webcheckers.ui.Replay.*;
+import com.webcheckers.ui.Spectate.GetSpectatorGameRoute;
+import com.webcheckers.ui.Spectate.GetSpectatorStopWatchingRoute;
+import com.webcheckers.ui.Spectate.PostSpectatorCheckTurnRoute;
 import spark.TemplateEngine;
 
 
@@ -70,6 +79,26 @@ public class WebServer {
   public static final String SUBMIT_TURN_URL = "/submitTurn";
 
   public static final String BACKUP_MOVE_URL = "/backupMove";
+
+  public static final String SIGN_OUT_URL = "/signout";
+
+  public static final String CHECK_TURN_URL = "/checkTurn";
+
+  public static final String SPECTATOR_GAME_URL = "/spectator/game";
+
+  public static final String SPECTATOR_STOP_WATCHING_URL = "/spectator/stopWatching";
+
+  public static final String SPECTATOR_CHECK_TURN_URL = "/spectator/checkTurn";
+
+  public static final String REPLAY_GAME_URL = "/replay/game";
+
+  public static final String REPLAY_STOP_WATCHING_URL = "/replay/stopWatching";
+
+  public static final String REPLAY_NEXT_TURN_URL = "/replay/nextTurn";
+
+  public static final String REPLAY_PREVIOUS_TURN_URL = "/replay/previousTurn";
+
+  public static final String REPLAY_URL = "/replay";
 
   /**
    * The URL pattern to
@@ -189,10 +218,25 @@ public class WebServer {
     //change on the board to both players
     post(SUBMIT_TURN_URL, new PostSubmitTurnRoute(gameCenter, gson));
 
+    post(CHECK_TURN_URL, new PostCheckTurnRoute(gameCenter, gson, playerLobby));
 
-    post("/checkTurn", new PostCheckTurnRoute(gameCenter, gson, playerLobby));
+    post(SIGN_OUT_URL, new PostSignOutRoute(playerLobby, gameCenter));
 
-    post("/signout", new PostSignOutRoute(playerLobby, gameCenter));
+    get(SPECTATOR_GAME_URL, new GetSpectatorGameRoute());
+
+    get(SPECTATOR_STOP_WATCHING_URL, new GetSpectatorStopWatchingRoute());
+
+    post(SPECTATOR_CHECK_TURN_URL, new PostSpectatorCheckTurnRoute());
+
+    get(REPLAY_URL, new GetReplayRoute(playerLobby, gameCenter, templateEngine));
+
+    get(REPLAY_GAME_URL, new GetReplayGameRoute(playerLobby, gameCenter, templateEngine, gson));
+
+    get(REPLAY_STOP_WATCHING_URL, new GetReplayStopWatchingRoute(playerLobby, gameCenter, templateEngine, gson));
+
+    post(REPLAY_NEXT_TURN_URL, new PostReplayNextTurnRoute(playerLobby,gameCenter,templateEngine,gson));
+
+    post(REPLAY_PREVIOUS_TURN_URL, new PostReplayPreviousTurnRoute(playerLobby,gameCenter,templateEngine,gson));
 
     //
     LOG.config("WebServer is initialized.");

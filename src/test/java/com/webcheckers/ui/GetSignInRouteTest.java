@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.ui.Home.GetSignInRoute;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -38,7 +39,7 @@ public class GetSignInRouteTest {
 
     @Test
     public void testLoadingSigninPage(){
-        final TemplateEngineTest testHelper = new TemplateEngineTest();
+        final TemplateEngineTester testHelper = new TemplateEngineTester();
         when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
 
         // Invoke the test

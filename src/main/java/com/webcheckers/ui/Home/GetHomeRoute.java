@@ -1,4 +1,4 @@
-package com.webcheckers.ui;
+package com.webcheckers.ui.Home;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -7,6 +7,8 @@ import java.util.logging.Logger;
 
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
+import com.webcheckers.ui.PlayGame.GetGameRoute;
+import com.webcheckers.ui.WebServer;
 import spark.*;
 
 import com.webcheckers.util.Message;
@@ -23,7 +25,8 @@ public class GetHomeRoute implements Route {
 
   public static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
   public static final String CURRENT_USER_ATTR = "currentUser";
-  private static final String VIEW_NAME = "home.ftl";
+  public static final String VIEW_NAME = "home.ftl";
+  public static final String ERROR_MSG = "homeErrorMessage";
 
   private final PlayerLobby playerLobby;
   private final TemplateEngine templateEngine;
@@ -62,8 +65,15 @@ public class GetHomeRoute implements Route {
 
     vm.put("title", "Welcome!");
 
-    // display a user message in the Home page
-    vm.put("message", WELCOME_MSG);
+    // Displays an error message to the user, if any.
+    if(httpSession.attribute(ERROR_MSG) != null && httpSession.attribute(ERROR_MSG) instanceof Message) {
+        // Show the error message
+        vm.put("message", (Message) httpSession.attribute(ERROR_MSG));
+        // Remove the error message
+        httpSession.removeAttribute(ERROR_MSG);
+    } else {
+        vm.put("message", WELCOME_MSG);
+    }
 
     if(httpSession.attribute(CURRENT_USER_ATTR) != null) {
         Player currentUser = httpSession.attribute(CURRENT_USER_ATTR);

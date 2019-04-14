@@ -3,6 +3,9 @@ package com.webcheckers.ui;
 import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Player;
+import com.webcheckers.ui.Home.GetHomeRoute;
+import com.webcheckers.ui.PlayGame.GetGameRoute;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -24,7 +27,7 @@ public class GetGameRouteTest {
     // mock objects
     private Request request;
     private Session session;
-    private PlayerLobby lobby;
+    private PlayerLobby playerLobby;
     private TemplateEngine engine;
     private Response response;
     private GameCenter gameCenter;
@@ -36,15 +39,17 @@ public class GetGameRouteTest {
     @BeforeEach
     public void setup() {
         request = mock(Request.class);
+        response = mock(Response.class);
         session = mock(Session.class);
         when(request.session()).thenReturn(session);
-        response = mock(Response.class);
-        engine = mock(TemplateEngine.class);
-        lobby = mock(PlayerLobby.class);
+        //playerLobby = new PlayerLobby();
+        //gameCenter = new GameCenter();
+        playerLobby = mock(PlayerLobby.class);
         gameCenter = mock(GameCenter.class);
-        gson = mock(Gson.class);
+        engine = mock(TemplateEngine.class);
+//        gson = mock(Gson.class);
 
-        CuT = new GetGameRoute(lobby, gameCenter, engine, gson);
+        this.CuT = new GetGameRoute(playerLobby, gameCenter, engine, gson);
     }
 
     /**
@@ -55,20 +60,23 @@ public class GetGameRouteTest {
      *      View_Name: "game.ftl" (String)
      *
      */
-//    @Test
-//    public void testLoadingGamePage(){
-//        final TemplateEngineTest testHelper = new TemplateEngineTest();
-//        when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
-//
-//        // Invoke the test
-//        CuT.handle(request, response);
-//
-//        // Analyze the results:
-//        //   * model is a non-null Map
-//        testHelper.assertViewModelExists();
-//        testHelper.assertViewModelIsaMap();
-//
-//        //   * test view name
-//        testHelper.assertViewName(GetGameRoute.VIEW_NAME);
-//    }
+    @Test
+    public void testLoadingGamePage(){
+        final TemplateEngineTester testHelper = new TemplateEngineTester();
+        when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
+
+        when(session.attribute(GetHomeRoute.CURRENT_USER_ATTR)).thenReturn(new Player("currentUser"));
+        when(session.attribute("opponent")).thenReturn(new Player("opponent"));
+
+        // Invoke the test
+        CuT.handle(request, response);
+
+        // Analyze the results:
+        //   * model is a non-null Map
+        testHelper.assertViewModelExists();
+        testHelper.assertViewModelIsaMap();
+
+        //   * test view name
+        testHelper.assertViewName(GetGameRoute.VIEW_NAME);
+    }
 }

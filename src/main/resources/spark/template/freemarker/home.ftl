@@ -24,11 +24,19 @@
         <h2> WebChecker Players: </h2>
         <#list players as player>
             <#if !currentUser.equals(player)>
-                <h3>
-                    <form method="GET">
-                          <a href = "./game?opponent=${player.name}"> ${player.name}'s Game </a>
-                    </form>
-                </h3>
+                <form action="./game" method="GET">
+                    <h3> ${player.name}'s Game </t>
+
+                    <#if !player.isPlaying()>
+                        <input type="hidden" name="opponent" value="${player.name}">
+                        <button type="submit">Play Game</button>
+                    <#else>
+                        <input type="hidden" name="opponent" value="${player.name}">
+                        <button type="submit">Spectate Game</button>
+                    </#if>
+
+                    </h3>
+                </form>
             </#if>
         </#list>
     <#else>

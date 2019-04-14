@@ -1,8 +1,10 @@
-package com.webcheckers.ui;
+package com.webcheckers.ui.Home;
 
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
+import com.webcheckers.ui.PlayGame.GetGameRoute;
+import com.webcheckers.ui.WebServer;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -43,7 +45,7 @@ public class PostSignOutRoute implements Route {
     public Object handle(Request request, Response response) {
         Session currentSession = request.session();
         Player currentPlayer = currentSession.attribute(GetHomeRoute.CURRENT_USER_ATTR);
-        if (gameCenter.hasGame(currentPlayer)){
+        if (gameCenter.isInAnyGame(currentPlayer)){
             String gameId = currentSession.attribute(GetGameRoute.GAME_ID_ATTR);
             gameCenter.getGame(gameId).playerResigned(currentPlayer);
             currentPlayer.leaveGame();
