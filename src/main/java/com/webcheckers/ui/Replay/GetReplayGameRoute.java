@@ -25,14 +25,12 @@ public class GetReplayGameRoute implements Route {
     public static final String GAME_ID_ATTR = "gameId";
     private static final String OPPONENT_NAME = "opponent";
 
-    private final PlayerLobby playerLobby;
     private final GameCenter gameCenter;
     private final TemplateEngine templateEngine;
     private final Gson gson;
 
-    public GetReplayGameRoute(final PlayerLobby playerLobby, final GameCenter gameCenter, final TemplateEngine templateEngine, final Gson gson) {
+    public GetReplayGameRoute(final GameCenter gameCenter, final TemplateEngine templateEngine, final Gson gson) {
         this.gameCenter = Objects.requireNonNull(gameCenter, "gameCenter is required");
-        this.playerLobby = Objects.requireNonNull(playerLobby, "playerLobby is required");
         this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
         this.gson = gson;
     }
@@ -45,9 +43,6 @@ public class GetReplayGameRoute implements Route {
         Session currentSession = request.session();
         Player currentUser = currentSession.attribute(GetHomeRoute.CURRENT_USER_ATTR);
 
-//        String gameId = currentSession.attribute(GAME_ID_ATTR);
-//        currentSession.attribute("gameId", gameId);
-        //Game currentGame = gameCenter.getGame(gameId);
         String gameID = request.queryParams("gameID");
         ReplayGame replayGame = gameCenter.getReplayGame(gameID);
 
@@ -81,9 +76,6 @@ public class GetReplayGameRoute implements Route {
         vm.put("redPlayer", replayGame.getRedPlayer());
         vm.put("whitePlayer", replayGame.getWhitePlayer());
         vm.put("activeColor", replayGame.getActiveColor());
-
-//        boolean isRed = currentGame.getPlayerColor(currentUser) == Player.PlayerColor.RED;
-//        BoardView boardView = new BoardView(currentGame.getCheckerBoard(), isRed);
 
         vm.put("board", new BoardView(replayGame.getCurrentTurn(), true));
         vm.put(GetHomeRoute.CURRENT_USER_ATTR, currentUser);

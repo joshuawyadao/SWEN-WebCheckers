@@ -20,36 +20,24 @@ public class PostReplayNextTurnRoute implements Route {
 
     private static final Logger LOG = Logger.getLogger(PostReplayNextTurnRoute.class.getName());
 
-    private final PlayerLobby playerLobby;
     private final GameCenter gameCenter;
-    private final TemplateEngine templateEngine;
     private final Gson gson;
 
-    public PostReplayNextTurnRoute(final PlayerLobby playerLobby, final GameCenter gameCenter, final TemplateEngine templateEngine, final Gson gson) {
+    public PostReplayNextTurnRoute(final GameCenter gameCenter, final Gson gson) {
         this.gameCenter = Objects.requireNonNull(gameCenter, "gameCenter is required");
-        this.playerLobby = Objects.requireNonNull(playerLobby, "playerLobby is required");
-        this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
         this.gson = gson;
     }
 
     @Override
     public Object handle(Request request, Response response) {
         LOG.finer("PostReplayNextTurnRoute is invoked.");
-//        Map<String, Object> vm = new HashMap<>();
-//        Session currentSession = request.session();
-
-//        Player currentUser = currentSession.attribute(GetHomeRoute.CURRENT_USER_ATTR);
-//        String gameId = currentSession.attribute(GetReplayGameRoute.GAME_ID_ATTR);
-
-        //TODO: MOVE THE GAME TO THE NEXT STATE
 
         String gameID = request.queryParams("gameID");
         ReplayGame replayGame = this.gameCenter.getReplayGame(gameID);
         Board nextTurn = replayGame.getNextTurn();
 
-        // If clicking next button was succesful
+        // If clicking next button was successful
         Message successInfo;
-
         if( nextTurn != null ){
             successInfo = Message.info("true");
         }else{

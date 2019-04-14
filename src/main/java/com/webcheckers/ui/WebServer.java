@@ -228,15 +228,15 @@ public class WebServer {
 
     post(SPECTATOR_CHECK_TURN_URL, new PostSpectatorCheckTurnRoute());
 
-    get(REPLAY_URL, new GetReplayRoute(playerLobby, gameCenter, templateEngine));
+    get(REPLAY_URL, new GetReplayRoute(gameCenter, templateEngine));
 
-    get(REPLAY_GAME_URL, new GetReplayGameRoute(playerLobby, gameCenter, templateEngine, gson));
+    get(REPLAY_GAME_URL, new GetReplayGameRoute(gameCenter, templateEngine, gson));
 
     get(REPLAY_STOP_WATCHING_URL, new GetReplayStopWatchingRoute(playerLobby, gameCenter, templateEngine, gson));
 
-    post(REPLAY_NEXT_TURN_URL, new PostReplayNextTurnRoute(playerLobby,gameCenter,templateEngine,gson));
+    post(REPLAY_NEXT_TURN_URL, new PostReplayNextTurnRoute(gameCenter,gson));
 
-    post(REPLAY_PREVIOUS_TURN_URL, new PostReplayPreviousTurnRoute(playerLobby,gameCenter,templateEngine,gson));
+    post(REPLAY_PREVIOUS_TURN_URL, new PostReplayPreviousTurnRoute(gameCenter,gson));
 
     //
     LOG.config("WebServer is initialized.");
