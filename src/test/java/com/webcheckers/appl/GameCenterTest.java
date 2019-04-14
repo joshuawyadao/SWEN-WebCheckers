@@ -84,7 +84,7 @@ class GameCenterTest {
 
         Move move = new Move( new Position(2,1), new Position(3,2) );
 
-        assertTrue(CuT.requestMove(cutGame, player1, move));
+        assertTrue(CuT.requestMove(cutGame, move));
     }
 
     @Test
