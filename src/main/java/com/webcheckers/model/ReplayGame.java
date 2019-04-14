@@ -5,7 +5,8 @@ import java.util.Objects;
 
 public class ReplayGame {
 
-    private Player redPlayer, whitePlayer, activePlayer;
+    private Player redPlayer, whitePlayer;
+    private Player.PlayerColor activeColor;
     private int currentTurn;
     private final ArrayList<Board> previousTurns;
     private String gameEndTime;
@@ -14,7 +15,7 @@ public class ReplayGame {
     public ReplayGame(Player redPlayer, Player whitePlayer, ArrayList<Board> previousTurns, String gameEndTime, String gameId){
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
-        this.activePlayer = redPlayer;
+        this.activeColor = Player.PlayerColor.RED;
         this.gameEndTime = gameEndTime;
         this.gameId = gameId;
         this.currentTurn = 0;
@@ -26,8 +27,8 @@ public class ReplayGame {
         return gameEndTime;
     }
 
-    public Player getActivePlayer() {
-        return activePlayer;
+    public Player.PlayerColor getActiveColor() {
+        return activeColor;
     }
 
     public Player getRedPlayer() {
@@ -46,9 +47,9 @@ public class ReplayGame {
         currentTurn--;
 
         if(currentTurn % 2 == 0)
-            activePlayer = redPlayer;
+            activeColor = Player.PlayerColor.RED;
         else
-            activePlayer = whitePlayer;
+            activeColor = Player.PlayerColor.WHITE;
 
         return previousTurns.get(currentTurn);
     }
@@ -61,9 +62,9 @@ public class ReplayGame {
         currentTurn++;
 
         if(currentTurn % 2 == 0)
-            activePlayer = redPlayer;
+            activeColor = Player.PlayerColor.RED;
         else
-            activePlayer = whitePlayer;
+            activeColor = Player.PlayerColor.WHITE;
 
         return previousTurns.get(currentTurn);
     }

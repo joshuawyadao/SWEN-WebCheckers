@@ -80,7 +80,7 @@ public class GetReplayGameRoute implements Route {
         vm.put("viewMode", GameCenter.ViewMode.REPLAY);// MUST BE REPLAY
         vm.put("redPlayer", replayGame.getRedPlayer());
         vm.put("whitePlayer", replayGame.getWhitePlayer());
-        vm.put("activeColor", replayGame.getActivePlayer().getPlayerColor());
+        vm.put("activeColor", replayGame.getActiveColor());
 
 //        boolean isRed = currentGame.getPlayerColor(currentUser) == Player.PlayerColor.RED;
 //        BoardView boardView = new BoardView(currentGame.getCheckerBoard(), isRed);

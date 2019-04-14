@@ -15,7 +15,7 @@ import static spark.Spark.halt;
 
 public class PostCheckTurnRoute implements Route {
 
-    private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
+    private static final Logger LOG = Logger.getLogger(PostCheckTurnRoute.class.getName());
 
     private final PlayerLobby playerLobby;
     private final GameCenter gameCenter;

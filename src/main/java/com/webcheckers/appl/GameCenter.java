@@ -148,7 +148,7 @@ public class GameCenter {
     }
 
     public boolean addToPreviousGames(Game game, String gameId){
-        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy 'at' HH:mm:ss");
         Date date = new Date();
         String gameEndTime = dateFormat.format(date);
 

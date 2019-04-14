@@ -53,13 +53,11 @@ public class GetReplayStopWatchingRoute implements Route {
      */
     @Override
     public Object handle(Request request, Response response) {
-        final Map<String, Object> vm = new HashMap<>();
-        final Map<String, Object> modeOptions = new HashMap<>(2);
-        Session currentSession = request.session();
-        Player currentUser = currentSession.attribute(GetHomeRoute.CURRENT_USER_ATTR);
-
-
-        response.redirect(WebServer.HOME_URL);
+        //final Map<String, Object> vm = new HashMap<>();
+        //final Map<String, Object> modeOptions = new HashMap<>(2);
+        //Session currentSession = request.session();
+        //Player currentUser = currentSession.attribute(GetHomeRoute.CURRENT_USER_ATTR);
+        response.redirect(WebServer.REPLAY_URL);
         halt();
         return null;
     }
