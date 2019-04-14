@@ -64,8 +64,17 @@ public class GameCenter {
         return currentGames.get(gameId);
     }
 
+    /**
+     * Gets a finished game from the list of finished games
+     * @param gameId the gameID to get the game
+     * @return the requested finished game
+     */
     public ReplayGame getReplayGame(String gameId) { return previousGames.get(gameId); }
 
+    /**
+     * Removes a game from the list of currently playing games
+     * @param gameId a unique identifier to determine what game is to be removed
+     */
     public void removeGame(String gameId) {
         currentGames.remove(gameId);
     }
@@ -80,6 +89,10 @@ public class GameCenter {
         return redPlayer.getName() + "Vs" + whitePlayer.getName();
     }
 
+    /**
+     * Creates a fresh, new game ID
+     * @return the new game ID
+     */
     private String createFinishedGameId(){
         return "Game #" + gamesCompleted;
     }
@@ -197,6 +210,10 @@ public class GameCenter {
         return previousGames.size() > 0;
     }
 
+    /**
+     * Gets the list of current games
+     * @return the current games
+     */
     public Collection<Game> getCurrentGames(){
         return currentGames.values();
     }
