@@ -9,22 +9,23 @@ import java.util.Stack;
 public class Game {
     private Player redPlayer, whitePlayer, activePlayer, resignedPlayer;
     private Board checkerBoard;
-    private Map<String, Object> modeOptionsAsJSON;
     private Stack<Board> previousMoves;
     private boolean validTurn;
     private ArrayList<Board> previousTurns;
+    private String gameId;
 
     /**
      * Creates a new game instance
      * @param redPlayer the red player
      * @param whitePlayer the white player
      */
-    public Game(Player redPlayer, Player whitePlayer){
+    public Game(Player redPlayer, Player whitePlayer, String gameId){
         this.redPlayer = redPlayer;
         this.activePlayer = redPlayer;
         this.whitePlayer = whitePlayer;
         this.checkerBoard = new Board();
         this.previousMoves = new Stack<>();
+        this.gameId = gameId;
         previousMoves.push(checkerBoard);
         this.resignedPlayer = null;
         this.validTurn = false;
@@ -62,6 +63,10 @@ public class Game {
         return activePlayer;
     }
 
+    public String getGameId(){
+        return gameId;
+    }
+
     public boolean isInGame(Player player) {
         return this.whitePlayer == player || this.redPlayer == player;
     }
@@ -95,11 +100,10 @@ public class Game {
 
     /**
      *
-     * @param player
      * @param move
      * @return
      */
-    public boolean makeMove( Player player, Move move ) {
+    public boolean makeMove( Move move ) {
         Board turn = new Board();
         //CHANGED: 'getRecentedTurn()' to 'this.checkerboard' so that multiple single moves
         //are not longer allowed
@@ -110,6 +114,7 @@ public class Game {
         if( moveType == Move.TYPE_OF_MOVE.ERROR ) {
             return false;
         }
+
 
         switch ( moveType ) {
             case SIMPLE:
@@ -240,7 +245,10 @@ public class Game {
      * @return if the turn was successfully backed-up
      */
     public boolean backup(){
-        return this.previousMoves.pop() != null;
+        Board previousMove = this.previousMoves.pop();
+        this.validTurn = validateTurn();
+
+        return previousMove != null;
     }
 
     /**

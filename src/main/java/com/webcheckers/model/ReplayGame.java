@@ -29,7 +29,7 @@ public class ReplayGame {
         this.gameId = gameId;
         this.currentTurn = 0;
 
-        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy 'at' HH:mm a");
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy 'at' hh:mm a");
         Date date = new Date();
         this.gameEndTime = dateFormat.format(date);
 

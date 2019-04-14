@@ -194,7 +194,7 @@ public class WebServer {
     //// code clean; using small classes.
 
     // Shows the Checkers game Home page.
-    get(HOME_URL, new GetHomeRoute(playerLobby, templateEngine));
+    get(HOME_URL, new GetHomeRoute(playerLobby, gameCenter, templateEngine));
 
     //Shows the Checkers game Sign-In page.
     get(SIGNIN_URL, new GetSignInRoute(templateEngine));
@@ -222,7 +222,7 @@ public class WebServer {
 
     post(SIGN_OUT_URL, new PostSignOutRoute(playerLobby, gameCenter));
 
-    get(SPECTATOR_GAME_URL, new GetSpectatorGameRoute());
+    get(SPECTATOR_GAME_URL, new GetSpectatorGameRoute(templateEngine, gameCenter, playerLobby, gson));
 
     get(SPECTATOR_STOP_WATCHING_URL, new GetSpectatorStopWatchingRoute());
 

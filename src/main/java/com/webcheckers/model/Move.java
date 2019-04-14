@@ -33,30 +33,37 @@ public class Move {
      * @return
      */
     public TYPE_OF_MOVE typeOfMove( Piece piece ) {
-        int difference = this.end.getRow() - this.start.getRow();
+        int rowDifference = this.end.getRow() - this.start.getRow();
+        int colDifference = this.end.getCell() - this.start.getCell();
         TYPE_OF_MOVE moveType;
         MOVE_COLOR moveColor;
 
-        switch (difference) {
-            case 1:
-                moveType = TYPE_OF_MOVE.SIMPLE;
-                moveColor = MOVE_COLOR.RED;
-                break;
-            case 2:
-                moveType = TYPE_OF_MOVE.JUMP;
-                moveColor = MOVE_COLOR.RED;
-                break;
-            case -1:
-                moveType = TYPE_OF_MOVE.SIMPLE;
-                moveColor = MOVE_COLOR.WHITE;
-                break;
-            case -2:
-                moveType = TYPE_OF_MOVE.JUMP;
-                moveColor = MOVE_COLOR.WHITE;
-                break;
-            default:
-                moveType = TYPE_OF_MOVE.ERROR;
-                moveColor = MOVE_COLOR.EMPTY;
+        boolean difference = Math.abs(rowDifference) == Math.abs(colDifference);
+
+        if(difference) {
+            switch (rowDifference) {
+                case 1:
+                    moveType = TYPE_OF_MOVE.SIMPLE;
+                    moveColor = MOVE_COLOR.RED;
+                    break;
+                case 2:
+                    moveType = TYPE_OF_MOVE.JUMP;
+                    moveColor = MOVE_COLOR.RED;
+                    break;
+                case -1:
+                    moveType = TYPE_OF_MOVE.SIMPLE;
+                    moveColor = MOVE_COLOR.WHITE;
+                    break;
+                case -2:
+                    moveType = TYPE_OF_MOVE.JUMP;
+                    moveColor = MOVE_COLOR.WHITE;
+                    break;
+                default:
+                    moveType = TYPE_OF_MOVE.ERROR;
+                    moveColor = MOVE_COLOR.EMPTY;
+            }
+        } else {
+            return TYPE_OF_MOVE.ERROR;
         }
 
         if( piece.getType() == Piece.TYPE.SINGLE ) { // if a single piece is moving the correct direction
