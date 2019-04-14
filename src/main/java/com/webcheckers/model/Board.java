@@ -107,6 +107,11 @@ public class Board {
         return board[rowNum];
     }
 
+    /**
+     * Equals method for Board
+     * @param other the supposedly other board
+     * @return true if 2 boards are of the same object, false if they are not
+     */
     public boolean equals(Board other) {
         for( int row = 0; row < BOARD_SIDE; row++ ) {
             for( int col = 0; col < BOARD_SIDE; col ++ ) {
