@@ -1,6 +1,9 @@
 package com.webcheckers.model;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Objects;
 
 public class ReplayGame {
@@ -12,13 +15,16 @@ public class ReplayGame {
     private String gameEndTime;
     private String gameId;
 
-    public ReplayGame(Player redPlayer, Player whitePlayer, ArrayList<Board> previousTurns, String gameEndTime, String gameId){
+    public ReplayGame(Player redPlayer, Player whitePlayer, ArrayList<Board> previousTurns, String gameId){
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
         this.activeColor = Player.PlayerColor.RED;
-        this.gameEndTime = gameEndTime;
         this.gameId = gameId;
         this.currentTurn = 0;
+
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy 'at' HH:mm a");
+        Date date = new Date();
+        this.gameEndTime = dateFormat.format(date);
 
         this.previousTurns = Objects.requireNonNull(previousTurns, "previousTurns is required");
     }

@@ -35,15 +35,16 @@ public class PostReplayNextTurnRoute implements Route {
     @Override
     public Object handle(Request request, Response response) {
         LOG.finer("PostReplayNextTurnRoute is invoked.");
-        Map<String, Object> vm = new HashMap<>();
-        Session currentSession = request.session();
+//        Map<String, Object> vm = new HashMap<>();
+//        Session currentSession = request.session();
 
-        Player currentUser = currentSession.attribute(GetHomeRoute.CURRENT_USER_ATTR);
-        String gameId = currentSession.attribute(GetReplayGameRoute.GAME_ID_ATTR);
+//        Player currentUser = currentSession.attribute(GetHomeRoute.CURRENT_USER_ATTR);
+//        String gameId = currentSession.attribute(GetReplayGameRoute.GAME_ID_ATTR);
 
         //TODO: MOVE THE GAME TO THE NEXT STATE
 
-        ReplayGame replayGame = this.gameCenter.getReplayGame(gameId);
+        String gameID = request.queryParams("gameID");
+        ReplayGame replayGame = this.gameCenter.getReplayGame(gameID);
         Board nextTurn = replayGame.getNextTurn();
 
         // If clicking next button was succesful

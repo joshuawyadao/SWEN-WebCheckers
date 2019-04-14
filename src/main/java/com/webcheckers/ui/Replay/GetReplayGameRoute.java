@@ -46,10 +46,10 @@ public class GetReplayGameRoute implements Route {
         Player currentUser = currentSession.attribute(GetHomeRoute.CURRENT_USER_ATTR);
 
 //        String gameId = currentSession.attribute(GAME_ID_ATTR);
-        String gameId = request.queryParams("gameId");
-        currentSession.attribute("gameId", gameId);
+//        currentSession.attribute("gameId", gameId);
         //Game currentGame = gameCenter.getGame(gameId);
-        ReplayGame replayGame = gameCenter.getReplayGame(gameId);
+        String gameID = request.queryParams("gameID");
+        ReplayGame replayGame = gameCenter.getReplayGame(gameID);
 
         // Upon entering the replayed game in question,
         // this route will go through the following routes
@@ -87,7 +87,7 @@ public class GetReplayGameRoute implements Route {
 
         vm.put("board", new BoardView(replayGame.getCurrentTurn(), true));
         vm.put(GetHomeRoute.CURRENT_USER_ATTR, currentUser);
-        vm.put("title", "Enjoy the replay!");
+        vm.put("title", "Enjoy the Replay!");
 
         // render the View
         return templateEngine.render(new ModelAndView(vm , VIEW_NAME));

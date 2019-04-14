@@ -148,15 +148,12 @@ public class GameCenter {
     }
 
     public boolean addToPreviousGames(Game game, String gameId){
-        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy 'at' HH:mm:ss");
-        Date date = new Date();
-        String gameEndTime = dateFormat.format(date);
-
         gamesCompleted++;
 
         String previousGameId = createFinishedGameId();
         ReplayGame previousGame = new ReplayGame(game.getRedPlayer(), game.getWhitePlayer(),
-                                                 game.getPreviousTurns(), gameEndTime, previousGameId);
+                                                 game.getPreviousTurns(), previousGameId);
+
         previousGames.put(previousGameId, previousGame);
 
         if(currentGames.containsKey(gameId))

@@ -29,7 +29,7 @@
                     <h3> Game: ${game.getRedPlayer().name} Vs. ${game.getWhitePlayer().name} </br>
                          Time Ended: ${game.getGameEndTime()} </br>
 
-                    <input type="hidden" name="gameId" value="${game.getGameId()}">
+                    <input type="hidden" name="gameID" value="${game.getGameId()}">
                     <button type="submit">View Game Replay</button>
 
                     </h3>
