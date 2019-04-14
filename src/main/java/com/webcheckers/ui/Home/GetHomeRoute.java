@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
 import com.webcheckers.ui.PlayGame.GetGameRoute;
@@ -29,6 +30,7 @@ public class GetHomeRoute implements Route {
   public static final String ERROR_MSG = "homeErrorMessage";
 
   private final PlayerLobby playerLobby;
+  private final GameCenter gameCenter;
   private final TemplateEngine templateEngine;
 
   /**
@@ -37,8 +39,9 @@ public class GetHomeRoute implements Route {
    * @param templateEngine
    *   the HTML template rendering engine
    */
-  public GetHomeRoute(final PlayerLobby playerLobby, final TemplateEngine templateEngine) {
+  public GetHomeRoute(final PlayerLobby playerLobby, final GameCenter gameCenter, final TemplateEngine templateEngine) {
     this.playerLobby = Objects.requireNonNull(playerLobby, "playerLobby is required");
+    this.gameCenter = Objects.requireNonNull(gameCenter, "gameCenter is required");
     this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
     //
     LOG.config("GetHomeRoute is initialized.");
@@ -79,6 +82,7 @@ public class GetHomeRoute implements Route {
         Player currentUser = httpSession.attribute(CURRENT_USER_ATTR);
         vm.put(CURRENT_USER_ATTR, currentUser);
         vm.put("players", playerLobby.getPlayers());
+        vm.put("currentGames", gameCenter.getCurrentGames());
 
         //if the player has been challenged to a game redirect them to the
         //GET Game Route, with the appropriate 'opponent' parameter

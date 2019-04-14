@@ -9,22 +9,23 @@ import java.util.Stack;
 public class Game {
     private Player redPlayer, whitePlayer, activePlayer, resignedPlayer;
     private Board checkerBoard;
-    private Map<String, Object> modeOptionsAsJSON;
     private Stack<Board> previousMoves;
     private boolean validTurn;
     private ArrayList<Board> previousTurns;
+    private String gameId;
 
     /**
      * Creates a new game instance
      * @param redPlayer the red player
      * @param whitePlayer the white player
      */
-    public Game(Player redPlayer, Player whitePlayer){
+    public Game(Player redPlayer, Player whitePlayer, String gameId){
         this.redPlayer = redPlayer;
         this.activePlayer = redPlayer;
         this.whitePlayer = whitePlayer;
         this.checkerBoard = new Board();
         this.previousMoves = new Stack<>();
+        this.gameId = gameId;
         previousMoves.push(checkerBoard);
         this.resignedPlayer = null;
         this.validTurn = false;
@@ -60,6 +61,10 @@ public class Game {
 
     public Player getActivePlayer() {
         return activePlayer;
+    }
+
+    public String getGameId(){
+        return gameId;
     }
 
     public boolean isInGame(Player player) {

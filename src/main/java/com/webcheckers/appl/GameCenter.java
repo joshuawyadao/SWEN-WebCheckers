@@ -46,7 +46,7 @@ public class GameCenter {
      */
     public String newGame(Player redPlayer, Player whitePlayer){
         String gameId = createGameId(redPlayer, whitePlayer);
-        Game newGame = new Game(redPlayer, whitePlayer);
+        Game newGame = new Game(redPlayer, whitePlayer, gameId);
         newGame.initializeGame();
 
         currentGames.put(gameId, newGame);
@@ -175,5 +175,9 @@ public class GameCenter {
 
     public boolean hasPreviousGames(){
         return previousGames.size() > 0;
+    }
+
+    public Collection<Game> getCurrentGames(){
+        return currentGames.values();
     }
 }
