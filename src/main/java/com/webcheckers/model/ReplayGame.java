@@ -121,7 +121,7 @@ public class ReplayGame {
      * @return true if the list has a previous move, false if the list has no moves (i.e. the start of the game state)
      */
     public boolean hasPrevious(){
-        return currentTurn != 0;
+        return currentTurn > 0;
     }
 
     /**
