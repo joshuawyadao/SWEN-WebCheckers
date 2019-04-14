@@ -55,6 +55,7 @@ public class GetSpectatorGameRoute implements Route {
         vm.put("board", new BoardView(gameToSpec.getCheckerBoard(),
                 gameToSpec.getActivePlayer() == gameToSpec.getRedPlayer()));
 
+        vm.put("title", "Enjoy watching your game!");
         return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
     }
 }
