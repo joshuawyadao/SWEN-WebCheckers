@@ -86,13 +86,12 @@ public class GameCenter {
     /**
      * Moves a piece of a game
      * @param gameId the gameID of the game
-     * @param currentPlayer the current player
      * @param move how is the piece going to be moved
      * @return true if the movement is successful, false if not
      */
-    public boolean requestMove(String gameId, Player currentPlayer, Move move){
+    public boolean requestMove(String gameId, Move move){
         Game game = currentGames.get(gameId);
-        return game.makeMove(currentPlayer, move);
+        return game.makeMove(move);
     }
 
     /**
