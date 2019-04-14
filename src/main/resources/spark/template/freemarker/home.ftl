@@ -30,7 +30,7 @@
                             <input type="hidden" name="opponent" value="${player.name}">
                             <button type="submit">Play Game</button>
                             </h3>
-                        <#/if>
+                        </#if>
                     </form>
                 </#if>
             </#list>
