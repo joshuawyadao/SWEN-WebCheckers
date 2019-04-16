@@ -71,7 +71,7 @@ public class Game {
     }
 
     public boolean isInGame(Player player) {
-        return this.whitePlayer == player || this.redPlayer == player;
+        return ((this.whitePlayer.equals(player)) || (this.redPlayer.equals(player)));
     }
 
     /**

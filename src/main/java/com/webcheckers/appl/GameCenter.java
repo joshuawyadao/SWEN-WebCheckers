@@ -211,4 +211,14 @@ public class GameCenter {
 
         return game.removeSpectator(spectator);
     }
+
+    public String getPlayerGameId(Player player) {
+        for( Game game : currentGames.values() ) {
+            if( game.isInGame(player)) {
+                return game.getGameId();
+            }
+        }
+
+        return null;
+    }
 }
