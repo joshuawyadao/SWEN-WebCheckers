@@ -24,10 +24,12 @@
   <form action="./signin" method="POST">
           Please Enter Your Name:
           <br/>
-          <input name="myUsername"/>
+          <input name="myUsername" placeholder="Your Name"/>
           <br/><br/>
           <button type="submit">Sign In</button>
   </form>
+
+  <meta http-equiv="refresh" content="60">
 
   </div>
 

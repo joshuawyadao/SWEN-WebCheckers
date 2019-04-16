@@ -81,7 +81,9 @@ public class GetHomeRoute implements Route {
     if(httpSession.attribute(CURRENT_USER_ATTR) != null) {
         Player currentUser = httpSession.attribute(CURRENT_USER_ATTR);
         vm.put(CURRENT_USER_ATTR, currentUser);
+        vm.put("hasPlayers", playerLobby.hasPlayers());
         vm.put("players", playerLobby.getPlayers());
+        vm.put("hasCurrentGames", gameCenter.hasCurrentGames());
         vm.put("currentGames", gameCenter.getCurrentGames());
 
         //if the player has been challenged to a game redirect them to the

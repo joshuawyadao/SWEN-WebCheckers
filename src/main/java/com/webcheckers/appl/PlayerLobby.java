@@ -101,4 +101,6 @@ public class PlayerLobby {
         players.remove(player);
     }
 
+    public boolean hasPlayers(){return !players.isEmpty();}
+
 }

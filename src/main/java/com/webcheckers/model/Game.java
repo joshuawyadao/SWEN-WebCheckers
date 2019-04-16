@@ -3,6 +3,7 @@ package com.webcheckers.model;
 import com.webcheckers.appl.GameCenter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
@@ -13,6 +14,7 @@ public class Game {
     private boolean validTurn;
     private ArrayList<Board> previousTurns;
     private String gameId;
+    private HashMap<Player, Board> spectators;
 
     /**
      * Creates a new game instance
@@ -31,6 +33,7 @@ public class Game {
         this.validTurn = false;
         this.previousTurns = new ArrayList<>();
         previousTurns.add(checkerBoard);
+        this.spectators = new HashMap<>();
     }
 
     //Accessors
@@ -249,6 +252,28 @@ public class Game {
         this.validTurn = validateTurn();
 
         return previousMove != null;
+    }
+
+    public boolean updateSpectator(Player spectator){
+        this.spectators.put(spectator, this.checkerBoard);
+
+        return true;
+    }
+
+    public Board getSpectatorBoard(Player spectator){
+        return this.spectators.get(spectator);
+    }
+
+    public boolean isSpectatorUpdated(Player spectator){
+        Board spectatorBoard = this.spectators.get(spectator);
+
+        return spectatorBoard.equals(this.checkerBoard);
+    }
+
+    public boolean removeSpectator(Player spectator){
+        this.spectators.remove(spectator);
+
+        return true;
     }
 
     /**

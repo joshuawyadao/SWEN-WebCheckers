@@ -224,9 +224,9 @@ public class WebServer {
 
     get(SPECTATOR_GAME_URL, new GetSpectatorGameRoute(templateEngine, gameCenter, playerLobby, gson));
 
-    get(SPECTATOR_STOP_WATCHING_URL, new GetSpectatorStopWatchingRoute());
+    get(SPECTATOR_STOP_WATCHING_URL, new GetSpectatorStopWatchingRoute(gameCenter));
 
-    post(SPECTATOR_CHECK_TURN_URL, new PostSpectatorCheckTurnRoute());
+    post(SPECTATOR_CHECK_TURN_URL, new PostSpectatorCheckTurnRoute(gameCenter, gson));
 
     get(REPLAY_URL, new GetReplayRoute(gameCenter, templateEngine));
 
