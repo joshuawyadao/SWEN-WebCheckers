@@ -221,4 +221,26 @@ public class GameCenter {
 
         return null;
     }
+
+    public Map<String, Object> endGame(String gameId){
+        Map<String, Object> modeOptions = new HashMap<>(2);
+        Game endedGame = currentGames.get(gameId);
+        Player resignedPlayer = endedGame.getResignedPlayer();
+
+        modeOptions.put("isGameOver", true);
+
+        if(endedGame.isResigned()){
+            modeOptions.put("gameOverMessage", resignedPlayer.getName() + " has resigned.");
+        }
+
+        endedGame.getRedPlayer().leaveGame();
+        endedGame.getWhitePlayer().leaveGame();
+
+        addToPreviousGames(endedGame, gameId);
+        currentGames.remove(gameId);
+
+        return modeOptions;
+    }
+
+
 }

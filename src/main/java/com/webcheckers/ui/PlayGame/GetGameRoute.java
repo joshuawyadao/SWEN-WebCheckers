@@ -58,7 +58,7 @@ public class GetGameRoute implements Route {
     @Override
     public Object handle(Request request, Response response) {
         final Map<String, Object> vm = new HashMap<>();
-        final Map<String, Object> modeOptions = new HashMap<>(2);
+        Map<String, Object> modeOptions = new HashMap<>(2);
         Session currentSession = request.session();
         Player currentUser = currentSession.attribute(GetHomeRoute.CURRENT_USER_ATTR);
 
@@ -69,14 +69,13 @@ public class GetGameRoute implements Route {
 
             // Is the opponent in question already in a game?
             if (gameCenter.hasGame(opponent, currentUser)) {
-
                 currentSession.attribute(GetHomeRoute.ERROR_MSG, Message.error( opponent.getName() + " is already in a game!"));
 
                 response.redirect(WebServer.HOME_URL);
                 halt();
                 return null;
-
             } else {
+                System.out.println("here");
                 String newGameId = gameCenter.newGame(currentUser, opponent);
                 currentSession.attribute(GAME_ID_ATTR, newGameId);
             }
@@ -94,83 +93,96 @@ public class GetGameRoute implements Route {
         BoardView boardView = new BoardView(currentGame.getCheckerBoard(), isRed);
         vm.put("board", boardView);
 
+        vm.put(GetHomeRoute.CURRENT_USER_ATTR, currentUser);
+        vm.put("title", "Enjoy Your Game!");
+
+//        if (currentGame.isResigned()){
+//            Player resignedPlayer = currentGame.getResignedPlayer();
+//
+//            modeOptions.put("isGameOver", true);
+//
+//            if (currentGame.getResignedPlayer().equals(currentUser)){
+//                // display a user message in the Home page
+//                System.out.println("Here");
+//                vm.put("message", GetHomeRoute.WELCOME_MSG);
+//                currentUser.leaveGame();
+//                currentSession.attribute(GetGameRoute.GAME_ID_ATTR, null);
+//
+//                response.redirect(WebServer.HOME_URL);
+//                halt();
+//                return null;
+//            } else {
+//                if (isRed){
+//                    modeOptions.put("gameOverMessage", currentGame.getWhitePlayer().getName() + " has resigned.");
+//                    vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
+//                    currentUser.leaveGame();
+//                    currentSession.attribute(GetGameRoute.GAME_ID_ATTR, null);
+//                    gameCenter.removeGame(gameId);
+//                } else{
+//                    modeOptions.put("gameOverMessage", currentGame.getRedPlayer().getName() + " has resigned.");
+//                    vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
+//                    currentUser.leaveGame();
+//                    currentSession.attribute(GetGameRoute.GAME_ID_ATTR, null);
+//                    gameCenter.removeGame(gameId);
+//                }
+//            }
+//
+//            gameCenter.addToPreviousGames(currentGame, gameId);
+//        }
+
         if (currentGame.isResigned()){
-            modeOptions.put("isGameOver", true);
-
-            if (currentGame.getResignedPlayer().equals(currentUser)){
-                // display a user message in the Home page
-                vm.put("message", GetHomeRoute.WELCOME_MSG);
-                currentUser.leaveGame();
-                currentSession.attribute(GetGameRoute.GAME_ID_ATTR, null);
-                response.redirect(WebServer.HOME_URL);
-                halt();
-                return null;
-            } else {
-                if (isRed){
-                    modeOptions.put("gameOverMessage", currentGame.getWhitePlayer().getName() + " has resigned.");
-                    vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
-                    currentUser.leaveGame();
-                    currentSession.attribute(GetGameRoute.GAME_ID_ATTR, null);
-                    gameCenter.removeGame(gameId);
-                } else{
-                    modeOptions.put("gameOverMessage", currentGame.getRedPlayer().getName() + " has resigned.");
-                    vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
-                    currentUser.leaveGame();
-                    currentSession.attribute(GetGameRoute.GAME_ID_ATTR, null);
-                    gameCenter.removeGame(gameId);
-                }
-            }
-
-            gameCenter.addToPreviousGames(currentGame, gameId);
+            modeOptions = this.gameCenter.endGame(gameId);
+            vm.put("modeOptionsAsJSON", this.gson.toJson(modeOptions));
         }
 
         //boolean testBool = true;
         //line below is conditional to use instead of testBool
         //currentGame.getCheckerBoard().finishedGame()
-        if (currentGame.getCheckerBoard().finishedGame()){
-            Player winner = currentGame.completedGame();
 
-            //Player winner = currentGame.getWhitePlayer();
-            modeOptions.put("isGameOver", true);
-            if (winner == currentGame.getRedPlayer()){
-                if (currentGame.getRedPlayer().equals(currentUser)){
-                    modeOptions.put("gameOverMessage", "You have captured all of "
-                            + currentGame.getWhitePlayer().getName()
-                            + "'s pieces. Congratulations, you win!");
-                    vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
-                    currentGame.getRedPlayer().leaveGame();
-                    currentSession.attribute(GetGameRoute.GAME_ID_ATTR, null);
-                } else{
-                    modeOptions.put("gameOverMessage", currentGame.getRedPlayer().getName()
-                            + " has captured all of your pieces. You lose.");
-                    vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
-                    currentGame.getWhitePlayer().leaveGame();
-                    currentSession.attribute(GetGameRoute.GAME_ID_ATTR, null);
-                    gameCenter.removeGame(gameId);
-                }
-            } else{
-                if (currentGame.getRedPlayer().equals(currentUser)){
-                    modeOptions.put("gameOverMessage", currentGame.getWhitePlayer().getName()
-                            + " has captured all of your pieces. You lose.");
-                    vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
-                    currentGame.getRedPlayer().leaveGame();
-                    currentSession.attribute(GetGameRoute.GAME_ID_ATTR, null);
-                    gameCenter.removeGame(gameId);
-                } else{
-                    modeOptions.put("gameOverMessage", "You have captured all of "
-                            + currentGame.getRedPlayer().getName()
-                            + "'s pieces. Congratulations, you win!");
-                    vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
-                    currentGame.getWhitePlayer().leaveGame();
-                    currentSession.attribute(GetGameRoute.GAME_ID_ATTR, null);
-                }
-            }
 
-            gameCenter.addToPreviousGames(currentGame, gameId);
-        }
+//        if (currentGame.getCheckerBoard().finishedGame()){
+//            Player winner = currentGame.completedGame();
+//
+//            //Player winner = currentGame.getWhitePlayer();
+//            modeOptions.put("isGameOver", true);
+//            if (winner == currentGame.getRedPlayer()){
+//                if (currentGame.getRedPlayer().equals(currentUser)){
+//                    modeOptions.put("gameOverMessage", "You have captured all of "
+//                            + currentGame.getWhitePlayer().getName()
+//                            + "'s pieces. Congratulations, you win!");
+//                    vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
+//                    currentGame.getRedPlayer().leaveGame();
+//                    currentSession.attribute(GetGameRoute.GAME_ID_ATTR, null);
+//                } else{
+//                    modeOptions.put("gameOverMessage", currentGame.getRedPlayer().getName()
+//                            + " has captured all of your pieces. You lose.");
+//                    vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
+//                    currentGame.getWhitePlayer().leaveGame();
+//                    currentSession.attribute(GetGameRoute.GAME_ID_ATTR, null);
+//                    gameCenter.removeGame(gameId);
+//                }
+//            } else{
+//                if (currentGame.getRedPlayer().equals(currentUser)){
+//                    modeOptions.put("gameOverMessage", currentGame.getWhitePlayer().getName()
+//                            + " has captured all of your pieces. You lose.");
+//                    vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
+//                    currentGame.getRedPlayer().leaveGame();
+//                    currentSession.attribute(GetGameRoute.GAME_ID_ATTR, null);
+//                    gameCenter.removeGame(gameId);
+//                } else{
+//                    modeOptions.put("gameOverMessage", "You have captured all of "
+//                            + currentGame.getRedPlayer().getName()
+//                            + "'s pieces. Congratulations, you win!");
+//                    vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
+//                    currentGame.getWhitePlayer().leaveGame();
+//                    currentSession.attribute(GetGameRoute.GAME_ID_ATTR, null);
+//                }
+//            }
+//
+//            gameCenter.addToPreviousGames(currentGame, gameId);
+//        }
 
-        vm.put(GetHomeRoute.CURRENT_USER_ATTR, currentUser);
-        vm.put("title", "Enjoy Your Game!");
+
 
         // render the View
         return templateEngine.render(new ModelAndView(vm , VIEW_NAME));
