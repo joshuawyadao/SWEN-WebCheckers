@@ -104,6 +104,7 @@ public class GetHomeRoute implements Route {
             Game game = gameCenter.getGame(gameId);
 
             if(game.isResigned()){
+                currentUser.leaveGame();
                 httpSession.removeAttribute(GetGameRoute.GAME_ID_ATTR);
             }
         }

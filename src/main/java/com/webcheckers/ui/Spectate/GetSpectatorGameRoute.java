@@ -49,7 +49,6 @@ public class GetSpectatorGameRoute implements Route {
 
         gameToSpec.updateSpectator(currentUser);
 
-
         vm.put(GetHomeRoute.CURRENT_USER_ATTR, currentUser);
         vm.put("viewMode", GameCenter.ViewMode.SPECTATOR);
         vm.put("redPlayer", gameToSpec.getRedPlayer());
