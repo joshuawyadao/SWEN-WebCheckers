@@ -75,7 +75,6 @@ public class GetGameRoute implements Route {
                 halt();
                 return null;
             } else {
-                System.out.println("here");
                 String newGameId = gameCenter.newGame(currentUser, opponent);
                 currentSession.attribute(GAME_ID_ATTR, newGameId);
             }
@@ -96,43 +95,11 @@ public class GetGameRoute implements Route {
         vm.put(GetHomeRoute.CURRENT_USER_ATTR, currentUser);
         vm.put("title", "Enjoy Your Game!");
 
-//        if (currentGame.isResigned()){
-//            Player resignedPlayer = currentGame.getResignedPlayer();
-//
-//            modeOptions.put("isGameOver", true);
-//
-//            if (currentGame.getResignedPlayer().equals(currentUser)){
-//                // display a user message in the Home page
-//                System.out.println("Here");
-//                vm.put("message", GetHomeRoute.WELCOME_MSG);
-//                currentUser.leaveGame();
-//                currentSession.attribute(GetGameRoute.GAME_ID_ATTR, null);
-//
-//                response.redirect(WebServer.HOME_URL);
-//                halt();
-//                return null;
-//            } else {
-//                if (isRed){
-//                    modeOptions.put("gameOverMessage", currentGame.getWhitePlayer().getName() + " has resigned.");
-//                    vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
-//                    currentUser.leaveGame();
-//                    currentSession.attribute(GetGameRoute.GAME_ID_ATTR, null);
-//                    gameCenter.removeGame(gameId);
-//                } else{
-//                    modeOptions.put("gameOverMessage", currentGame.getRedPlayer().getName() + " has resigned.");
-//                    vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
-//                    currentUser.leaveGame();
-//                    currentSession.attribute(GetGameRoute.GAME_ID_ATTR, null);
-//                    gameCenter.removeGame(gameId);
-//                }
-//            }
-//
-//            gameCenter.addToPreviousGames(currentGame, gameId);
-//        }
-
         if (currentGame.isResigned()){
             modeOptions = this.gameCenter.endGame(gameId);
             vm.put("modeOptionsAsJSON", this.gson.toJson(modeOptions));
+
+            currentSession.removeAttribute(GAME_ID_ATTR);
         }
 
         //boolean testBool = true;

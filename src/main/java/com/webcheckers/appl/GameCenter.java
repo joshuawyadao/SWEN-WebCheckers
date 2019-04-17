@@ -233,14 +233,12 @@ public class GameCenter {
             modeOptions.put("gameOverMessage", resignedPlayer.getName() + " has resigned.");
         }
 
-        endedGame.getRedPlayer().leaveGame();
-        endedGame.getWhitePlayer().leaveGame();
+        endedGame.endGame();
 
         addToPreviousGames(endedGame, gameId);
         currentGames.remove(gameId);
 
         return modeOptions;
     }
-
 
 }

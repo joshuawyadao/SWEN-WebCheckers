@@ -316,4 +316,11 @@ public class Game {
         return this.resignedPlayer;
     }
 
+    public boolean endGame(){
+        this.getRedPlayer().leaveGame();
+        this.getWhitePlayer().leaveGame();
+
+        return true;
+    }
+
 }
