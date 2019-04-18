@@ -246,8 +246,7 @@ public class GameCenter {
         Game endedGame = currentGames.get(gameId);
         String gameResult = endedGame.getGameResult(currentUser);
 //        Player resignedPlayer = endedGame.getResignedPlayer();
-
-
+        
 //        if(endedGame.isResigned()){
 //            modeOptions.put("gameOverMessage", resignedPlayer.getName() + " has resigned.");
 //        }else{
