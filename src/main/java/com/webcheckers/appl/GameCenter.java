@@ -24,16 +24,17 @@ public class GameCenter {
     //
 
     private HashMap<String, Game> currentGames;
-    private int gamesCompleted;
+    private int gamesPlayed;
     private HashMap<String, ReplayGame> previousGames;
-
+    private int gamesCompleted;
     /**
      * GameCenter constructor
      */
     public GameCenter( ){
         this.currentGames = new HashMap<>();
-        this.gamesCompleted = 0;
+        this.gamesPlayed = 0;
         this.previousGames = new HashMap<>();
+        this.gamesCompleted = 0;
     }
 
     /**
@@ -43,10 +44,11 @@ public class GameCenter {
      * @return a gameID, that is, a unique string to identify the newly made game
      */
     public String newGame(Player redPlayer, Player whitePlayer){
-        String gameId = createGameId(redPlayer, whitePlayer);
+        String gameId = createGameId();
         Game newGame = new Game(redPlayer, whitePlayer, gameId);
         newGame.initializeGame();
 
+        gamesPlayed++;
         currentGames.put(gameId, newGame);
 
         return gameId;
@@ -69,12 +71,13 @@ public class GameCenter {
 
     /**
      * Creates a new, unique ID to identify a game with
-     * @param redPlayer the redPlayer
-     * @param whitePlayer the whitePlayer
+//     * @param redPlayer the redPlayer
+//     * @param whitePlayer the whitePlayer
      * @return a new ID, that is, a string
      */
-    private String createGameId(Player redPlayer, Player whitePlayer){
-        return redPlayer.getName() + "Vs" + whitePlayer.getName();
+    private String createGameId(){
+        return "Game " + gamesPlayed;
+//        return redPlayer.getName() + "Vs" + whitePlayer.getName();
     }
 
     private String createFinishedGameId(){
@@ -120,10 +123,18 @@ public class GameCenter {
      * @return true if either one of the 2 players have a game, and false if both players do not have a game
      */
     public boolean hasGame(Player player1, Player player2) {
-        String key1 = player1.getName() + "Vs" + player2.getName();
-        String key2 = player2.getName() + "Vs" + player1.getName();
+        for(Game game: currentGames.values()){
+            if(player1.equals(game.getRedPlayer()) && player2.equals(game.getWhitePlayer()))
+                return true;
+            else if(player2.equals(game.getRedPlayer()) && player1.equals(game.getWhitePlayer()))
+                return true;
+        }
 
-        return currentGames.get(key1) != null || currentGames.get(key2) != null;
+        return false;
+//        String key1 = player1.getName() + "Vs" + player2.getName();
+//        String key2 = player2.getName() + "Vs" + player1.getName();
+//
+//        return currentGames.get(key1) != null || currentGames.get(key2) != null;
     }
 
     /**
@@ -164,10 +175,6 @@ public class GameCenter {
                                                  game.getPreviousTurns(), previousGameId);
 
         previousGames.put(previousGameId, previousGame);
-
-        if(currentGames.containsKey(gameId))
-            currentGames.remove(gameId);
-
     }
 
     /**
@@ -206,10 +213,22 @@ public class GameCenter {
         return game.isSpectatorUpdated(spectator);
     }
 
-    public boolean removedSpectator(String gameId, Player spectator){
+    public boolean removeSpectator(String gameId, Player spectator){
         Game game = currentGames.get(gameId);
 
+        game.removeSpectator(spectator);
+
+        if(game.getSpectatorNum() == 0)
+            currentGames.remove(gameId);
+
         return game.removeSpectator(spectator);
+    }
+
+    public boolean updateSpectator(String gameId, Player spectator){
+        Game gameToSpec = currentGames.get(gameId);
+        gameToSpec.updateSpectator(spectator);
+
+        return true;
     }
 
     public String getPlayerGameId(Player player) {
@@ -225,38 +244,43 @@ public class GameCenter {
     public Map<String, Object> endGame(String gameId, Player currentUser){
         Map<String, Object> modeOptions = new HashMap<>(2);
         Game endedGame = currentGames.get(gameId);
-        Player resignedPlayer = endedGame.getResignedPlayer();
+        String gameResult = endedGame.getGameResult(currentUser);
+//        Player resignedPlayer = endedGame.getResignedPlayer();
+
+
+//        if(endedGame.isResigned()){
+//            modeOptions.put("gameOverMessage", resignedPlayer.getName() + " has resigned.");
+//        }else{
+//            Player winner = endedGame.completedGame();
+//            Player loser;
+//            String gameResult;
+//
+//            if(winner.equals(endedGame.getRedPlayer())){
+//                loser = endedGame.getWhitePlayer();
+//            }else{
+//                loser = endedGame.getRedPlayer();
+//            }
+//
+//            if(winner.equals(currentUser)){
+//                gameResult = "You have captured all of " + loser.getName()
+//                            + "'s pieces. Congratulations, you win!";
+//            }else{
+//                gameResult = winner.getName() + " has captured all of your pieces. You lose.";
+//            }
+//
+//            modeOptions.put("gameOverMessage", gameResult);
+//        }
 
         modeOptions.put("isGameOver", true);
-
-        if(endedGame.isResigned()){
-            modeOptions.put("gameOverMessage", resignedPlayer.getName() + " has resigned.");
-        }else{
-            Player winner = endedGame.completedGame();
-            Player loser;
-            String gameResult;
-
-            if(winner.equals(endedGame.getRedPlayer())){
-                loser = endedGame.getWhitePlayer();
-            }else{
-                loser = endedGame.getRedPlayer();
-            }
-
-            if(winner.equals(currentUser)){
-                gameResult = "You have captured all of " + loser.getName()
-                            + "'s pieces. Congratulations, you win!";
-            }else{
-                gameResult = winner.getName() + " has captured all of your pieces. You lose.";
-            }
-
-            modeOptions.put("gameOverMessage", gameResult);
-        }
+        modeOptions.put("gameOverMessage", gameResult);
 
         currentUser.leaveGame();
 
         if(!(endedGame.getRedPlayer().isPlaying()) && !(endedGame.getWhitePlayer().isPlaying())){
             addToPreviousGames(endedGame, gameId);
-            currentGames.remove(gameId);
+
+            if(endedGame.getSpectatorNum() == 0)
+                currentGames.remove(gameId);
         }
 
         return modeOptions;

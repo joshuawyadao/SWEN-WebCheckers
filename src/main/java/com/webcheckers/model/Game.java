@@ -1,10 +1,7 @@
 package com.webcheckers.model;
 
-import com.webcheckers.appl.GameCenter;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Stack;
 
 public class Game {
@@ -315,6 +312,43 @@ public class Game {
      */
     public Player getResignedPlayer(){
         return this.resignedPlayer;
+    }
+
+    public boolean arePlayersInGame(){
+        return this.redPlayer.isPlaying() && this.whitePlayer.isPlaying();
+    }
+
+    public String getGameResult(Player currentUser){
+        String gameResult;
+
+        if(this.isResigned()){
+            gameResult = this.resignedPlayer.getName() + " has resigned.";
+        }else{
+            Player winner = this.completedGame();
+            Player loser;
+
+            if(winner.equals(this.getRedPlayer())){
+                loser = this.getWhitePlayer();
+            }else{
+                loser = this.getRedPlayer();
+            }
+
+            if(winner.equals(currentUser)){
+                gameResult = "You have captured all of " + loser.getName()
+                        + "'s pieces. Congratulations, you win!";
+            }else if(loser.equals(currentUser)){
+                gameResult = winner.getName() + " has captured all of your pieces. You lose.";
+            }else{
+                gameResult = winner.getName() + " has captured all of " + loser.getName() + "'s pieces"
+                        + "and has won the game! Thank you for watching!";
+            }
+        }
+
+        return gameResult;
+    }
+
+    public int getSpectatorNum(){
+        return this.spectators.size();
     }
 
 }
