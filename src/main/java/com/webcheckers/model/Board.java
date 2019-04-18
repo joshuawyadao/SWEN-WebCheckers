@@ -1,5 +1,6 @@
 package com.webcheckers.model;
 
+import com.sun.org.apache.regexp.internal.RE;
 import com.webcheckers.model.Piece;
 import com.webcheckers.model.Player;
 import com.webcheckers.model.Space;
@@ -90,6 +91,23 @@ public class Board {
         }
     }
 
+    public void setUpEndGame() {
+        this.board[4][5].setPiece(new Piece(Piece.TYPE.SINGLE, Piece.COLOR.RED));
+        this.board[5][4].setPiece(new Piece(Piece.TYPE.SINGLE, Piece.COLOR.WHITE));
+    }
+
+    public void setUpMultiJump() {
+        this.board[0][1].setPiece(new Piece(Piece.TYPE.SINGLE, Piece.COLOR.RED));
+        this.board[1][2].setPiece(new Piece(Piece.TYPE.SINGLE, Piece.COLOR.WHITE));
+        this.board[3][4].setPiece(new Piece(Piece.TYPE.SINGLE, Piece.COLOR.WHITE));
+        this.board[5][6].setPiece(new Piece(Piece.TYPE.SINGLE, Piece.COLOR.WHITE));
+    }
+
+    public void setUpKingPiece() {
+        this.board[6][1].setPiece(new Piece(Piece.TYPE.SINGLE, Piece.COLOR.RED));
+        this.board[4][5].setPiece(new Piece(Piece.TYPE.SINGLE, Piece.COLOR.WHITE));
+    }
+
     /**
      * Get the entire board
      * @return the entire board
@@ -107,6 +125,11 @@ public class Board {
         return board[rowNum];
     }
 
+    /**
+     * Equals method for Board
+     * @param other the supposedly other board
+     * @return true if 2 boards are of the same object, false if they are not
+     */
     public boolean equals(Board other) {
         for( int row = 0; row < BOARD_SIDE; row++ ) {
             for( int col = 0; col < BOARD_SIDE; col ++ ) {

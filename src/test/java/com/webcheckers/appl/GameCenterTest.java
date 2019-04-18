@@ -29,18 +29,18 @@ class GameCenterTest {
     public void testNewGame() {
         Player player1 = new Player("redPlayer");
         Player player2 = new Player("whitePlayer");
-        Game.ViewMode viewMode = Game.ViewMode.PLAY;
+        GameCenter.ViewMode viewMode = GameCenter.ViewMode.PLAY;
 
-        assertEquals(GAME_ID_TEST, CuT.newGame(player1, player2, viewMode) );
+        assertEquals(GAME_ID_TEST, CuT.newGame(player1, player2) );
     }
 
     @Test
     public void testGetGame() {
         Player player1 = new Player("redPlayer");
         Player player2 = new Player("whitePlayer");
-        Game.ViewMode viewMode = Game.ViewMode.PLAY;
+        GameCenter.ViewMode viewMode = GameCenter.ViewMode.PLAY;
 
-        CuT.newGame(player1, player2, viewMode);
+        CuT.newGame(player1, player2);
 
         assertSame(player1, CuT.getGame(GAME_ID_TEST).getRedPlayer());
         assertSame(player2, CuT.getGame(GAME_ID_TEST).getWhitePlayer());
@@ -50,11 +50,11 @@ class GameCenterTest {
     public void testRedPlayerHasGame() {
         Player player1 = new Player("redPlayer");
         Player player2 = new Player("whitePlayer");
-        Game.ViewMode viewMode = Game.ViewMode.PLAY;
+        GameCenter.ViewMode viewMode = GameCenter.ViewMode.PLAY;
 
-        CuT.newGame(player1, player2, viewMode);
+        CuT.newGame(player1, player2);
 
-        assertTrue( CuT.hasGame(player1) );
+        assertTrue( CuT.hasGame(player1, player2) );
 
     }
 
@@ -62,17 +62,17 @@ class GameCenterTest {
     public void testWhitePlayerHasGame(){
         Player player1 = new Player("redPlayer");
         Player player2 = new Player("whitePlayer");
-        Game.ViewMode viewMode = Game.ViewMode.PLAY;
+        GameCenter.ViewMode viewMode = GameCenter.ViewMode.PLAY;
 
-        CuT.newGame(player1, player2, viewMode);
+        CuT.newGame(player1, player2);
 
-        assertTrue( CuT.hasGame(player2) );
+        assertTrue( CuT.hasGame(player1, player2) );
     }
 
     @Test
     public void testDoesNotHasGame(){
         Player player1 = new Player("redPlayer");
-        assertFalse( CuT.hasGame(player1) );
+        assertFalse( CuT.hasGame(player1, null) );
     }
 
     @Test
@@ -80,8 +80,7 @@ class GameCenterTest {
         Player player1 = new Player("redPlayer");
         Player player2 = new Player("whitePlayer");
 
-        Game.ViewMode viewMode = Game.ViewMode.PLAY;
-        String cutGame = CuT.newGame(player1, player2, viewMode);
+        String cutGame = CuT.newGame(player1, player2);
 
         Move move = new Move( new Position(2,1), new Position(3,2) );
 
@@ -93,8 +92,7 @@ class GameCenterTest {
         Player player1 = new Player("redPlayer");
         Player player2 = new Player("whitePlayer");
 
-        Game.ViewMode viewMode = Game.ViewMode.PLAY;
-        String cutGame = CuT.newGame(player1, player2, viewMode);
+        String cutGame = CuT.newGame(player1, player2);
 
         assertTrue(CuT.submitTurn(cutGame));
     }
@@ -104,8 +102,7 @@ class GameCenterTest {
         Player player1 = new Player("redPlayer");
         Player player2 = new Player("whitePlayer");
 
-        Game.ViewMode viewMode = Game.ViewMode.PLAY;
-        String cutGame = CuT.newGame(player1, player2, viewMode);
+        String cutGame = CuT.newGame(player1, player2);
 
         assertTrue(CuT.backupMove(cutGame));
     }
@@ -114,9 +111,8 @@ class GameCenterTest {
     public void testIsMyTurnRED() {
         Player player1 = new Player("redPlayer");
         Player player2 = new Player("whitePlayer");
-        Game.ViewMode viewMode = Game.ViewMode.PLAY;
 
-        CuT.newGame(player1, player2, viewMode);
+        CuT.newGame(player1, player2);
 
         assertSame(player1, CuT.getGame(GAME_ID_TEST).getRedPlayer());
         assertSame(player2, CuT.getGame(GAME_ID_TEST).getWhitePlayer());
@@ -129,9 +125,8 @@ class GameCenterTest {
     public void testIsMyTurnWHITE() {
         Player player1 = new Player("redPlayer");
         Player player2 = new Player("whitePlayer");
-        Game.ViewMode viewMode = Game.ViewMode.PLAY;
 
-        CuT.newGame(player1, player2, viewMode);
+        CuT.newGame(player1, player2);
 
         assertSame(player1, CuT.getGame(GAME_ID_TEST).getRedPlayer());
         assertSame(player2, CuT.getGame(GAME_ID_TEST).getWhitePlayer());
@@ -146,9 +141,8 @@ class GameCenterTest {
     public void testRemoveGame() {
         Player player1 = new Player("redPlayer");
         Player player2 = new Player("whitePlayer");
-        Game.ViewMode viewMode = Game.ViewMode.PLAY;
 
-        CuT.newGame(player1, player2, viewMode);
+        CuT.newGame(player1, player2);
 
         assertSame(player1, CuT.getGame(GAME_ID_TEST).getRedPlayer());
         assertSame(player2, CuT.getGame(GAME_ID_TEST).getWhitePlayer());

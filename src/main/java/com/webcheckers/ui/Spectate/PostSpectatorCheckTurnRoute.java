@@ -2,6 +2,7 @@ package com.webcheckers.ui.Spectate;
 
 import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
+import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import com.webcheckers.ui.Home.GetHomeRoute;
 import com.webcheckers.util.Message;
@@ -13,7 +14,6 @@ import spark.Session;
 import java.util.logging.Logger;
 
 public class PostSpectatorCheckTurnRoute implements Route {
-
     private static final Logger LOG = Logger.getLogger(PostSpectatorCheckTurnRoute.class.getName());
 
     private final Gson gson;
@@ -23,6 +23,7 @@ public class PostSpectatorCheckTurnRoute implements Route {
     public PostSpectatorCheckTurnRoute(final GameCenter gameCenter, final Gson gson) {
         this.gson = gson;
         this.gameCenter = gameCenter;
+        LOG.config("PostSpectatorCheckTurnRoute is initialized.");
     }
 
     @Override
@@ -34,12 +35,13 @@ public class PostSpectatorCheckTurnRoute implements Route {
         Player currentUser = currentSession.attribute(GetHomeRoute.CURRENT_USER_ATTR);
 
         boolean isUpdated = gameCenter.isSpectatorUpdated(gameID, currentUser);
+        Game gameToSpec = gameCenter.getGame(gameID);
 
         Message updateInfo;
-        if(isUpdated)
-            updateInfo = Message.info("false");
-        else
+        if(!isUpdated || gameToSpec.isResigned())
             updateInfo = Message.info("true");
+        else
+            updateInfo = Message.info("false");
 
         return gson.toJson(updateInfo);
     }

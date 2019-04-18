@@ -3,6 +3,7 @@ package com.webcheckers.ui.PlayGame;
 import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import com.webcheckers.ui.Home.GetHomeRoute;
 import com.webcheckers.util.Message;
@@ -39,8 +40,9 @@ public class PostCheckTurnRoute implements Route {
 
         // Get Game
         String gameId = currentSession.attribute(GetGameRoute.GAME_ID_ATTR);
+        Game game = gameCenter.getGame(gameId);
 
-        if (gameCenter.isMyTurn(gameId, currentUser))
+        if (gameCenter.isMyTurn(gameId, currentUser) || (game.isResigned()))
             return gson.toJson(Message.info("true"));
         else
             return gson.toJson(Message.info("false"));

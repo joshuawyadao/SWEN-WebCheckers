@@ -18,13 +18,11 @@ public class GetReplayRoute implements Route {
 
     public static final String VIEW_NAME = "replay.ftl";
 
-    private final PlayerLobby playerLobby;
     private final GameCenter gameCenter;
     private final TemplateEngine templateEngine;
 
-    public GetReplayRoute(final PlayerLobby playerLobby, final GameCenter gameCenter, final TemplateEngine templateEngine) {
+    public GetReplayRoute(final GameCenter gameCenter, final TemplateEngine templateEngine) {
         this.gameCenter = Objects.requireNonNull(gameCenter, "gameCenter is required");
-        this.playerLobby = Objects.requireNonNull(playerLobby, "playerLobby is required");
         this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
 
         LOG.config("GetReplayRoute is initialized.");
