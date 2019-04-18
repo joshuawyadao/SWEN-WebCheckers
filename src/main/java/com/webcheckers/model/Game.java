@@ -25,7 +25,7 @@ public class Game {
         this.redPlayer = redPlayer;
         this.activePlayer = redPlayer;
         this.whitePlayer = whitePlayer;
-        this.checkerBoard = new Board();
+        this.checkerBoard = setUpPreferences();
         this.previousMoves = new Stack<>();
         this.gameId = gameId;
         previousMoves.push(checkerBoard);
@@ -36,7 +36,29 @@ public class Game {
         this.spectators = new HashMap<>();
     }
 
-    //Accessors
+
+    public Board setUpPreferences() {
+        Board setUp = new Board(false);
+        String keyName = getKeyNames();
+
+        switch (keyName) {
+            case "END GAME":
+                setUp.setUpEndGame();
+                break;
+            case "MULTI JUMP":
+                setUp.setUpMultiJump();
+                break;
+            case "KING PIECE":
+                setUp.setUpKingPiece();
+                break;
+            default:
+                setUp = new Board();
+                break;
+        }
+        return setUp;
+    }
+
+    //    Accessors
 
     /**
      * Returns the red player
@@ -315,6 +337,25 @@ public class Game {
      */
     public Player getResignedPlayer(){
         return this.resignedPlayer;
+    }
+
+
+    private String getKeyNames() {
+        String redName = this.redPlayer.getName();
+        String whiteName = this.whitePlayer.getName();
+
+        if( redOrWhitePlayerNameEquals( redName, whiteName, "END GAME" ) ) {
+            return "END GAME";
+        } else if( redOrWhitePlayerNameEquals( redName, whiteName, "MULTI JUMP" ) ) {
+            return "MULTI JUMP";
+        } else if( redOrWhitePlayerNameEquals( redName, whiteName, "KING PIECE" ) ) {
+            return "KING PIECE";
+        } else {
+            return "NONE";
+        }
+    }
+    private boolean redOrWhitePlayerNameEquals(String redName, String whiteName, String key) {
+        return redName.equals(key) || whiteName.equals(key);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.webcheckers.model;
 
+import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ public class ReplayGame {
      * @return the game's end time
      */
     public String getGameEndTime() {
-        return gameEndTime;
+        return this.gameEndTime;
     }
 
     /**
@@ -49,7 +50,7 @@ public class ReplayGame {
      * @return the game's active player color
      */
     public Player.PlayerColor getActiveColor() {
-        return activeColor;
+        return this.activeColor;
     }
 
     /**
@@ -57,7 +58,7 @@ public class ReplayGame {
      * @return the game's red player
      */
     public Player getRedPlayer() {
-        return redPlayer;
+        return this.redPlayer;
     }
 
     /**
@@ -65,7 +66,7 @@ public class ReplayGame {
      * @return the game's white player
      */
     public Player getWhitePlayer() {
-        return whitePlayer;
+        return this.whitePlayer;
     }
 
     /**
@@ -73,8 +74,10 @@ public class ReplayGame {
      * @return the game's ID
      */
     public String getGameId(){
-        return gameId;
+        return this.gameId;
     }
+
+    public ArrayList<Board> getPreviousTurns() { return this.previousTurns; }
 
     /**
      * Changes the index pointing to the list of successful turns (i.e. previousTurns)
