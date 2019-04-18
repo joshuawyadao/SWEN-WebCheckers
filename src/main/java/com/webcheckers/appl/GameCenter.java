@@ -245,30 +245,6 @@ public class GameCenter {
         Map<String, Object> modeOptions = new HashMap<>(2);
         Game endedGame = currentGames.get(gameId);
         String gameResult = endedGame.getGameResult(currentUser);
-//        Player resignedPlayer = endedGame.getResignedPlayer();
-        
-//        if(endedGame.isResigned()){
-//            modeOptions.put("gameOverMessage", resignedPlayer.getName() + " has resigned.");
-//        }else{
-//            Player winner = endedGame.completedGame();
-//            Player loser;
-//            String gameResult;
-//
-//            if(winner.equals(endedGame.getRedPlayer())){
-//                loser = endedGame.getWhitePlayer();
-//            }else{
-//                loser = endedGame.getRedPlayer();
-//            }
-//
-//            if(winner.equals(currentUser)){
-//                gameResult = "You have captured all of " + loser.getName()
-//                            + "'s pieces. Congratulations, you win!";
-//            }else{
-//                gameResult = winner.getName() + " has captured all of your pieces. You lose.";
-//            }
-//
-//            modeOptions.put("gameOverMessage", gameResult);
-//        }
 
         modeOptions.put("isGameOver", true);
         modeOptions.put("gameOverMessage", gameResult);

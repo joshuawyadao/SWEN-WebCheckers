@@ -1,6 +1,5 @@
 package com.webcheckers.model;
 
-import com.sun.org.apache.regexp.internal.RE;
 import com.webcheckers.model.Piece;
 import com.webcheckers.model.Player;
 import com.webcheckers.model.Space;

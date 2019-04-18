@@ -364,7 +364,7 @@ public class Game {
             }else if(loser.equals(currentUser)){
                 gameResult = winner.getName() + " has captured all of your pieces. You lose.";
             }else{
-                gameResult = winner.getName() + " has captured all of " + loser.getName() + "'s pieces"
+                gameResult = winner.getName() + " has captured all of " + loser.getName() + "'s pieces "
                         + "and has won the game! Thank you for watching!";
             }
         }
