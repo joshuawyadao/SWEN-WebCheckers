@@ -7,6 +7,7 @@ import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import com.webcheckers.ui.BoardView;
 import com.webcheckers.ui.Home.GetHomeRoute;
+import com.webcheckers.util.Message;
 import spark.*;
 
 import java.util.HashMap;
@@ -47,18 +48,22 @@ public class GetSpectatorGameRoute implements Route {
 
         Game gameToSpec = gameCenter.getGame(gameID);
 
-        gameToSpec.updateSpectator(currentUser);
+        gameCenter.updateSpectator(gameID, currentUser);
 
         vm.put(GetHomeRoute.CURRENT_USER_ATTR, currentUser);
         vm.put("viewMode", GameCenter.ViewMode.SPECTATOR);
         vm.put("redPlayer", gameToSpec.getRedPlayer());
         vm.put("whitePlayer", gameToSpec.getWhitePlayer());
         vm.put("activeColor", gameToSpec.getActivePlayer().getPlayerColor());
-        boolean isRed;
-        if (gameToSpec.getActivePlayer().equals(gameToSpec.getRedPlayer())) isRed = true;
-        else isRed = false;
-        vm.put("board", new BoardView(gameToSpec.getSpectatorBoard(currentUser),
-                isRed));
+
+        boolean isRed = true;
+//        if (gameToSpec.getActivePlayer().equals(gameToSpec.getRedPlayer())) isRed = true;
+//        else isRed = false;
+        vm.put("board", new BoardView(gameToSpec.getSpectatorBoard(currentUser), isRed));
+
+        if((gameToSpec.isResigned()) || (gameToSpec.completedGame() != null)){
+            vm.put("message", Message.info(gameToSpec.getGameResult(currentUser)));
+        }
 
         vm.put("title", "Enjoy watching your game!");
         return templateEngine.render(new ModelAndView(vm, VIEW_NAME));

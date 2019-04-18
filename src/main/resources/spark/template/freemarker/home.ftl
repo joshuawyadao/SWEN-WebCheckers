@@ -41,12 +41,14 @@
         <h2> Currently Playing: </h2>
             <#if hasCurrentGames>
                 <#list currentGames as game>
-                    <form action="./spectator/game" method="GET">
-                        <h3> Game: ${game.getRedPlayer().name} Vs. ${game.getWhitePlayer().name} </t>
-                        <input type="hidden" name="gameID" value="${game.getGameId()}">
-                        <button type="submit">Spectate Game</button>
-                        </h3>
-                    </form>
+                    <#if game.arePlayersInGame()>
+                        <form action="./spectator/game" method="GET">
+                            <h3> Game: ${game.getRedPlayer().name} Vs. ${game.getWhitePlayer().name} </t>
+                            <input type="hidden" name="gameID" value="${game.getGameId()}">
+                            <button type="submit">Spectate Game</button>
+                            </h3>
+                        </form>
+                    </#if>
                 </#list>
             <#else>
                 <h3> No Games are currently being played. </h3>

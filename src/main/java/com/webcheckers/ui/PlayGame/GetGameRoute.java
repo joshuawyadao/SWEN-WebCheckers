@@ -101,7 +101,7 @@ public class GetGameRoute implements Route {
 
             currentSession.removeAttribute(GAME_ID_ATTR);
         }
-        
+
         // render the View
         return templateEngine.render(new ModelAndView(vm , VIEW_NAME));
     }
