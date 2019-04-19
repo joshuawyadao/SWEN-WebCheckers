@@ -69,6 +69,9 @@ public class GetSpectatorGameRoute implements Route {
         vm.put("activeColor", gameToSpec.getActivePlayer().getPlayerColor());
 
         boolean isRed = true;
+        if (currentSession.attribute("isRed") != null){
+            isRed = currentSession.attribute("isRed");
+        }
 //        if (gameToSpec.getActivePlayer().equals(gameToSpec.getRedPlayer())) isRed = true;
 //        else isRed = false;
         vm.put("board", new BoardView(gameToSpec.getSpectatorBoard(currentUser), isRed));

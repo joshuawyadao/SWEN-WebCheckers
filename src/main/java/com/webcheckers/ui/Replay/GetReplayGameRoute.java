@@ -46,7 +46,14 @@ public class GetReplayGameRoute implements Route {
         Player currentUser = currentSession.attribute(GetHomeRoute.CURRENT_USER_ATTR);
 
         String gameID = request.queryParams("gameID");
-        ReplayGame replayGame = gameCenter.getReplayGame(gameID);
+        ReplayGame replayGame;
+
+        if(currentSession.attribute("replayGame") == null){
+            replayGame = gameCenter.getReplayGame(gameID);
+            currentSession.attribute("replayGame", replayGame);
+        }else {
+            replayGame = currentSession.attribute("replayGame");
+        }
 
         // Upon entering the replayed game in question,
         // this route will go through the following routes

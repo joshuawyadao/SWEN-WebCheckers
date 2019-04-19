@@ -27,6 +27,7 @@ public class GameCenter {
     private int gamesPlayed;
     private HashMap<String, ReplayGame> previousGames;
     private int gamesCompleted;
+
     /**
      * GameCenter constructor
      */
@@ -44,15 +45,16 @@ public class GameCenter {
      * @return a gameID, that is, a unique string to identify the newly made game
      */
     public String newGame(Player redPlayer, Player whitePlayer){
+        gamesPlayed++;
         String gameId = createGameId();
         Game newGame = new Game(redPlayer, whitePlayer, gameId);
         newGame.initializeGame();
 
-        gamesPlayed++;
         currentGames.put(gameId, newGame);
 
         return gameId;
     }
+
 
     /**
      * Gets an active game by their unique gameID
@@ -63,7 +65,8 @@ public class GameCenter {
         return currentGames.get(gameId);
     }
 
-    public ReplayGame getReplayGame(String gameId) { return previousGames.get(gameId); }
+    public ReplayGame getReplayGame(String gameId) {
+        return previousGames.get(gameId).cloneGame(); }
 
     public void removeGame(String gameId) {
         currentGames.remove(gameId);
@@ -190,6 +193,8 @@ public class GameCenter {
             sortedPreviousGames.add(tempGame);
         }
 
+        Collections.reverse(sortedPreviousGames);
+
         return sortedPreviousGames;
     }
 
@@ -218,7 +223,7 @@ public class GameCenter {
 
         game.removeSpectator(spectator);
 
-        if(game.getSpectatorNum() == 0)
+        if(game.getSpectatorNum() == 0 && ((game.isResigned()) || (game.completedGame() != null)))
             currentGames.remove(gameId);
 
         return game.removeSpectator(spectator);
@@ -245,30 +250,6 @@ public class GameCenter {
         Map<String, Object> modeOptions = new HashMap<>(2);
         Game endedGame = currentGames.get(gameId);
         String gameResult = endedGame.getGameResult(currentUser);
-//        Player resignedPlayer = endedGame.getResignedPlayer();
-        
-//        if(endedGame.isResigned()){
-//            modeOptions.put("gameOverMessage", resignedPlayer.getName() + " has resigned.");
-//        }else{
-//            Player winner = endedGame.completedGame();
-//            Player loser;
-//            String gameResult;
-//
-//            if(winner.equals(endedGame.getRedPlayer())){
-//                loser = endedGame.getWhitePlayer();
-//            }else{
-//                loser = endedGame.getRedPlayer();
-//            }
-//
-//            if(winner.equals(currentUser)){
-//                gameResult = "You have captured all of " + loser.getName()
-//                            + "'s pieces. Congratulations, you win!";
-//            }else{
-//                gameResult = winner.getName() + " has captured all of your pieces. You lose.";
-//            }
-//
-//            modeOptions.put("gameOverMessage", gameResult);
-//        }
 
         modeOptions.put("isGameOver", true);
         modeOptions.put("gameOverMessage", gameResult);

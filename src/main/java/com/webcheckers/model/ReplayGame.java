@@ -37,6 +37,16 @@ public class ReplayGame {
         this.previousTurns = Objects.requireNonNull(previousTurns, "previousTurns is required");
     }
 
+    public ReplayGame cloneGame(){
+        Player redPlayer = new Player(this.redPlayer.getName());
+        Player whitePlayer = new Player(this.whitePlayer.getName());
+
+        ArrayList<Board> previousTurns = new ArrayList<>();
+        previousTurns.addAll(this.previousTurns);
+
+        return new ReplayGame(redPlayer, whitePlayer, previousTurns, this.gameId);
+    }
+
     /**
      * Get the game's end time
      * @return the game's end time

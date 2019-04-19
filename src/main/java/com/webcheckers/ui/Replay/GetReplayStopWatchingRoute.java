@@ -53,6 +53,10 @@ public class GetReplayStopWatchingRoute implements Route {
      */
     @Override
     public Object handle(Request request, Response response) {
+        Session currentSession = request.session();
+
+        currentSession.removeAttribute("replayGame");
+
         //final Map<String, Object> vm = new HashMap<>();
         //final Map<String, Object> modeOptions = new HashMap<>(2);
         //Session currentSession = request.session();
