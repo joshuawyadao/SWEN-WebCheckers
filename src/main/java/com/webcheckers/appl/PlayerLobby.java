@@ -13,7 +13,6 @@ public class PlayerLobby {
 
     private final static Message LOGIN_SUCCESSFUL_MSG = Message.info("Login Successful!");
 
-
     private HashMap<Player, Session> players;
 
     /**
@@ -101,6 +100,10 @@ public class PlayerLobby {
         players.remove(player);
     }
 
+    /**
+     * Checks if the player lobby is empty
+     * @return true if the player lobby is empty
+     */
     public boolean hasPlayers(){return !players.isEmpty();}
 
 }
