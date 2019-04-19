@@ -1,11 +1,7 @@
 package com.webcheckers.model;
 
-import java.lang.reflect.Array;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Objects;
+import java.text.*;
+import java.util.*;
 
 public class ReplayGame {
 

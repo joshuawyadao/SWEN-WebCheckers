@@ -1,14 +1,10 @@
 package com.webcheckers.ui.Home;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.logging.Logger;
 
-import com.webcheckers.appl.GameCenter;
-import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.model.Game;
-import com.webcheckers.model.Player;
+import com.webcheckers.appl.*;
+import com.webcheckers.model.*;
 import com.webcheckers.ui.PlayGame.GetGameRoute;
 import com.webcheckers.ui.WebServer;
 import spark.*;

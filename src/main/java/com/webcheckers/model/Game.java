@@ -1,11 +1,6 @@
 package com.webcheckers.model;
 
-import com.webcheckers.appl.GameCenter;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 
 public class Game {
     private Player redPlayer, whitePlayer, activePlayer, resignedPlayer;

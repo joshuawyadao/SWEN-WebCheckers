@@ -1,16 +1,11 @@
 package com.webcheckers.ui.Replay;
 
 import com.google.gson.Gson;
-import com.webcheckers.appl.GameCenter;
-import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.model.Player;
-import com.webcheckers.ui.Home.GetHomeRoute;
+import com.webcheckers.appl.*;
 import com.webcheckers.ui.WebServer;
 import com.webcheckers.util.Message;
 import spark.*;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 

@@ -1,12 +1,8 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.model.*;
-import com.webcheckers.ui.Row;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class BoardView implements Iterable<Row> {
 

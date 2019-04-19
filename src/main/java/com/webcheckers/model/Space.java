@@ -1,7 +1,5 @@
 package com.webcheckers.model;
 
-import java.awt.image.SinglePixelPackedSampleModel;
-
 public class Space {
 
     enum COLOR { LIGHT, DARK }

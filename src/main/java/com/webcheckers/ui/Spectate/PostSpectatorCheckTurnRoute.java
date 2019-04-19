@@ -2,14 +2,10 @@ package com.webcheckers.ui.Spectate;
 
 import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
-import com.webcheckers.model.Game;
-import com.webcheckers.model.Player;
+import com.webcheckers.model.*;
 import com.webcheckers.ui.Home.GetHomeRoute;
 import com.webcheckers.util.Message;
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.Session;
+import spark.*;
 
 import java.util.logging.Logger;
 

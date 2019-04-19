@@ -3,9 +3,7 @@ package com.webcheckers.appl;
 import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
 import spark.Session;
-
-import java.util.HashMap;
-import java.util.Set;
+import java.util.*;
 
 public class PlayerLobby {
     private final static Message INVALID_NAME_MSG = Message.error("ERROR: Name MUST contain at least one " +

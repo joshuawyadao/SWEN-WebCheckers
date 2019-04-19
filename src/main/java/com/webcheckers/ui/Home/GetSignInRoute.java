@@ -2,9 +2,7 @@ package com.webcheckers.ui.Home;
 
 import spark.*;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.logging.Logger;
 
 public class GetSignInRoute implements Route {

@@ -1,16 +1,11 @@
 package com.webcheckers.ui.Replay;
 
 import com.webcheckers.appl.GameCenter;
-import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
-import com.webcheckers.model.ReplayGame;
 import com.webcheckers.ui.Home.GetHomeRoute;
 import spark.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.logging.Logger;
 
 public class GetReplayRoute implements Route {

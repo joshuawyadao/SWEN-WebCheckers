@@ -1,9 +1,6 @@
 package com.webcheckers.appl;
 
 import com.webcheckers.model.*;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**

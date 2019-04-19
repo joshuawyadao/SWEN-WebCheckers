@@ -9,15 +9,10 @@ import com.google.gson.Gson;
 
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.ui.Home.GetHomeRoute;
-import com.webcheckers.ui.Home.GetSignInRoute;
-import com.webcheckers.ui.Home.PostSignInRoute;
-import com.webcheckers.ui.Home.PostSignOutRoute;
+import com.webcheckers.ui.Home.*;
 import com.webcheckers.ui.PlayGame.*;
 import com.webcheckers.ui.Replay.*;
-import com.webcheckers.ui.Spectate.GetSpectatorGameRoute;
-import com.webcheckers.ui.Spectate.GetSpectatorStopWatchingRoute;
-import com.webcheckers.ui.Spectate.PostSpectatorCheckTurnRoute;
+import com.webcheckers.ui.Spectate.*;
 import spark.TemplateEngine;
 
 

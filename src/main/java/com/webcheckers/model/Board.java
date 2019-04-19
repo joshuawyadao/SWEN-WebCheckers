@@ -1,12 +1,5 @@
 package com.webcheckers.model;
 
-import com.webcheckers.model.Piece;
-import com.webcheckers.model.Player;
-import com.webcheckers.model.Space;
-import javafx.geometry.Pos;
-
-import java.util.*;
-
 public class Board {
 
     private final int BOARD_SIDE = 8;
