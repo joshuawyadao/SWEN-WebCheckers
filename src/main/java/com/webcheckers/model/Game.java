@@ -31,6 +31,7 @@ public class Game {
         this.spectators = new HashMap<>();
     }
 
+
     /**
      * Sets up certain preferences if anyone has a key in the their name
      * @return the initial turn
