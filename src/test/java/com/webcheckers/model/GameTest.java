@@ -267,6 +267,26 @@ class GameTest {
         assertEquals( endGamePlayer, CuTEmpty.completedGame() );
     }
 
+    @Test
+    void testGetNeighbors() {
+        Piece redPiece = new Piece(Piece.TYPE.SINGLE, Piece.COLOR.RED);
+        Piece whitePiece = new Piece(Piece.TYPE.SINGLE, Piece.COLOR.WHITE);
+        Piece redKingPiece = new Piece(Piece.TYPE.KING, Piece.COLOR.RED);
+        Piece whiteKingPiece = new Piece(Piece.TYPE.KING, Piece.COLOR.WHITE);
+        Piece nullPiece = new Piece(null,null);
+
+        assertNull(CuTEmpty.getNeighbors(nullPiece,0,0));
+
+        CuTEmpty.getNeighbors(redPiece,0,1);
+
+        CuTEmpty.getNeighbors(whitePiece,5,4);
+
+        CuTEmpty.getNeighbors(redKingPiece, 2,1);
+
+        CuTEmpty.getNeighbors(whiteKingPiece, 5,0);
+
+
+    }
 
 
 
