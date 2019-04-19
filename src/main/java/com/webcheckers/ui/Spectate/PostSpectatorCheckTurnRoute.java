@@ -29,13 +29,15 @@ public class PostSpectatorCheckTurnRoute implements Route {
     @Override
     public Object handle(Request request, Response response) {
         LOG.finer("PostSpectatorCheckTurnRoute is invoked.");
-        String gameID = request.queryParams("gameID");
+        //String gameID = request.queryParams("gameID");
 
         Session currentSession = request.session();
+        String gameID = currentSession.attribute("specID");
         Player currentUser = currentSession.attribute(GetHomeRoute.CURRENT_USER_ATTR);
 
         boolean isUpdated = gameCenter.isSpectatorUpdated(gameID, currentUser);
         Game gameToSpec = gameCenter.getGame(gameID);
+
 
         Message updateInfo;
         if(!isUpdated || gameToSpec.isResigned())

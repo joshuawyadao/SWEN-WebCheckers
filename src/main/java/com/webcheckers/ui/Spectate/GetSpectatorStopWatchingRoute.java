@@ -22,9 +22,10 @@ public class GetSpectatorStopWatchingRoute implements Route {
 
     @Override
     public Object handle(Request request, Response response) {
-        String gameID = request.queryParams("gameID");
+        //String gameID = request.queryParams("gameID");
 
         Session currentSession = request.session();
+        String gameID = currentSession.attribute("specID");
         Player currentUser = currentSession.attribute(GetHomeRoute.CURRENT_USER_ATTR);
 
         gameCenter.removeSpectator(gameID, currentUser);

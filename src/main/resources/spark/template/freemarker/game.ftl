@@ -58,6 +58,14 @@
           
           <fieldset id="game-toolbar">
             <legend>Controls</legend>
+            <#if viewMode.name() == "SPECTATOR">
+                <form action="./swap" method="GET">
+                    <h3>
+                        <input type="hidden" name="p" value="stuff">
+                        <button type="submit">Swap Views</button>
+                    </h3>
+                    </form>
+             </#if>
             <div class="toolbar"></div>
           </fieldset>
 

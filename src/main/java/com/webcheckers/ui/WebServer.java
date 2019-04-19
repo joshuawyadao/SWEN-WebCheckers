@@ -17,6 +17,7 @@ import com.webcheckers.ui.PlayGame.*;
 import com.webcheckers.ui.Replay.*;
 import com.webcheckers.ui.Spectate.GetSpectatorGameRoute;
 import com.webcheckers.ui.Spectate.GetSpectatorStopWatchingRoute;
+import com.webcheckers.ui.Spectate.GetSpectatorSwapRoute;
 import com.webcheckers.ui.Spectate.PostSpectatorCheckTurnRoute;
 import spark.TemplateEngine;
 
@@ -227,6 +228,8 @@ public class WebServer {
     get(SPECTATOR_STOP_WATCHING_URL, new GetSpectatorStopWatchingRoute(gameCenter));
 
     post(SPECTATOR_CHECK_TURN_URL, new PostSpectatorCheckTurnRoute(gameCenter, gson));
+
+    get("spectator/swap", new GetSpectatorSwapRoute());
 
     get(REPLAY_URL, new GetReplayRoute(gameCenter, templateEngine));
 

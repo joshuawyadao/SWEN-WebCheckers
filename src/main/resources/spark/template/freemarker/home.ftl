@@ -42,22 +42,11 @@
             <#if hasCurrentGames>
                 <#list currentGames as game>
                     <#if game.arePlayersInGame()>
-                        <h3> Game: ${game.getRedPlayer().name} Vs. ${game.getWhitePlayer().name} </h3>
-
                         <form action="./spectator/game" method="GET">
-                            <h2> Red Player: ${game.getRedPlayer().name}
+                            <h3> Game: ${game.getRedPlayer().name} Vs. ${game.getWhitePlayer().name} </t>
                             <input type="hidden" name="gameID" value="${game.getGameId()}">
-                            <input type="hidden" name="isRed" value="true">
-                            <button type="submit">View Perspective</button>
-                            </h2>
-                        </form>
-
-                        <form action="./spectator/game" method="GET">
-                            <h2> White Player: ${game.getWhitePlayer().name}
-                            <input type="hidden" name="gameID" value="${game.getGameId()}">
-                            <input type="hidden" name="isRed" value="false">
-                            <button type="submit">View Perspective</button>
-                            </h2>
+                            <button type="submit">Spectate Game</button>
+                            </h3>
                         </form>
                         </br>
                     </#if>
