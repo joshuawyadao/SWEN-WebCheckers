@@ -162,26 +162,43 @@ class GameCenterTest {
         Player p5 = new Player("p5");
         Player p6 = new Player("p6");
 
-        Game game0 = new Game(p1, p2, "1");
-        Game game1 = new Game(p3, p4, "2");
-        Game game2 = new Game(p5, p6, "3");
+        String game0 = CuT.newGame(p1, p2);
+        String game1 = CuT.newGame(p3, p4);
 
-        
+        assertTrue( CuT.isInAnyGame(p1) );
+        assertTrue( CuT.isInAnyGame(p2) );
+        assertTrue( CuT.isInAnyGame(p4) );
+        assertFalse( CuT.isInAnyGame(p6) );
 
     }
 
     @Test
     void testIsMyTurn() {
 
+        Player p1 = new Player("p1");
+        Player p2 = new Player("p2");
+
+        String cutGame = CuT.newGame(p1, p2);
+
+        assertTrue( CuT.isMyTurn(cutGame, p1) );
+        assertFalse( CuT.isMyTurn(cutGame, p2) );
+
     }
 
     @Test
     void testAddToPreviousGames() {
 
-    }
+        Player p1 = new Player("p1");
+        Player p2 = new Player("p2");
 
-    @Test
-    void testHasPreviousGames() {
+        String game0 = CuT.newGame(p1, p2);
+
+        assertFalse(CuT.hasPreviousGames());
+
+        CuT.addToPreviousGames( CuT.getGame(game0), "0");
+
+        assertTrue(CuT.hasPreviousGames());
+
 
     }
 
@@ -192,6 +209,21 @@ class GameCenterTest {
 
     @Test
     void sortPreviousGames() {
+
+        Player p1 = new Player("p1");
+        Player p2 = new Player("p2");
+        Player p3 = new Player("p3");
+        Player p4 = new Player("p4");
+        Player p5 = new Player("p5");
+        Player p6 = new Player("p6");
+
+        String game0 = CuT.newGame(p1, p2);
+        String game1 = CuT.newGame(p3,p4);
+        String game2 = CuT.newGame(p5,p6);
+
+        CuT.addToPreviousGames( CuT.getGame(game0), "0");
+        CuT.addToPreviousGames( CuT.getGame(game1), "1");
+
 
     }
 
