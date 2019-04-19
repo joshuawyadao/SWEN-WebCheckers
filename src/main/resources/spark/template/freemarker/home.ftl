@@ -52,6 +52,7 @@
                             <button type="submit">Spectate Game</button>
                             </h3>
                         </form>
+                        </br>
                     </#if>
                 </#list>
             <#else>

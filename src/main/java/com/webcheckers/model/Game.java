@@ -36,7 +36,10 @@ public class Game {
         this.spectators = new HashMap<>();
     }
 
-
+    /**
+     * Sets up certain preferences if anyone has a key in the their name
+     * @return the initial turn
+     */
     public Board setUpPreferences() {
         Board setUp = new Board(false);
         String keyName = getKeyNames();
@@ -84,14 +87,27 @@ public class Game {
         return this.checkerBoard;
     }
 
+    /**
+     * Gets the current active player
+     * @return the active player
+     */
     public Player getActivePlayer() {
         return activePlayer;
     }
 
+    /**
+     * Gets the game Id of this game
+     * @return the game Id
+     */
     public String getGameId(){
         return gameId;
     }
 
+    /**
+     * Checks if a player is in this game
+     * @param player the player to be examined
+     * @return true if the player is in this game
+     */
     public boolean isInGame(Player player) {
         return ((this.whitePlayer.equals(player)) || (this.redPlayer.equals(player)));
     }
@@ -111,6 +127,10 @@ public class Game {
         return currentPlayer.getPlayerColor();
     }
 
+    /**
+     * Gets the previous turns from this game
+     * @return an array list of the previous turns
+     */
     public ArrayList<Board> getPreviousTurns() {
         return this.previousTurns;
     }
@@ -124,9 +144,9 @@ public class Game {
     }
 
     /**
-     *
-     * @param move
-     * @return
+     * Makes a move
+     * @param move the move to be made
+     * @return true if the move was sucessful
      */
     public boolean makeMove( Move move ) {
         Board turn = new Board();
@@ -171,16 +191,23 @@ public class Game {
 
 
     /**
-     *
-     * @param move
-     * @param turn
-     * @param piece
+     * Moves a piece
+     * @param move the move object
+     * @param turn the board to have the piece moved
+     * @param piece the piece to be moved
      */
     public void movePiece( Move move, Board turn, Piece piece ) {
         turn.getBoard()[move.getEndRow()][move.getEndCell()].setPiece( new Piece( piece.getType(), piece.getColor() ) );
         turn.getBoard()[move.getStartRow()][move.getStartCell()].setPiece( null );
     }
 
+    /**
+     * Checks if the piece could have jumped
+     * @param startPos the start position
+     * @param turn the board turn instance
+     * @param neighbors all the neighboring spaces
+     * @return true if the piece can jump
+     */
     public boolean canJump( Position startPos, Board turn, Position[] neighbors ) {
         for( Position position : neighbors ) {
             if( position.inBounds() ) {
@@ -195,6 +222,13 @@ public class Game {
         return false;
     }
 
+    /**
+     * Gets all the valid positions that neighbor the space
+     * @param piece the piece to check
+     * @param row the row of the piece
+     * @param col the col of the piece
+     * @return an array of all the neighbors
+     */
     public Position[] getNeighbors(Piece piece, int row, int col){
         Piece.TYPE pieceType = piece.getType();
         Piece.COLOR pieceColor = piece.getColor();
@@ -218,6 +252,10 @@ public class Game {
         return null;
     }
 
+    /**
+     * Validates every turn by checking if any piece could be captured and was not
+     * @return true if the move was valid
+     */
     public boolean validateTurn() {
         Space[][] board = this.checkerBoard.getBoard();
         for( int row = 0; row < 8; row++ ) {
@@ -276,22 +314,42 @@ public class Game {
         return previousMove != null;
     }
 
+    /**
+     * Updates the spectator's view
+     * @param spectator the spectator to be examined
+     * @return true if the view was successfully updated
+     */
     public boolean updateSpectator(Player spectator){
         this.spectators.put(spectator, this.checkerBoard);
 
         return true;
     }
 
+    /**
+     * Gets the board that the spectator is currently viewing
+     * @param spectator the spectator to be examined
+     * @return the board that the spectator is viewing
+     */
     public Board getSpectatorBoard(Player spectator){
         return this.spectators.get(spectator);
     }
 
+    /**
+     * Checks to see if the spectator's view was updated
+     * @param spectator the spectator to be examined
+     * @return true if their view was updated
+     */
     public boolean isSpectatorUpdated(Player spectator){
         Board spectatorBoard = this.spectators.get(spectator);
 
         return spectatorBoard.equals(this.checkerBoard);
     }
 
+    /**
+     * Removes spectators from the list of spectators
+     * @param spectator the spectator to be removed
+     * @return true if the spectator was successfully removed
+     */
     public boolean removeSpectator(Player spectator){
         this.spectators.remove(spectator);
 
@@ -339,10 +397,19 @@ public class Game {
         return this.resignedPlayer;
     }
 
+    /**
+     * Checks if both players are currently in a game
+     * @return true if both players are in a game
+     */
     public boolean arePlayersInGame(){
         return this.redPlayer.isPlaying() && this.whitePlayer.isPlaying();
     }
 
+    /**
+     * Gets the game result message
+     * @param currentUser the current user to display and compare
+     * @return the game result message
+     */
     public String getGameResult(Player currentUser){
         String gameResult;
 
@@ -372,11 +439,21 @@ public class Game {
         return gameResult;
     }
 
+    /**
+     * Gets the number of current spectators
+     * @return the number of current spectator
+     */
     public int getSpectatorNum(){
         return this.spectators.size();
     }
 
-
+    /**
+     * Gets the key names if any are present
+     * @return "END GAME": if we want the end game scenario
+     *         "MULTI JUMP": if we want the multi jump scenario
+     *         "KING PIECE": if we want the king piece scenario
+     *         "NONE": if there is no name that makes the key
+     */
     private String getKeyNames() {
         String redName = this.redPlayer.getName();
         String whiteName = this.whitePlayer.getName();
@@ -391,6 +468,14 @@ public class Game {
             return "NONE";
         }
     }
+
+    /**
+     * Checks to see if the red or white player's name equals a special key
+     * @param redName the name of the Red Player
+     * @param whiteName the name of the White Player
+     * @param key the key to be compared with
+     * @return true if at least one of their names matches
+     */
     private boolean redOrWhitePlayerNameEquals(String redName, String whiteName, String key) {
         return redName.equals(key) || whiteName.equals(key);
     }
