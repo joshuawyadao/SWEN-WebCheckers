@@ -35,7 +35,7 @@ class GetHomeRouteTest {
         gameCenter = new GameCenter();
         engine = mock(TemplateEngine.class);
 
-        this.CuT = new GetHomeRoute(playerLobby, engine);
+        this.CuT = new GetHomeRoute(playerLobby, gameCenter, engine);
     }
 
     @Test
