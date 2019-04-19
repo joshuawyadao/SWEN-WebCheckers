@@ -55,7 +55,7 @@ public class GameCenter {
         return gameId;
     }
 
-    
+
     /**
      * Gets an active game by their unique gameID
      * @param gameId the unique string to find the game with
