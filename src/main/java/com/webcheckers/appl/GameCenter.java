@@ -185,7 +185,7 @@ public class GameCenter {
         ArrayList<ReplayGame> sortedPreviousGames = new ArrayList<>();
         ReplayGame tempGame;
 
-        for(int i = 1; i < previousGames.size() + 1; i++){
+        for(int i = 0; i < previousGames.size() + 1; i++){
             tempGame = previousGames.get("Game #" + i);
             sortedPreviousGames.add(tempGame);
         }

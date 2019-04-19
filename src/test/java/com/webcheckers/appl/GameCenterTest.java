@@ -1,13 +1,13 @@
 package com.webcheckers.appl;
 
-import com.webcheckers.model.Game;
-import com.webcheckers.model.Move;
-import com.webcheckers.model.Player;
-import com.webcheckers.model.Position;
+import com.webcheckers.model.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.eq;
@@ -17,13 +17,12 @@ import static org.mockito.Mockito.mock;
 class GameCenterTest {
 
     private GameCenter CuT;
-    private Game CuTGame;
-    private String GAME_ID_TEST = "redPlayerVswhitePlayer";
+
+    private String GAME_ID_TEST = "Game 0";
 
     @BeforeEach
     void setup() {
         this.CuT = new GameCenter();
-        //this.CuTGame = new Game()
     }
 
     @Test
@@ -73,7 +72,8 @@ class GameCenterTest {
     @Test
     void testDoesNotHasGame(){
         Player player1 = new Player("redPlayer");
-        assertFalse( CuT.hasGame(player1, null) );
+        Player player2 = new Player("whitePlayer");
+        assertFalse( CuT.hasGame(player1, player2) );
     }
 
     @Test
@@ -95,7 +95,7 @@ class GameCenterTest {
 
         String cutGame = CuT.newGame(player1, player2);
 
-        assertTrue(CuT.submitTurn(cutGame));
+        assertFalse(CuT.submitTurn(cutGame));
     }
 
     @Test
@@ -127,15 +127,103 @@ class GameCenterTest {
         Player player1 = new Player("redPlayer");
         Player player2 = new Player("whitePlayer");
 
-        CuT.newGame(player1, player2);
+        String game = CuT.newGame(player1, player2);
 
         assertSame(player1, CuT.getGame(GAME_ID_TEST).getRedPlayer());
         assertSame(player2, CuT.getGame(GAME_ID_TEST).getWhitePlayer());
 
         CuT.getGame(GAME_ID_TEST).submitTurn();
 
-        assertFalse( CuT.isMyTurn(GAME_ID_TEST, player1));
-        assertTrue( CuT.isMyTurn(GAME_ID_TEST, player2));
+        assertTrue( CuT.isMyTurn(GAME_ID_TEST, player1) );
+        assertFalse( CuT.isMyTurn(GAME_ID_TEST, player2) );
+    }
+
+    @Test
+    void testIsInAnyGame() {
+
+        Player p1 = new Player("p1");
+        Player p2 = new Player("p2");
+        Player p3 = new Player("p3");
+        Player p4 = new Player("p4");
+        Player p5 = new Player("p5");
+        Player p6 = new Player("p6");
+
+        String game0 = CuT.newGame(p1, p2);
+        String game1 = CuT.newGame(p3, p4);
+
+        assertTrue( CuT.isInAnyGame(p1) );
+        assertTrue( CuT.isInAnyGame(p2) );
+        assertTrue( CuT.isInAnyGame(p4) );
+        assertFalse( CuT.isInAnyGame(p6) );
+
+    }
+
+    @Test
+    void testIsMyTurn() {
+
+        Player p1 = new Player("p1");
+        Player p2 = new Player("p2");
+
+        String cutGame = CuT.newGame(p1, p2);
+
+        assertTrue( CuT.isMyTurn(cutGame, p1) );
+        assertFalse( CuT.isMyTurn(cutGame, p2) );
+
+    }
+
+    @Test
+    void testAddToPreviousGames() {
+
+        Player p1 = new Player("p1");
+        Player p2 = new Player("p2");
+
+        String game0 = CuT.newGame(p1, p2);
+
+        assertFalse(CuT.hasPreviousGames());
+
+        CuT.addToPreviousGames( CuT.getGame(game0), "0");
+
+        assertTrue(CuT.hasPreviousGames());
+
+
+    }
+
+    @Test
+    void testGetCurrentGames() {
+        Player p1 = new Player("p1");
+        Player p2 = new Player("p2");
+
+        String game0 = CuT.newGame(p1,p2);
+
+        Collection<Game> gameCollection = CuT.getCurrentGames();
+
+        assertTrue( gameCollection.contains(CuT.getGame(game0)) );
+    }
+
+    @Test
+    void sortPreviousGames() {
+
+        Player p1 = new Player("p1");
+        Player p2 = new Player("p2");
+        Player p3 = new Player("p3");
+        Player p4 = new Player("p4");
+        Player p5 = new Player("p5");
+        Player p6 = new Player("p6");
+
+        String game0 = CuT.newGame(p1,p2);
+        String game1 = CuT.newGame(p3,p4);
+        String game2 = CuT.newGame(p5,p6);
+
+        CuT.addToPreviousGames( CuT.getGame(game0), "0");
+        CuT.addToPreviousGames( CuT.getGame(game1), "1");
+        CuT.addToPreviousGames( CuT.getGame(game2) , "2");
+
+        ArrayList<ReplayGame> arrayList = CuT.sortPreviousGames();
+
+        assertEquals( arrayList.get(1).getGameId(), "Game #1" );
+        assertEquals( arrayList.get(2).getGameId(), "Game #2" );
+        assertEquals( arrayList.get(3).getGameId(), "Game #3" );
+
     }
 
     @Test
