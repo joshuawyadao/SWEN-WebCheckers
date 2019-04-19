@@ -18,6 +18,7 @@ public class GetSpectatorSwapRoute implements Route {
     public Object handle(Request request, Response response) {
         Session currentSession = request.session();
 
+
         String gameID = currentSession.attribute("specID");
 
         Boolean isRed = currentSession.attribute("isRed");
