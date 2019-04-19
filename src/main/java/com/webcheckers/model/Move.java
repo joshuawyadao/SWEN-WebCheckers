@@ -28,9 +28,9 @@ public class Move {
     }
 
     /**
-     *
-     * @param piece
-     * @return
+     * Checks the piece and returns the type of move the piece was
+     * @param piece the piece to be checked
+     * @return the type of move the piece made
      */
     public TYPE_OF_MOVE typeOfMove( Piece piece ) {
         int rowDifference = this.end.getRow() - this.start.getRow();
@@ -102,41 +102,41 @@ public class Move {
     }
 
     /**
-     *
-     * @return
+     * Gets the row value from the start position
+     * @return the row form the start position
      */
     public int getStartRow() {
         return this.start.getRow();
     }
 
     /**
-     *
-     * @return
+     * Gets the cell value from the start position
+     * @return the cell from the start position
      */
     public int getStartCell() {
         return this.start.getCell();
     }
 
     /**
-     *
-     * @return
+     * Gets the row value from the end position
+     * @return the row from the end position
      */
     public int getEndRow() {
         return this.end.getRow();
     }
 
     /**
-     *
-     * @return
+     * Gets the cell value from the end position
+     * @return the cell from the end position
      */
     public int getEndCell() {
         return this.end.getCell();
     }
 
     /**
-     *
-     * @param board
-     * @return
+     * Validates a simple move
+     * @param board the board to be checked
+     * @return true if the move was valid
      */
     public boolean validSimpleMove( Board board ) {
         Space[][] checkerBoard = board.getBoard();
@@ -146,9 +146,9 @@ public class Move {
     }
 
     /**
-     *
-     * @param board
-     * @return
+     * Validates a simple jump
+     * @param board the board to be checked
+     * @return the position of the piece that was captured or null if not a valid jump
      */
     public Position validSimpleJump( Board board ) {
         Position between = this.start.between( this.end );

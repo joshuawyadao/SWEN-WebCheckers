@@ -78,6 +78,11 @@ public class Space {
         return new Space( this.cellIdx, tempPiece, this.color );
     }
 
+    /**
+     *
+     * @param player
+     * @return
+     */
     public boolean validSpaceWithPiece( Player player ) {
         return ( getColor() == COLOR.DARK ) &&
                 ( getPiece() != null ) &&

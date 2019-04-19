@@ -90,11 +90,17 @@ public class Board {
         }
     }
 
+    /**
+     * Sets up the board for a simple jump to win the game for demo
+     */
     public void setUpEndGame() {
         this.board[4][5].setPiece(new Piece(Piece.TYPE.SINGLE, Piece.COLOR.RED));
         this.board[5][4].setPiece(new Piece(Piece.TYPE.SINGLE, Piece.COLOR.WHITE));
     }
 
+    /**
+     * Sets up the board for a multiple jump for demo
+     */
     public void setUpMultiJump() {
         this.board[0][1].setPiece(new Piece(Piece.TYPE.SINGLE, Piece.COLOR.RED));
         this.board[1][2].setPiece(new Piece(Piece.TYPE.SINGLE, Piece.COLOR.WHITE));
@@ -102,6 +108,9 @@ public class Board {
         this.board[5][6].setPiece(new Piece(Piece.TYPE.SINGLE, Piece.COLOR.WHITE));
     }
 
+    /**
+     * Sets up the board to king a piece for demo
+     */
     public void setUpKingPiece() {
         this.board[6][1].setPiece(new Piece(Piece.TYPE.SINGLE, Piece.COLOR.RED));
         this.board[4][5].setPiece(new Piece(Piece.TYPE.SINGLE, Piece.COLOR.WHITE));
