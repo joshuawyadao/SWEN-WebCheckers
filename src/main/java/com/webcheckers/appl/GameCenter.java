@@ -1,9 +1,6 @@
 package com.webcheckers.appl;
 
-import com.webcheckers.model.Game;
-import com.webcheckers.model.Move;
-import com.webcheckers.model.Player;
-import com.webcheckers.model.ReplayGame;
+import com.webcheckers.model.*;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -27,16 +24,18 @@ public class GameCenter {
     //
 
     private HashMap<String, Game> currentGames;
-    private int gamesCompleted;
+    private int gamesPlayed;
     private HashMap<String, ReplayGame> previousGames;
+    private int gamesCompleted;
 
     /**
      * GameCenter constructor
      */
     public GameCenter( ){
         this.currentGames = new HashMap<>();
-        this.gamesCompleted = 0;
+        this.gamesPlayed = 0;
         this.previousGames = new HashMap<>();
+        this.gamesCompleted = 0;
     }
 
     /**
@@ -46,7 +45,8 @@ public class GameCenter {
      * @return a gameID, that is, a unique string to identify the newly made game
      */
     public String newGame(Player redPlayer, Player whitePlayer){
-        String gameId = createGameId(redPlayer, whitePlayer);
+        gamesPlayed++;
+        String gameId = createGameId();
         Game newGame = new Game(redPlayer, whitePlayer, gameId);
         newGame.initializeGame();
 
@@ -54,6 +54,7 @@ public class GameCenter {
 
         return gameId;
     }
+
 
     /**
      * Gets an active game by their unique gameID
@@ -64,12 +65,17 @@ public class GameCenter {
         return currentGames.get(gameId);
     }
 
+
+    public ReplayGame getReplayGame(String gameId) {
+        return previousGames.get(gameId).cloneGame(); }
+
     /**
      * Gets a finished game from the list of finished games
      * @param gameId the gameID to get the game
      * @return the requested finished game
      */
     public ReplayGame getReplayGame(String gameId) { return previousGames.get(gameId); }
+
 
     /**
      * Removes a game from the list of currently playing games
@@ -81,12 +87,13 @@ public class GameCenter {
 
     /**
      * Creates a new, unique ID to identify a game with
-     * @param redPlayer the redPlayer
-     * @param whitePlayer the whitePlayer
+//     * @param redPlayer the redPlayer
+//     * @param whitePlayer the whitePlayer
      * @return a new ID, that is, a string
      */
-    private String createGameId(Player redPlayer, Player whitePlayer){
-        return redPlayer.getName() + "Vs" + whitePlayer.getName();
+    private String createGameId(){
+        return "Game " + gamesPlayed;
+//        return redPlayer.getName() + "Vs" + whitePlayer.getName();
     }
 
     /**
@@ -136,10 +143,18 @@ public class GameCenter {
      * @return true if either one of the 2 players have a game, and false if both players do not have a game
      */
     public boolean hasGame(Player player1, Player player2) {
-        String key1 = player1.getName() + "Vs" + player2.getName();
-        String key2 = player2.getName() + "Vs" + player1.getName();
+        for(Game game: currentGames.values()){
+            if(player1.equals(game.getRedPlayer()) && player2.equals(game.getWhitePlayer()))
+                return true;
+            else if(player2.equals(game.getRedPlayer()) && player1.equals(game.getWhitePlayer()))
+                return true;
+        }
 
-        return currentGames.get(key1) != null || currentGames.get(key2) != null;
+        return false;
+//        String key1 = player1.getName() + "Vs" + player2.getName();
+//        String key2 = player2.getName() + "Vs" + player1.getName();
+//
+//        return currentGames.get(key1) != null || currentGames.get(key2) != null;
     }
 
     /**
@@ -180,10 +195,6 @@ public class GameCenter {
                                                  game.getPreviousTurns(), previousGameId);
 
         previousGames.put(previousGameId, previousGame);
-
-        if(currentGames.containsKey(gameId))
-            currentGames.remove(gameId);
-
     }
 
     /**
@@ -199,6 +210,8 @@ public class GameCenter {
             sortedPreviousGames.add(tempGame);
         }
 
+        Collections.reverse(sortedPreviousGames);
+
         return sortedPreviousGames;
     }
 
@@ -207,7 +220,7 @@ public class GameCenter {
      * @return true if the list has any games
      */
     public boolean hasPreviousGames(){
-        return previousGames.size() > 0;
+        return !previousGames.isEmpty();
     }
 
     /**
@@ -217,4 +230,61 @@ public class GameCenter {
     public Collection<Game> getCurrentGames(){
         return currentGames.values();
     }
+
+    public boolean hasCurrentGames() {return !currentGames.isEmpty();}
+
+    public boolean isSpectatorUpdated(String gameId, Player spectator){
+        Game game = currentGames.get(gameId);
+
+        return game.isSpectatorUpdated(spectator);
+    }
+
+    public boolean removeSpectator(String gameId, Player spectator){
+        Game game = currentGames.get(gameId);
+
+        game.removeSpectator(spectator);
+
+        if(game.getSpectatorNum() == 0 && ((game.isResigned()) || (game.completedGame() != null)))
+            currentGames.remove(gameId);
+
+        return game.removeSpectator(spectator);
+    }
+
+    public boolean updateSpectator(String gameId, Player spectator){
+        Game gameToSpec = currentGames.get(gameId);
+        gameToSpec.updateSpectator(spectator);
+
+        return true;
+    }
+
+    public String getPlayerGameId(Player player) {
+        for( Game game : currentGames.values() ) {
+            if( game.isInGame(player)) {
+                return game.getGameId();
+            }
+        }
+
+        return null;
+    }
+
+    public Map<String, Object> endGame(String gameId, Player currentUser){
+        Map<String, Object> modeOptions = new HashMap<>(2);
+        Game endedGame = currentGames.get(gameId);
+        String gameResult = endedGame.getGameResult(currentUser);
+
+        modeOptions.put("isGameOver", true);
+        modeOptions.put("gameOverMessage", gameResult);
+
+        currentUser.leaveGame();
+
+        if(!(endedGame.getRedPlayer().isPlaying()) && !(endedGame.getWhitePlayer().isPlaying())){
+            addToPreviousGames(endedGame, gameId);
+
+            if(endedGame.getSpectatorNum() == 0)
+                currentGames.remove(gameId);
+        }
+
+        return modeOptions;
+    }
+
 }

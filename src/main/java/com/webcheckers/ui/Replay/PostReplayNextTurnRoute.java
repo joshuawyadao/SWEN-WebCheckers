@@ -32,8 +32,9 @@ public class PostReplayNextTurnRoute implements Route {
     public Object handle(Request request, Response response) {
         LOG.finer("PostReplayNextTurnRoute is invoked.");
 
-        String gameID = request.queryParams("gameID");
-        ReplayGame replayGame = this.gameCenter.getReplayGame(gameID);
+//        String gameID = request.queryParams("gameID");
+        Session currentSession = request.session();
+        ReplayGame replayGame = currentSession.attribute("replayGame");
         Board nextTurn = replayGame.getNextTurn();
 
         // If clicking next button was successful

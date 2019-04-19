@@ -3,6 +3,7 @@ package com.webcheckers.ui.Replay;
 import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Board;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import com.webcheckers.model.ReplayGame;
@@ -11,6 +12,7 @@ import com.webcheckers.ui.Home.GetHomeRoute;
 import com.webcheckers.util.Message;
 import spark.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -44,7 +46,14 @@ public class GetReplayGameRoute implements Route {
         Player currentUser = currentSession.attribute(GetHomeRoute.CURRENT_USER_ATTR);
 
         String gameID = request.queryParams("gameID");
-        ReplayGame replayGame = gameCenter.getReplayGame(gameID);
+        ReplayGame replayGame;
+
+        if(currentSession.attribute("replayGame") == null){
+            replayGame = gameCenter.getReplayGame(gameID);
+            currentSession.attribute("replayGame", replayGame);
+        }else {
+            replayGame = currentSession.attribute("replayGame");
+        }
 
         // Upon entering the replayed game in question,
         // this route will go through the following routes

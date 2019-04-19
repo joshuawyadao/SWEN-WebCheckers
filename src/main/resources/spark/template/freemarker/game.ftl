@@ -19,8 +19,6 @@
 <body>
   <div class="page">
     <h1>Web Checkers | Game View</h1>
-    
-    <#include "nav-bar.ftl">
 
     <div class="body">
 
@@ -58,6 +56,14 @@
           
           <fieldset id="game-toolbar">
             <legend>Controls</legend>
+            <#if viewMode.name() == "SPECTATOR">
+                <form action="./swap" method="GET">
+                    <h3>
+                        <input type="hidden" name="p" value="stuff">
+                        <button type="submit">Swap Views</button>
+                    </h3>
+                    </form>
+             </#if>
             <div class="toolbar"></div>
           </fieldset>
           
@@ -93,7 +99,7 @@
     </div>
   </div>
 
-  <audio id="audio" src="http://www.soundjay.com/button/beep-07.mp3" autostart="false" ></audio>
+  <audio id="audio" src="https://s0.vocaroo.com/media/download_temp/Vocaroo_s0XVpJBmroKi.mp3" autostart="false" ></audio>
   
   <script data-main="/js/game/index" src="/js/require.js"></script>
   

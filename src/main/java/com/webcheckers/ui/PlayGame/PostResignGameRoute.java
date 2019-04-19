@@ -3,6 +3,7 @@ package com.webcheckers.ui.PlayGame;
 import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import com.webcheckers.ui.Home.GetHomeRoute;
 import com.webcheckers.util.Message;
@@ -56,8 +57,9 @@ public class PostResignGameRoute implements Route {
         Player currentUser = currentSession.attribute(GetHomeRoute.CURRENT_USER_ATTR);
         String gameId = currentSession.attribute(GetGameRoute.GAME_ID_ATTR);
 
-        gameCenter.getGame(gameId).playerResigned(currentUser);
-        vm.put("message", GetHomeRoute.WELCOME_MSG);
+        Game game = gameCenter.getGame(gameId);
+        game.playerResigned(currentUser);
+
         Message resignInfo = Message.info("Resigned.");
 
         return gson.toJson(resignInfo);

@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import com.webcheckers.ui.PlayGame.GetGameRoute;
 import com.webcheckers.ui.WebServer;
@@ -80,16 +81,32 @@ public class GetHomeRoute implements Route {
 
     if(httpSession.attribute(CURRENT_USER_ATTR) != null) {
         Player currentUser = httpSession.attribute(CURRENT_USER_ATTR);
+
         vm.put(CURRENT_USER_ATTR, currentUser);
+        vm.put("hasPlayers", playerLobby.hasPlayers());
         vm.put("players", playerLobby.getPlayers());
+        vm.put("hasCurrentGames", gameCenter.hasCurrentGames());
         vm.put("currentGames", gameCenter.getCurrentGames());
 
         //if the player has been challenged to a game redirect them to the
         //GET Game Route, with the appropriate 'opponent' parameter
-        if(currentUser.isPlaying() && (httpSession.attribute(GetGameRoute.GAME_ID_ATTR) != null)){
-            response.redirect(WebServer.GAME_URL);
-            halt();
-            return null;
+        if(httpSession.attribute(GetGameRoute.GAME_ID_ATTR) == null){
+            if(currentUser.isPlaying()){
+                String newGameId = gameCenter.getPlayerGameId(currentUser);
+                httpSession.attribute(GetGameRoute.GAME_ID_ATTR, newGameId);
+
+                response.redirect(WebServer.GAME_URL);
+                halt();
+                return null;
+            }
+        }else {
+            String gameId = httpSession.attribute(GetGameRoute.GAME_ID_ATTR);
+            Game game = gameCenter.getGame(gameId);
+
+            if(game.isResigned()){
+                currentUser.leaveGame();
+                httpSession.removeAttribute(GetGameRoute.GAME_ID_ATTR);
+            }
         }
     }else{
         int currentNumOfPlayers = playerLobby.getNumOfPlayers();

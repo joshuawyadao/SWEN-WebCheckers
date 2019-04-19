@@ -90,6 +90,23 @@ public class Board {
         }
     }
 
+    public void setUpEndGame() {
+        this.board[4][5].setPiece(new Piece(Piece.TYPE.SINGLE, Piece.COLOR.RED));
+        this.board[5][4].setPiece(new Piece(Piece.TYPE.SINGLE, Piece.COLOR.WHITE));
+    }
+
+    public void setUpMultiJump() {
+        this.board[0][1].setPiece(new Piece(Piece.TYPE.SINGLE, Piece.COLOR.RED));
+        this.board[1][2].setPiece(new Piece(Piece.TYPE.SINGLE, Piece.COLOR.WHITE));
+        this.board[3][4].setPiece(new Piece(Piece.TYPE.SINGLE, Piece.COLOR.WHITE));
+        this.board[5][6].setPiece(new Piece(Piece.TYPE.SINGLE, Piece.COLOR.WHITE));
+    }
+
+    public void setUpKingPiece() {
+        this.board[6][1].setPiece(new Piece(Piece.TYPE.SINGLE, Piece.COLOR.RED));
+        this.board[4][5].setPiece(new Piece(Piece.TYPE.SINGLE, Piece.COLOR.WHITE));
+    }
+
     /**
      * Get the entire board
      * @return the entire board
