@@ -223,7 +223,7 @@ public class WebServer {
 
     post(SIGN_OUT_URL, new PostSignOutRoute(playerLobby, gameCenter));
 
-    get(SPECTATOR_GAME_URL, new GetSpectatorGameRoute(templateEngine, gameCenter, playerLobby, gson));
+    get(SPECTATOR_GAME_URL, new GetSpectatorGameRoute(templateEngine, gameCenter));
 
     get(SPECTATOR_STOP_WATCHING_URL, new GetSpectatorStopWatchingRoute(gameCenter));
 

@@ -6,18 +6,34 @@ import spark.Response;
 import spark.Route;
 import spark.Session;
 
+import java.util.logging.Logger;
+
 import static spark.Spark.halt;
 
+/**
+ * The UI Controller to swap the perspective and GET the spectator game page
+ */
 public class GetSpectatorSwapRoute implements Route {
 
-    public GetSpectatorSwapRoute(){
+    private static final Logger LOG = Logger.getLogger(GetSpectatorSwapRoute.class.getName());
 
+    /**
+     * Create the Spark Route (UI Controller) to handle  all {@code GET /} HTTP requests.
+     */
+    public GetSpectatorSwapRoute(){
+        LOG.config("GetSpectatorSwapRoute is initialized.");
     }
 
+    /**
+     * Render the WebCheckers Spectator Game page after swapping perspectives
+     * @param request the HTTP request
+     * @param response the HTTP response
+     * @return the rendered HTML for the Spectator Game page
+     */
     @Override
     public Object handle(Request request, Response response) {
+        LOG.finer("GetSpectatorSwapRoute is invoked.");
         Session currentSession = request.session();
-
 
         String gameID = currentSession.attribute("specID");
 
