@@ -250,7 +250,7 @@ public class GameCenter {
 
         game.removeSpectator(spectator);
 
-        if(game.getSpectatorNum() == 0 && ((game.isResigned()) || (game.completedGame() != null)))
+        if(game.getSpectatorNum() == 0 && game.isResigned() || (game.completedGame() != null))
             currentGames.remove(gameId);
 
         return game.removeSpectator(spectator);

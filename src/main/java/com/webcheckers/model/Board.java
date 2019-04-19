@@ -106,7 +106,7 @@ public class Board {
      */
     public void setUpKingPiece() {
         this.board[6][1].setPiece(new Piece(Piece.TYPE.SINGLE, Piece.COLOR.RED));
-        this.board[4][5].setPiece(new Piece(Piece.TYPE.SINGLE, Piece.COLOR.WHITE));
+        this.board[7][4].setPiece(new Piece(Piece.TYPE.SINGLE, Piece.COLOR.WHITE));
     }
 
     /**

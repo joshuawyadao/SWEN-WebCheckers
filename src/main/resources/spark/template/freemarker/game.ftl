@@ -20,8 +20,6 @@
   <div class="page">
     <h1>Web Checkers | Game View</h1>
 
-    <#include "nav-bar.ftl">
-
     <div class="body">
 
       <div id="help_text" class="INFO"></div>
