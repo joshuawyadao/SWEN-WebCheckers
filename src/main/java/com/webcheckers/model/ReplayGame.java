@@ -38,6 +38,20 @@ public class ReplayGame {
     }
 
     /**
+     * Clones this game for another person to view
+     * @return the new replayGame instance to be viewed
+     */
+    public ReplayGame cloneGame(){
+        Player redPlayer = new Player(this.redPlayer.getName());
+        Player whitePlayer = new Player(this.whitePlayer.getName());
+
+        ArrayList<Board> previousTurns = new ArrayList<>();
+        previousTurns.addAll(this.previousTurns);
+
+        return new ReplayGame(redPlayer, whitePlayer, previousTurns, this.gameId);
+    }
+
+    /**
      * Get the game's end time
      * @return the game's end time
      */
@@ -77,6 +91,10 @@ public class ReplayGame {
         return this.gameId;
     }
 
+    /**
+     * Gets the previous turns
+     * @return an array list of the previous turns
+     */
     public ArrayList<Board> getPreviousTurns() { return this.previousTurns; }
 
     /**
