@@ -27,6 +27,7 @@ public class GameCenter {
     private int gamesPlayed;
     private HashMap<String, ReplayGame> previousGames;
     private int gamesCompleted;
+
     /**
      * GameCenter constructor
      */
@@ -63,7 +64,8 @@ public class GameCenter {
         return currentGames.get(gameId);
     }
 
-    public ReplayGame getReplayGame(String gameId) { return previousGames.get(gameId); }
+    public ReplayGame getReplayGame(String gameId) {
+        return previousGames.get(gameId).cloneGame(); }
 
     public void removeGame(String gameId) {
         currentGames.remove(gameId);
