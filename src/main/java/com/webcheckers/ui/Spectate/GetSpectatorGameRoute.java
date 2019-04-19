@@ -11,6 +11,9 @@ import spark.*;
 import java.util.*;
 import java.util.logging.Logger;
 
+/**
+ * The UI Controller to GET the Spectator Game page
+ */
 public class GetSpectatorGameRoute implements Route {
 
     private static final Logger LOG = Logger.getLogger(GetSpectatorGameRoute.class.getName());
@@ -19,21 +22,27 @@ public class GetSpectatorGameRoute implements Route {
 
     private final TemplateEngine templateEngine;
 
-    private final PlayerLobby playerLobby;
-
     private final GameCenter gameCenter;
 
-    private final Gson gson;
 
-    public GetSpectatorGameRoute(final TemplateEngine templateEngine, final GameCenter gameCenter
-    , final PlayerLobby playerLobby, final Gson gson) {
+    /**
+     * Create the Spark Route (UI Controller) to handle all {@code GET /} HTTP requests.
+     * @param templateEngine the HTML Rendering Engine
+     * @param gameCenter class that holds all current active games and replay games
+     * @param playerLobby class that holds all online players
+     */
+    public GetSpectatorGameRoute(final TemplateEngine templateEngine, final GameCenter gameCenter) {
         this.templateEngine = templateEngine;
         this.gameCenter = gameCenter;
-        this.playerLobby = playerLobby;
-        this.gson = gson;
         LOG.config("GetSpectatorGameRoute is initialized.");
     }
 
+    /**
+     * Render the WebCheckers Spectator Page
+     * @param request the HTTP request
+     * @param response the HTTP response
+     * @return the rendered HTML for the Spectator Game page
+     */
     @Override
     public Object handle(Request request, Response response) {
         LOG.finer("GetSpectatorGameRoute is invoked.");
@@ -41,10 +50,6 @@ public class GetSpectatorGameRoute implements Route {
         Session currentSession = request.session();
         Player currentUser = currentSession.attribute(GetHomeRoute.CURRENT_USER_ATTR);
 
-//        Set<String> qp = request.queryParams();
-//        for (String s : qp){
-//            System.out.println(s);
-//        }
         String gameID;
         if (currentSession.attribute("specID") == null) {
             gameID = request.queryParams("gameID");
@@ -52,7 +57,6 @@ public class GetSpectatorGameRoute implements Route {
         } else {
             gameID = currentSession.attribute("specID");
         }
-        //System.out.println(gameID);
 
         Game gameToSpec = gameCenter.getGame(gameID);
 
@@ -68,8 +72,7 @@ public class GetSpectatorGameRoute implements Route {
         if (currentSession.attribute("isRed") != null){
             isRed = currentSession.attribute("isRed");
         }
-//        if (gameToSpec.getActivePlayer().equals(gameToSpec.getRedPlayer())) isRed = true;
-//        else isRed = false;
+
         vm.put("board", new BoardView(gameToSpec.getSpectatorBoard(currentUser), isRed));
 
         if((gameToSpec.isResigned()) || (gameToSpec.completedGame() != null)){
