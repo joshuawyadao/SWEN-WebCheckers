@@ -316,7 +316,52 @@ class GameCenterTest {
         assertNull( CuT.getPlayerGameId(p6) );
     }
 
+    @Test
+    void testGetReplayGame() {
+        assertNull( CuT.getReplayGame("0"));
 
+        Player p1 = new Player("p1");
+        Player p2 = new Player("p2");
+
+        String game0 = CuT.newGame(p1, p2);
+
+        CuT.addToPreviousGames( CuT.getGame(game0) ,game0);
+
+        assertNull(CuT.getReplayGame("Game #" + 0));
+
+    }
+
+    @Test
+    void testHasGame() {
+        Player p1 = new Player("p1");
+        Player p2 = new Player("p2");
+        Player p3 = new Player("p3");
+        Player p4 = new Player("p4");
+        Player p5 = new Player("p5");
+        Player p6 = new Player("p6");
+
+        CuT.newGame(p1,p2);
+        CuT.newGame(p3,p4);
+
+        assertTrue(CuT.hasGame(p1,p2));
+        assertTrue(CuT.hasGame(p3,p4));
+        assertFalse(CuT.hasGame(p5,p6));
+        assertFalse(CuT.hasGame(p1, p5));
+    }
+
+//    @Test
+//    void testEndGame() {
+//        Player p1 = new Player("p1");
+//        Player p2 = new Player("p2");
+//
+//        Game game = new Game(p1, p2, "0");
+//        Board board = new Board(false);
+//
+//
+//        String game0 = CuT.
+//
+//        CuT.endGame(game0, p1);
+//    }
 
 
 
