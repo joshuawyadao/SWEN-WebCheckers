@@ -193,6 +193,8 @@ public class GameCenter {
             sortedPreviousGames.add(tempGame);
         }
 
+        Collections.reverse(sortedPreviousGames);
+
         return sortedPreviousGames;
     }
 
