@@ -316,7 +316,6 @@ public class Game {
      */
     public boolean updateSpectator(Player spectator){
         this.spectators.put(spectator, this.checkerBoard);
-
         return true;
     }
 
@@ -336,7 +335,6 @@ public class Game {
      */
     public boolean isSpectatorUpdated(Player spectator){
         Board spectatorBoard = this.spectators.get(spectator);
-
         return spectatorBoard.equals(this.checkerBoard);
     }
 
@@ -347,7 +345,6 @@ public class Game {
      */
     public boolean removeSpectator(Player spectator){
         this.spectators.remove(spectator);
-
         return true;
     }
 

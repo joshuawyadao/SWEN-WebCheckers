@@ -63,7 +63,9 @@ public class Player {
      * Determine if the player is playing
      * @return true if is playing, false otherwise
      */
-    public boolean isPlaying() { return this.playing; }
+    public boolean isPlaying() {
+        return this.playing;
+    }
 
     /**
      * Returns a player's piece color

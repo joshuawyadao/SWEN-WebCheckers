@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class MoveTest {
 
     @Test
-    public void testMoveNullity() {
+    void testMoveNullity() {
         final Position src = new Position(2, 1);
         final Position dst = new Position(3,2);
 
@@ -20,7 +20,7 @@ class MoveTest {
     }
 
     @Test
-    public void testValidSimpleMoveTrueRED_RIGHT() {
+    void testValidSimpleMoveTrueRED_RIGHT() {
         final Board board = new Board();
         final Position startPos = new Position(2, 1);
         final Position endPos = new Position(3,2);
@@ -31,7 +31,7 @@ class MoveTest {
     }
 
     @Test
-    public void testValidSimpleMoveTooLargeJumpRED_RIGHT() {
+    void testValidSimpleMoveTooLargeJumpRED_RIGHT() {
         final Board board = new Board();
         final Position startPos = new Position(2, 1);
         final Position endPos = new Position(4,2);
@@ -42,7 +42,7 @@ class MoveTest {
     }
 
     @Test
-    public void testValidSimpleMoveNotPieceRED_RIGHT() {
+    void testValidSimpleMoveNotPieceRED_RIGHT() {
         final Board board = new Board();
         final Position startPos = new Position(2, 2);
         final Position endPos = new Position(2,3);
@@ -53,7 +53,7 @@ class MoveTest {
     }
 
     @Test
-    public void testValidSimpleJumpTrueRED_RIGHT() {
+    void testValidSimpleJumpTrueRED_RIGHT() {
         final Board board = new Board();
         final Position startPos = new Position(2, 1);
         final Position endPos = new Position(4,3);
@@ -67,7 +67,7 @@ class MoveTest {
 
 
     @Test
-    public void testValidSimpleJumpTooFarRED_RIGHT() {
+    void testValidSimpleJumpTooFarRED_RIGHT() {
         final Board board = new Board();
         final Position startPos = new Position(2, 1);
         final Position endPos = new Position(5,4);
@@ -80,7 +80,7 @@ class MoveTest {
 
 
     @Test
-    public void testValidSimpleJumpSameColorRED_RIGHT() {
+    void testValidSimpleJumpSameColorRED_RIGHT() {
         final Board board = new Board();
         final Position startPos = new Position(2, 1);
         final Position endPos = new Position(4,3);
@@ -92,7 +92,7 @@ class MoveTest {
     }
 
     @Test
-    public void testValidSimpleMoveTrueRED_LEFT() {
+    void testValidSimpleMoveTrueRED_LEFT() {
         final Board board = new Board();
         final Position startPos = new Position(2, 5);
         final Position endPos = new Position(3,4);
@@ -103,10 +103,10 @@ class MoveTest {
     }
 
     @Test
-    public void testValidSimpleMoveTooLargeJumpRED_LEFT() {
+    void testValidSimpleMoveTooLargeJumpRED_LEFT() {
         final Board board = new Board();
         final Position startPos = new Position(2, 5);
-        final Position endPos = new Position(4,3);
+        final Position endPos = new Position(5,3);
 
         final Move CuT = new Move(startPos, endPos);
 
@@ -114,7 +114,7 @@ class MoveTest {
     }
 
     @Test
-    public void testValidSimpleMoveNotPieceRED_LEFT() {
+    void testValidSimpleMoveNotPieceRED_LEFT() {
         final Board board = new Board();
         final Position startPos = new Position(2, 4);
         final Position endPos = new Position(3,3);
@@ -125,7 +125,7 @@ class MoveTest {
     }
 
     @Test
-    public void testValidSimpleJumpTrueRED_LEFT() {
+    void testValidSimpleJumpTrueRED_LEFT() {
         final Board board = new Board();
         final Position startPos = new Position(2, 5);
         final Position endPos = new Position(4,3);
@@ -139,7 +139,7 @@ class MoveTest {
 
 
     @Test
-    public void testValidSimpleJumpTooFarRED_LEFT() {
+    void testValidSimpleJumpTooFarRED_LEFT() {
         final Board board = new Board();
         final Position startPos = new Position(2, 5);
         final Position endPos = new Position(5,2);
@@ -152,7 +152,7 @@ class MoveTest {
 
 
     @Test
-    public void testValidSimpleJumpSameColorRED_LEFT() {
+    void testValidSimpleJumpSameColorRED_LEFT() {
         final Board board = new Board();
         final Position startPos = new Position(2, 5);
         final Position endPos = new Position(4,3);
@@ -164,7 +164,7 @@ class MoveTest {
     }
 
     @Test
-    public void testValidSimpleMoveTrueWHITE_RIGHT() {
+    void testValidSimpleMoveTrueWHITE_RIGHT() {
         final Board board = new Board();
         final Position startPos = new Position(5, 2);
         final Position endPos = new Position(4,3);
@@ -175,10 +175,10 @@ class MoveTest {
     }
 
     @Test
-    public void testValidSimpleMoveTooLargeJumpWHITE_RIGHT() {
+    void testValidSimpleMoveTooLargeJumpWHITE_RIGHT() {
         final Board board = new Board();
         final Position startPos = new Position(5, 2);
-        final Position endPos = new Position(3,4);
+        final Position endPos = new Position(2,4);
 
         final Move CuT = new Move(startPos, endPos);
 
@@ -186,7 +186,7 @@ class MoveTest {
     }
 
     @Test
-    public void testValidSimpleMoveNotPieceWHITE_RIGHT() {
+    void testValidSimpleMoveNotPieceWHITE_RIGHT() {
         final Board board = new Board();
         final Position startPos = new Position(5, 3);
         final Position endPos = new Position(4,4);
@@ -197,7 +197,7 @@ class MoveTest {
     }
 
     @Test
-    public void testValidSimpleJumpTrueWHITE_RIGHT() {
+    void testValidSimpleJumpTrueWHITE_RIGHT() {
         final Board board = new Board();
         final Position startPos = new Position(5, 2);
         final Position endPos = new Position(3,4);
@@ -211,7 +211,7 @@ class MoveTest {
 
 
     @Test
-    public void testValidSimpleJumpTooFarWHITE_RIGHT() {
+    void testValidSimpleJumpTooFarWHITE_RIGHT() {
         final Board board = new Board();
         final Position startPos = new Position(5, 2);
         final Position endPos = new Position(2,5);
@@ -224,7 +224,7 @@ class MoveTest {
 
 
     @Test
-    public void testValidSimpleJumpSameColorWHITE_RIGHT() {
+    void testValidSimpleJumpSameColorWHITE_RIGHT() {
         final Board board = new Board();
         final Position startPos = new Position(5, 2);
         final Position endPos = new Position(3,4);
@@ -236,7 +236,7 @@ class MoveTest {
     }
 
     @Test
-    public void testValidSimpleMoveTrueWHITE_LEFT() {
+    void testValidSimpleMoveTrueWHITE_LEFT() {
         final Board board = new Board();
         final Position startPos = new Position(5, 6);
         final Position endPos = new Position(4,5);
@@ -247,10 +247,10 @@ class MoveTest {
     }
 
     @Test
-    public void testValidSimpleMoveTooLargeJumpWHITE_LEFT() {
+    void testValidSimpleMoveTooLargeJumpWHITE_LEFT() {
         final Board board = new Board();
         final Position startPos = new Position(5, 6);
-        final Position endPos = new Position(3,4);
+        final Position endPos = new Position(2,1);
 
         final Move CuT = new Move(startPos, endPos);
 
@@ -258,7 +258,7 @@ class MoveTest {
     }
 
     @Test
-    public void testValidSimpleMoveNotPieceWHITE_LEFT() {
+    void testValidSimpleMoveNotPieceWHITE_LEFT() {
         final Board board = new Board();
         final Position startPos = new Position(5, 5);
         final Position endPos = new Position(4,4);
@@ -269,7 +269,7 @@ class MoveTest {
     }
 
     @Test
-    public void testValidSimpleJumpTrueWHITE_LEFT() {
+    void testValidSimpleJumpTrueWHITE_LEFT() {
         final Board board = new Board();
         final Position startPos = new Position(5, 6);
         final Position endPos = new Position(3,4);
@@ -283,7 +283,7 @@ class MoveTest {
 
 
     @Test
-    public void testValidSimpleJumpTooFarWHITE_LEFT() {
+    void testValidSimpleJumpTooFarWHITE_LEFT() {
         final Board board = new Board();
         final Position startPos = new Position(5, 6);
         final Position endPos = new Position(2,3);
@@ -296,7 +296,7 @@ class MoveTest {
 
 
     @Test
-    public void testValidSimpleJumpSameColorWHITE_LEFT() {
+    void testValidSimpleJumpSameColorWHITE_LEFT() {
         final Board board = new Board();
         final Position startPos = new Position(5, 6);
         final Position endPos = new Position(3,4);
@@ -308,15 +308,18 @@ class MoveTest {
     }
 
     @Test
-    public void testGetStartNull() {
+    void testGetStartNull() {
         final Space[][] board = new Space[8][8];
-        //final Move CuT = new Move( board );
+        final Position startPos = null;
+        final Position endPos = new Position(3,4);
 
-        //assertNull( CuT.getStart(), "Start is null");
+        final Move CuT = new Move( startPos, endPos );
+
+        assertNull( CuT.getStart(), "Start is null");
     }
 
     @Test
-    public void testGetStartRED_LEFT() {
+    void testGetStartRED_LEFT() {
         final Board board = new Board();
         final Position startPos = new Position(2, 1);
         final Position endPos = new Position(3,2);
@@ -329,7 +332,7 @@ class MoveTest {
     }
 
     @Test
-    public void testGetStartRED_RIGHT() {
+    void testGetStartRED_RIGHT() {
         final Board board = new Board();
         final Position startPos = new Position(2, 1);
         final Position endPos = new Position(3,2);
@@ -342,7 +345,7 @@ class MoveTest {
     }
 
     @Test
-    public void testGetStartWHITE_LEFT() {
+    void testGetStartWHITE_LEFT() {
         final Board board = new Board();
         final Position startPos = new Position(5, 6);
         final Position endPos = new Position(4,5);
@@ -355,7 +358,7 @@ class MoveTest {
     }
 
     @Test
-    public void testGetStartWHITE_RIGHT() {
+    void testGetStartWHITE_RIGHT() {
         final Board board = new Board();
         final Position startPos = new Position(5, 2);
         final Position endPos = new Position(4,3);
@@ -368,7 +371,7 @@ class MoveTest {
     }
 
     @Test
-    public void testGetEndNull() {
+    void testGetEndNull() {
         final Space[][] board = new Space[8][8];
         //final Move CuT = new Move( board );
 
@@ -376,7 +379,7 @@ class MoveTest {
     }
 
     @Test
-    public void testGetEndRED_LEFT() {
+    void testGetEndRED_LEFT() {
         final Board board = new Board();
         final Position startPos = new Position(2, 1);
         final Position endPos = new Position(3,2);
@@ -389,7 +392,7 @@ class MoveTest {
     }
 
     @Test
-    public void testGetEndRED_RIGHT() {
+    void testGetEndRED_RIGHT() {
         final Board board = new Board();
         final Position startPos = new Position(2, 1);
         final Position endPos = new Position(3,2);
@@ -402,7 +405,7 @@ class MoveTest {
     }
 
     @Test
-    public void testGetEndWHITE_LEFT() {
+    void testGetEndWHITE_LEFT() {
         final Board board = new Board();
         final Position startPos = new Position(5, 6);
         final Position endPos = new Position(4,5);
@@ -415,7 +418,7 @@ class MoveTest {
     }
 
     @Test
-    public void testGetEndWHITE_RIGHT() {
+    void testGetEndWHITE_RIGHT() {
         final Board board = new Board();
         final Position startPos = new Position(5, 2);
         final Position endPos = new Position(4,3);
@@ -425,5 +428,10 @@ class MoveTest {
         CuT.validSimpleMove(board);
 
         assertEquals( endPos, CuT.getEnd(), "Start is saved correctly");
+    }
+
+    @Test
+    void testTypesOfMove() {
+
     }
 }

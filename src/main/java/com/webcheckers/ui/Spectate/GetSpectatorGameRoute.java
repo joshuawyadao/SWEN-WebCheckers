@@ -29,7 +29,6 @@ public class GetSpectatorGameRoute implements Route {
      * Create the Spark Route (UI Controller) to handle all {@code GET /} HTTP requests.
      * @param templateEngine the HTML Rendering Engine
      * @param gameCenter class that holds all current active games and replay games
-     * @param playerLobby class that holds all online players
      */
     public GetSpectatorGameRoute(final TemplateEngine templateEngine, final GameCenter gameCenter) {
         this.templateEngine = templateEngine;

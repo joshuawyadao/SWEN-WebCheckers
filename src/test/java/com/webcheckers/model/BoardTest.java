@@ -12,8 +12,8 @@ class BoardTest {
 
     @BeforeEach
     void setUp() {
-        CuT = new Board();
         CuTNoPieces = new Board(false);
+        CuT = new Board( true);
     }
 
     @Test
@@ -84,6 +84,14 @@ class BoardTest {
     }
 
     @Test
+    void noWinner() {
+        Space[][] testSpaces = CuT.getBoard();
+        assertFalse( CuT.finishedGame() );
+        assertEquals( Player.PlayerColor.NONE, CuT.winnerColor() );
+
+    }
+
+    @Test
     void kingPieces() {
         Space[][] testSpaces = CuTNoPieces.getBoard();
         Piece pieceTest = new Piece(Piece.TYPE.SINGLE, Piece.COLOR.WHITE);
@@ -97,4 +105,20 @@ class BoardTest {
 
         assertEquals(testSpaces[0][1].getPiece().getType(), Piece.TYPE.KING);
     }
+
+    @Test
+    void testSetUpEndGame() {
+        CuT.setUpEndGame();
+    }
+
+    @Test
+    void testSetUpMultiJump() {
+        CuT.setUpMultiJump();
+    }
+
+    @Test
+    void testSetUpKingPiece() {
+        CuT.setUpKingPiece();
+    }
+
 }
