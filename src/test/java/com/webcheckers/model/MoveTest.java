@@ -429,4 +429,9 @@ class MoveTest {
 
         assertEquals( endPos, CuT.getEnd(), "Start is saved correctly");
     }
+
+    @Test
+    void testTypesOfMove() {
+
+    }
 }
