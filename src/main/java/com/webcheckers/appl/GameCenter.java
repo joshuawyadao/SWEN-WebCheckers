@@ -45,11 +45,11 @@ public class GameCenter {
      * @return a gameID, that is, a unique string to identify the newly made game
      */
     public String newGame(Player redPlayer, Player whitePlayer){
+        gamesPlayed++;
         String gameId = createGameId();
         Game newGame = new Game(redPlayer, whitePlayer, gameId);
         newGame.initializeGame();
 
-        gamesPlayed++;
         currentGames.put(gameId, newGame);
 
         return gameId;
@@ -223,7 +223,7 @@ public class GameCenter {
 
         game.removeSpectator(spectator);
 
-        if(game.getSpectatorNum() == 0)
+        if(game.getSpectatorNum() == 0 && ((game.isResigned()) || (game.completedGame() != null)))
             currentGames.remove(gameId);
 
         return game.removeSpectator(spectator);
