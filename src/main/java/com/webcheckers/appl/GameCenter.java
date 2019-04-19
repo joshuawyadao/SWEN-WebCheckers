@@ -201,18 +201,39 @@ public class GameCenter {
         return !previousGames.isEmpty();
     }
 
+    /**
+     *
+     * @return
+     */
     public Collection<Game> getCurrentGames(){
         return currentGames.values();
     }
 
-    public boolean hasCurrentGames() {return !currentGames.isEmpty();}
+    /**
+     * Determines if there are any games currently being played
+     * @return true if there is at least 1 game being played, false otherwise
+     */
+    public boolean hasCurrentGames() {
+        return !currentGames.isEmpty();
+    }
 
+    /**
+     * Determines if a spectator has been updated
+     * @param gameId a unique identifier to get the game
+     * @param spectator the spectator to be checked
+     * @return true if they have been updated, false otherwise
+     */
     public boolean isSpectatorUpdated(String gameId, Player spectator){
         Game game = currentGames.get(gameId);
-
         return game.isSpectatorUpdated(spectator);
     }
 
+    /**
+     * Removes a spectator from the game
+     * @param gameId a unique identifier to get the game
+     * @param spectator the spectator to be removed
+     * @return true if successful removal, false otherwise
+     */
     public boolean removeSpectator(String gameId, Player spectator){
         Game game = currentGames.get(gameId);
 
@@ -224,6 +245,12 @@ public class GameCenter {
         return game.removeSpectator(spectator);
     }
 
+    /**
+     * Requests the game to update the spectator
+     * @param gameId a unique identifier to get the game
+     * @param spectator the spectator to be updated
+     * @return true if the request was made successfully, false otherwise.
+     */
     public boolean updateSpectator(String gameId, Player spectator){
         Game gameToSpec = currentGames.get(gameId);
         gameToSpec.updateSpectator(spectator);
@@ -231,6 +258,11 @@ public class GameCenter {
         return true;
     }
 
+    /**
+     * Gets a gameID from the player
+     * @param player the player to be searched
+     * @return the gameID obtained from the player
+     */
     public String getPlayerGameId(Player player) {
         for( Game game : currentGames.values() ) {
             if( game.isInGame(player)) {
@@ -241,6 +273,12 @@ public class GameCenter {
         return null;
     }
 
+    /**
+     * Ends the game and clears up any necessary data-consuming items
+     * @param gameId a unique identifier to get the game
+     * @param currentUser the current user
+     * @return a Map<String, Object> used for UI handling
+     */
     public Map<String, Object> endGame(String gameId, Player currentUser){
         Map<String, Object> modeOptions = new HashMap<>(2);
         Game endedGame = currentGames.get(gameId);

@@ -16,8 +16,9 @@ class GameTest {
     void setUp(){
         this.redPlayer = new Player("red");
         this.whitePlayer = new Player("white");
+
         GameCenter.ViewMode viewMode = GameCenter.ViewMode.PLAY;
-        CuT = new Game(redPlayer,whitePlayer);
+        CuT = new Game(redPlayer,whitePlayer,"redVswhite");
     }
 
     @Test
@@ -61,7 +62,7 @@ class GameTest {
 
         Move move = new Move(src, dst);
 
-        assertTrue( CuT.makeMove(redPlayer, move) );
+        assertTrue( CuT.makeMove(move) );
 
     }
 
