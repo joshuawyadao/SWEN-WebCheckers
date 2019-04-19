@@ -19,7 +19,7 @@
 <body>
   <div class="page">
     <h1>Web Checkers | Game View</h1>
-    
+
     <#include "nav-bar.ftl">
 
     <div class="body">
@@ -28,10 +28,10 @@
 
       <div>
         <div id="game-controls">
-        
+
           <fieldset id="game-info">
             <legend>Info</legend>
-            
+
             <#if message??>
             <div id="message" class="${message.type}">${message.text}</div>
             <#else>
@@ -39,7 +39,7 @@
               <!-- keep here for client-side messages -->
             </div>
             </#if>
-            
+
             <div>
               <table data-color='RED'>
                 <tr>
@@ -55,14 +55,21 @@
               </table>
             </div>
           </fieldset>
-          
+
           <fieldset id="game-toolbar">
             <legend>Controls</legend>
+            <#if viewMode.name() == "SPECTATOR">
+                <form action="./swap" method="POST">
+                    <h3>
+                        <button type="submit">Swap Views</button>
+                    </h3>
+                </form>
+            </#if>
             <div class="toolbar"></div>
           </fieldset>
-          
+
         </div>
-  
+
         <div class="game-board">
           <table id="game-board">
             <tbody>
@@ -94,8 +101,8 @@
   </div>
 
   <audio id="audio" src="http://www.soundjay.com/button/beep-07.mp3" autostart="false" ></audio>
-  
+
   <script data-main="/js/game/index" src="/js/require.js"></script>
-  
+
 </body>
 </html>

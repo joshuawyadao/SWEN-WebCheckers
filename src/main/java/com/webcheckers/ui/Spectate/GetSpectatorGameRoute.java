@@ -12,6 +12,7 @@ import spark.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Logger;
 
 public class GetSpectatorGameRoute implements Route {
@@ -44,7 +45,18 @@ public class GetSpectatorGameRoute implements Route {
         Session currentSession = request.session();
         Player currentUser = currentSession.attribute(GetHomeRoute.CURRENT_USER_ATTR);
 
-        String gameID = request.queryParams("gameID");
+//        Set<String> qp = request.queryParams();
+//        for (String s : qp){
+//            System.out.println(s);
+//        }
+        String gameID;
+        if (currentSession.attribute("specID") == null) {
+            gameID = request.queryParams("gameID");
+            currentSession.attribute("specID", gameID);
+        } else {
+            gameID = currentSession.attribute("specID");
+        }
+        //System.out.println(gameID);
 
         Game gameToSpec = gameCenter.getGame(gameID);
 

@@ -25,6 +25,7 @@ public class GetSpectatorStopWatchingRoute implements Route {
         String gameID = request.queryParams("gameID");
 
         Session currentSession = request.session();
+        //String gameID = currentSession.attribute("gameID");
         Player currentUser = currentSession.attribute(GetHomeRoute.CURRENT_USER_ATTR);
 
         gameCenter.removeSpectator(gameID, currentUser);
