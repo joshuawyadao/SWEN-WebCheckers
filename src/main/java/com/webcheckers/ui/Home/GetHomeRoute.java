@@ -1,12 +1,15 @@
-package com.webcheckers.ui;
+package com.webcheckers.ui.Home;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
+import com.webcheckers.ui.PlayGame.GetGameRoute;
+import com.webcheckers.ui.WebServer;
 import spark.*;
 
 import com.webcheckers.util.Message;
@@ -24,9 +27,10 @@ public class GetHomeRoute implements Route {
   public static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
   public static final String CURRENT_USER_ATTR = "currentUser";
   public static final String VIEW_NAME = "home.ftl";
-    public static final String ERROR_MSG = "homeErrorMessage";
+  public static final String ERROR_MSG = "homeErrorMessage";
 
   private final PlayerLobby playerLobby;
+  private final GameCenter gameCenter;
   private final TemplateEngine templateEngine;
 
   /**
@@ -35,8 +39,9 @@ public class GetHomeRoute implements Route {
    * @param templateEngine
    *   the HTML template rendering engine
    */
-  public GetHomeRoute(final PlayerLobby playerLobby, final TemplateEngine templateEngine) {
+  public GetHomeRoute(final PlayerLobby playerLobby, final GameCenter gameCenter, final TemplateEngine templateEngine) {
     this.playerLobby = Objects.requireNonNull(playerLobby, "playerLobby is required");
+    this.gameCenter = Objects.requireNonNull(gameCenter, "gameCenter is required");
     this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
     //
     LOG.config("GetHomeRoute is initialized.");
@@ -63,7 +68,6 @@ public class GetHomeRoute implements Route {
 
     vm.put("title", "Welcome!");
 
-
     // Displays an error message to the user, if any.
     if(httpSession.attribute(ERROR_MSG) != null && httpSession.attribute(ERROR_MSG) instanceof Message) {
         // Show the error message
@@ -78,6 +82,7 @@ public class GetHomeRoute implements Route {
         Player currentUser = httpSession.attribute(CURRENT_USER_ATTR);
         vm.put(CURRENT_USER_ATTR, currentUser);
         vm.put("players", playerLobby.getPlayers());
+        vm.put("currentGames", gameCenter.getCurrentGames());
 
         //if the player has been challenged to a game redirect them to the
         //GET Game Route, with the appropriate 'opponent' parameter

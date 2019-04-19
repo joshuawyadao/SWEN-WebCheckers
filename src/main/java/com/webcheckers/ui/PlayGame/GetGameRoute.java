@@ -1,10 +1,13 @@
-package com.webcheckers.ui;
+package com.webcheckers.ui.PlayGame;
 
 import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
+import com.webcheckers.ui.BoardView;
+import com.webcheckers.ui.Home.GetHomeRoute;
+import com.webcheckers.ui.WebServer;
 import com.webcheckers.util.Message;
 import spark.*;
 
@@ -74,22 +77,20 @@ public class GetGameRoute implements Route {
                 return null;
 
             } else {
-                String newGameId = gameCenter.newGame(currentUser, opponent, Game.ViewMode.PLAY);
+                String newGameId = gameCenter.newGame(currentUser, opponent);
                 currentSession.attribute(GAME_ID_ATTR, newGameId);
                 opponentSession.attribute(GAME_ID_ATTR, newGameId);
 
             }
-
         }
 
         String gameId = currentSession.attribute(GAME_ID_ATTR);
         Game currentGame = gameCenter.getGame(gameId);
 
-
         vm.put("redPlayer", currentGame.getRedPlayer());
         vm.put("whitePlayer", currentGame.getWhitePlayer());
         vm.put("activeColor", currentGame.getActivePlayer().getPlayerColor());
-        vm.put("viewMode", currentGame.getViewMode());
+        vm.put("viewMode", GameCenter.ViewMode.PLAY);
 
         boolean isRed = currentGame.getPlayerColor(currentUser) == Player.PlayerColor.RED;
         BoardView boardView = new BoardView(currentGame.getCheckerBoard(), isRed);
@@ -121,6 +122,8 @@ public class GetGameRoute implements Route {
                     gameCenter.removeGame(gameId);
                 }
             }
+
+            gameCenter.addToPreviousGames(currentGame, gameId);
         }
 
         //boolean testBool = true;
@@ -165,6 +168,7 @@ public class GetGameRoute implements Route {
                 }
             }
 
+            gameCenter.addToPreviousGames(currentGame, gameId);
         }
 
         vm.put(GetHomeRoute.CURRENT_USER_ATTR, currentUser);

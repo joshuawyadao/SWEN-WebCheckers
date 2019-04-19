@@ -1,5 +1,6 @@
 package com.webcheckers.model;
 
+import com.webcheckers.appl.GameCenter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,8 +16,8 @@ class GameTest {
     void setUp(){
         this.redPlayer = new Player("red");
         this.whitePlayer = new Player("white");
-        Game.ViewMode viewMode = Game.ViewMode.PLAY;
-        CuT = new Game(redPlayer,whitePlayer,viewMode);
+        String gameID = "gameID";
+        CuT = new Game(redPlayer,whitePlayer, gameID);
     }
 
     @Test
@@ -27,11 +28,6 @@ class GameTest {
     @Test
     void getWhitePlayer() {
         assertSame( whitePlayer, CuT.getWhitePlayer() );
-    }
-
-    @Test
-    void getViewMode() {
-        assertEquals( Game.ViewMode.PLAY, CuT.getViewMode() );
     }
 
     @Test
@@ -65,7 +61,7 @@ class GameTest {
 
         Move move = new Move(src, dst);
 
-        assertTrue( CuT.makeMove(redPlayer, move) );
+        assertTrue( CuT.makeMove(move) );
 
     }
 

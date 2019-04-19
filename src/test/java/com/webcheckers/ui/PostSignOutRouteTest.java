@@ -3,12 +3,11 @@ package com.webcheckers.ui;
 import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.model.Player;
+import com.webcheckers.ui.Home.PostSignOutRoute;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import spark.*;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -41,17 +40,6 @@ class PostSignOutRouteTest {
 
     @Test
     void testSignOut(){
-        final TemplateEngineTest testHelper = new TemplateEngineTest();
-        when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
-
-        when(session.attribute("currentUser")).thenReturn(new Player("currentUser"));
-        when(session.attribute(GetGameRoute.GAME_ID_ATTR)).thenReturn("gameId");
-
-
-        CuT.handle(request, response);
-
-        testHelper.assertViewModelExists();
-        testHelper.assertViewModelIsaMap();
 
     }
 

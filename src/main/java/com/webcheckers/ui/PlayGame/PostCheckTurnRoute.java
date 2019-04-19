@@ -1,16 +1,13 @@
-package com.webcheckers.ui;
+package com.webcheckers.ui.PlayGame;
 
 import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
+import com.webcheckers.ui.Home.GetHomeRoute;
 import com.webcheckers.util.Message;
-import javafx.geometry.Pos;
 import spark.*;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
@@ -18,7 +15,7 @@ import static spark.Spark.halt;
 
 public class PostCheckTurnRoute implements Route {
 
-    private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
+    private static final Logger LOG = Logger.getLogger(PostCheckTurnRoute.class.getName());
 
     private final PlayerLobby playerLobby;
     private final GameCenter gameCenter;

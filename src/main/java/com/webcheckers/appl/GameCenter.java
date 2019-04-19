@@ -3,9 +3,11 @@ package com.webcheckers.appl;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Move;
 import com.webcheckers.model.Player;
+import com.webcheckers.model.ReplayGame;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * GameCenter Class
@@ -13,29 +15,39 @@ import java.util.Map;
  */
 public class GameCenter {
 
+    //Enumeration for the View Mode
+    public enum ViewMode{
+        PLAY,
+        SPECTATOR,
+        REPLAY
+    }
+
     //
     // Private fields
     //
 
     private HashMap<String, Game> currentGames;
+    private int gamesCompleted;
+    private HashMap<String, ReplayGame> previousGames;
 
     /**
      * GameCenter constructor
      */
     public GameCenter( ){
-        currentGames = new HashMap<>();
+        this.currentGames = new HashMap<>();
+        this.gamesCompleted = 0;
+        this.previousGames = new HashMap<>();
     }
 
     /**
      * newGame creates a new checkers game that players can interact with
      * @param redPlayer the player to be red
      * @param whitePlayer the player to be white
-     * @param viewMode the mode to situate the game with
      * @return a gameID, that is, a unique string to identify the newly made game
      */
-    public String newGame(Player redPlayer, Player whitePlayer, Game.ViewMode viewMode){
+    public String newGame(Player redPlayer, Player whitePlayer){
         String gameId = createGameId(redPlayer, whitePlayer);
-        Game newGame = new Game(redPlayer, whitePlayer, viewMode);
+        Game newGame = new Game(redPlayer, whitePlayer, gameId);
         newGame.initializeGame();
 
         currentGames.put(gameId, newGame);
@@ -52,6 +64,17 @@ public class GameCenter {
         return currentGames.get(gameId);
     }
 
+    /**
+     * Gets a finished game from the list of finished games
+     * @param gameId the gameID to get the game
+     * @return the requested finished game
+     */
+    public ReplayGame getReplayGame(String gameId) { return previousGames.get(gameId); }
+
+    /**
+     * Removes a game from the list of currently playing games
+     * @param gameId a unique identifier to determine what game is to be removed
+     */
     public void removeGame(String gameId) {
         currentGames.remove(gameId);
     }
@@ -62,20 +85,27 @@ public class GameCenter {
      * @param whitePlayer the whitePlayer
      * @return a new ID, that is, a string
      */
-    private static String createGameId(Player redPlayer, Player whitePlayer){
+    private String createGameId(Player redPlayer, Player whitePlayer){
         return redPlayer.getName() + "Vs" + whitePlayer.getName();
+    }
+
+    /**
+     * Creates a fresh, new game ID
+     * @return the new game ID
+     */
+    private String createFinishedGameId(){
+        return "Game #" + gamesCompleted;
     }
 
     /**
      * Moves a piece of a game
      * @param gameId the gameID of the game
-     * @param currentPlayer the current player
      * @param move how is the piece going to be moved
      * @return true if the movement is successful, false if not
      */
-    public boolean requestMove(String gameId, Player currentPlayer, Move move){
+    public boolean requestMove(String gameId, Move move){
         Game game = currentGames.get(gameId);
-        return game.makeMove(currentPlayer, move);
+        return game.makeMove(move);
     }
 
     /**
@@ -100,19 +130,23 @@ public class GameCenter {
 
 
     /**
-     *
-     * @param player1
-     * @param player2
-     * @return
+     * Determines if 2 players are in a game or not
+     * @param player1 the 1st player to determine if they have a game
+     * @param player2 the 2nd player to determine if they have a game
+     * @return true if either one of the 2 players have a game, and false if both players do not have a game
      */
     public boolean hasGame(Player player1, Player player2) {
         String key1 = player1.getName() + "Vs" + player2.getName();
         String key2 = player2.getName() + "Vs" + player1.getName();
 
         return currentGames.get(key1) != null || currentGames.get(key2) != null;
-
     }
 
+    /**
+     * Determines if a player is in a game or not
+     * @param player the player in question
+     * @return true if the player is within a game, false if they are not in a game
+     */
     public boolean isInAnyGame(Player player) {
         for( Game game : currentGames.values() ) {
             if( game.isInGame(player)) {
@@ -122,14 +156,65 @@ public class GameCenter {
         return false;
     }
 
+    /**
+     * Determines if it's a player's turn
+     * @param gameId the unique identifier for the game that the player is in
+     * @param currentPlayer the current player in question
+     * @return true if it is the current player's turn, false if it is not the current player's turn
+     */
     public boolean isMyTurn(String gameId, Player currentPlayer){
         Game game = currentGames.get(gameId);
-
-        if((game.getActivePlayer()).equals(currentPlayer))
-            return true;
-        else
-            return false;
+        return game.getActivePlayer().equals(currentPlayer);
     }
 
+    /**
+     * Adds a game to the list of finished games
+     * @param game the game to be added
+     * @param gameId the subsequent game ID
+     */
+    public void addToPreviousGames(Game game, String gameId){
+        gamesCompleted++;
 
+        String previousGameId = createFinishedGameId();
+        ReplayGame previousGame = new ReplayGame(game.getRedPlayer(), game.getWhitePlayer(),
+                                                 game.getPreviousTurns(), previousGameId);
+
+        previousGames.put(previousGameId, previousGame);
+
+        if(currentGames.containsKey(gameId))
+            currentGames.remove(gameId);
+
+    }
+
+    /**
+     * Goes through the list of games finished and sorts them by game ID
+     * @return a new list the the newly sorted games
+     */
+    public ArrayList<ReplayGame> sortPreviousGames(){
+        ArrayList<ReplayGame> sortedPreviousGames = new ArrayList<>();
+        ReplayGame tempGame;
+
+        for(int i = 0; i < previousGames.size() + 1; i++){
+            tempGame = previousGames.get("Game #" + i);
+            sortedPreviousGames.add(tempGame);
+        }
+
+        return sortedPreviousGames;
+    }
+
+    /**
+     * Determine if the list of finished games has any games.
+     * @return true if the list has any games
+     */
+    public boolean hasPreviousGames(){
+        return previousGames.size() > 0;
+    }
+
+    /**
+     * Gets the list of current games
+     * @return the current games
+     */
+    public Collection<Game> getCurrentGames(){
+        return currentGames.values();
+    }
 }
