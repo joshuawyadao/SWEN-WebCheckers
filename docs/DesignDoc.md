@@ -198,6 +198,8 @@ This class largely focused on the dynamics of players,
 as in a player's basic capabilities (i.e. request to move a piece)
 or other general player information (i.e. grab a player's color).
 
+ReplayGame: A class the holds all the valid turns for a given game so they can be viewed and iterated through while in Replay Mode. This class keeps track of the time the game ended, the players in the game and the current turn the user is viewing. 
+
 Move: This class dealt with the movement of pieces across our
 board. Also dealing with any jump movement. It is worth noting that any movement
 validation is not involved within this class. It is simply the movement of piecs.
@@ -214,6 +216,13 @@ It is used to simulate any and all validation.
 Space: This class basically places the black and white tiles on the board.
 
 ### Design Improvements
+-Further error checking within routes to ensure the user never sees an error page
+-Possibly refactor the Game class to hold less instance variables
+-Provide the user with more information while viewing any page, to make the application easier to learn and nearly eliminate all abigbuity
+-Refactor methods that seem to repeat themeselves or take similar actions as others methods within the domain (which exist from multiple developers attempting to find a different solution to the same problem)
+-Refactor the PlayerLobby class to hold a HashMap of Players and their names, rather than Players and their Sessions
+-Refactor joining two players to the same game without using their Sessions and through taking more advantage of the GameCenter class
+
 > _Discuss design improvements that you would make if the project were
 > to continue. These improvement should be based on your direct
 > analysis of where there are problems in the code base which could be
@@ -252,12 +261,6 @@ User Story Breakdown for Sprint 3:
 -10 User Stories Passed All Tests
 -No Stories Failed there Acceptance Criteria Tests
 -No Stories went untested
-
-> _Report on the number of user stories that have passed all their
-> acceptance criteria tests, the number that have some acceptance
-> criteria tests failing, and the number of user stories that
-> have not had any testing yet. Highlight the issues found during
-> acceptance testing and if there are any concerns._
 
 ### Unit Testing and Code Coverage
 
