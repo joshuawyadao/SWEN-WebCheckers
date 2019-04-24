@@ -21,7 +21,7 @@ geometry: margin=1in
 This is a summary of the project.
 
 ### Purpose
-The purpose of this project is to make a way for friends and strangers from around the world can play Chess with each other.
+The purpose of this project is to make a way for friends and strangers from around the world can play Checkers with each other online.
 
 
 ### Glossary and Acronyms
@@ -45,11 +45,10 @@ The player must be able to signout at any time they please.
 The game must follow the standard Chess rules.
 
 ### Definition of MVP
-The Minimum Viable Product is a WebCheckers Application that allows players to sign-in and find other players to play a match of Checkers. You are allowed to resign if you have to go mid game or you can play it to victory/defeat. You can sign out whenever you please, however your game will not be saved.
+The Minimum Viable Product is a WebCheckers Application that allows players to sign-in and find other players to play a match of Checkers. You are allowed to resign if you have to leave mid-game or you can play to victory/defeat. You can sign out whenever you please, however your game will not be saved.
 
 ### MVP Features
 Sign in:
-
 	- Allows you to sign in and play against other players
 
 	- You MUST be signed in to start a match and see other lobbies
@@ -66,12 +65,13 @@ Resign:
 End game experience:
 	
 	- This will display a victory or defeat message depending on the circumstance of the end game and a reason (resign, all pieces taken)
-
+	
+Sign out: Allows you to sign out of the application
 
 ### Roadmap of Enhancements
-> Spectator mode
+> Spectator Mode
 
-> AI Player
+> Replay Mode
 
 
 ## Application Domain
@@ -201,6 +201,7 @@ or other general player information (i.e. grab a player's color).
 Move: This class dealt with the movement of pieces across our
 board. Also dealing with any jump movement. It is worth noting that any movement
 validation is not involved within this class. It is simply the movement of piecs.
+
 Piece: This class controlled the status of a piece, or many pieces, on the
 board.
 
@@ -235,13 +236,28 @@ building the tests seemed much more abstract than the model
 tier and application tier. This lead to easy mishaps and many null pointers.
 
 ### Acceptance Testing
+The following is breakdown of our user story progress across Sprints 1- 3. These breakdown summaries explain which stories passed their Acceptance Criteria Tests, which stories failed and which stories went untested. All Stories that that fail their acceptance criteria tests for a given sprint are put into the preceeding Sprint's backlog, and subsequently worked on.
+
+User Story Breakdown for Sprint 1:
+-1 User Stories Passed All Tests
+-1 User Story Failed Some Tests (The 'Start a Game' Story)
+-No User Stories went untested
+
+User Story Breakdown for Sprint 2:
+-9 User Stories Passed All Tests
+-1 User Story Failed Some Tests (The 'Submit Turn' Story)
+-No User Stories went untested
+
+User Story Breakdown for Sprint 3:
+-10 User Stories Passed All Tests
+-No Stories Failed there Acceptance Criteria Tests
+-No Stories went untested
+
 > _Report on the number of user stories that have passed all their
 > acceptance criteria tests, the number that have some acceptance
 > criteria tests failing, and the number of user stories that
 > have not had any testing yet. Highlight the issues found during
 > acceptance testing and if there are any concerns._
-
-
 
 ### Unit Testing and Code Coverage
 
